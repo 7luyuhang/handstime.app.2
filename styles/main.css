@@ -57,7 +57,9 @@ body {
     height: 80px;
     background-color: #f7f7f7;
     border-radius: 20px;
+    cursor: ew-resize;
 }
+
 
 /*Container*/
 .container {
@@ -175,6 +177,7 @@ input[type="email"] {
     display: block;
 }
 
+
 /*Video*/
 .container.video-container {
     padding: 0;
@@ -200,4 +203,121 @@ input[type="email"] {
     color: white;
     z-index: 2;
     pointer-events: none;
+}
+
+/*Dark Mode*/
+body.dark-mode {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+body.dark-mode .icon {
+    background-color: #1c1c1c;
+}
+
+body.dark-mode .container {
+    background-color: #1c1c1c;
+}
+
+body.dark-mode .container-circle {
+    background-color: #1c1c1c;
+}
+
+body.dark-mode .circle {
+    background-color: #000000;
+}
+
+body.dark-mode .circle.outside {
+    background-color: #ffffff;
+}
+
+body.dark-mode a {
+    color: #ffffff;
+}
+
+body.dark-mode a:hover {
+    color: #000000;
+    background-color: #ffffff;
+}
+
+body.dark-mode input[type="email"] {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #1c1c1c;
+}
+
+body.dark-mode input[type="email"]::placeholder {
+    color: #808080;
+}
+
+body.dark-mode .video-overlay {
+    color: #ffffff;
+}
+
+body.dark-mode .icon svg path {
+    fill: #ffffff;
+}
+
+body.dark-mode .circle-backgroundimage {
+    filter: invert(1);
+}
+
+
+/*System Dark Mode (fallback)*/
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode):not(.dark-mode) {
+        background-color: #000000;
+        color: #ffffff;
+    }
+
+    body:not(.light-mode):not(.dark-mode) .icon {
+        background-color: #1c1c1c;
+    }
+
+    body:not(.light-mode):not(.dark-mode) .container {
+        background-color: #1c1c1c;
+    }
+
+    body:not(.light-mode):not(.dark-mode) .container-circle {
+        background-color: #1c1c1c;
+    }
+
+    body:not(.light-mode):not(.dark-mode) .circle {
+        background-color: #000000;
+    }
+
+    body:not(.light-mode):not(.dark-mode) .circle.outside {
+        background-color: #ffffff;
+    }
+
+    body:not(.light-mode):not(.dark-mode) a {
+        color: #ffffff;
+    }
+
+    body:not(.light-mode):not(.dark-mode) a:hover {
+        color: #000000;
+        background-color: #ffffff;
+    }
+
+    body:not(.light-mode):not(.dark-mode) input[type="email"] {
+        background-color: #000000;
+        color: #ffffff;
+        border: 1px solid #1c1c1c;
+    }
+
+    body:not(.light-mode):not(.dark-mode) input[type="email"]::placeholder {
+        color: #808080;
+    }
+
+    body:not(.light-mode):not(.dark-mode) .video-overlay {
+        color: #ffffff;
+    }
+
+    body:not(.light-mode):not(.dark-mode) .icon svg path {
+        fill: #ffffff;
+    }
+
+    body:not(.light-mode):not(.dark-mode) .circle-backgroundimage {
+        filter: invert(1);
+    }
 } 

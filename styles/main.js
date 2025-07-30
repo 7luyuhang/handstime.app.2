@@ -141,4 +141,71 @@ form.addEventListener('submit', async (e) => {
         messageDiv.classList.add('error');
         console.error('Form Error.', error);
     }
+});
+
+// Theme Toggle Functionality
+const icon = document.querySelector('.icon');
+const body = document.body;
+
+// Initialize theme on page load
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme) {
+        // Use saved theme preference
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            body.classList.remove('light-mode');
+        } else {
+            body.classList.add('light-mode');
+            body.classList.remove('dark-mode');
+        }
+    } else {
+        // Follow system preference (no class added, CSS media query handles it)
+        body.classList.remove('dark-mode', 'light-mode');
+    }
+}
+
+// Toggle theme function
+function toggleTheme() {
+    const isDarkMode = body.classList.contains('dark-mode');
+    const isLightMode = body.classList.contains('light-mode');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (isDarkMode) {
+        // Currently dark mode -> switch to light mode
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light');
+    } else if (isLightMode) {
+        // Currently light mode -> switch to dark mode
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        // Currently following system -> switch to opposite of system
+        if (systemPrefersDark) {
+            body.classList.add('light-mode');
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+}
+
+// Add click event to icon
+icon.addEventListener('click', toggleTheme);
+
+// Initialize theme when page loads
+initializeTheme();
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // Only update if user hasn't manually set a preference
+    const savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+        // Remove any existing classes to follow system preference
+        body.classList.remove('dark-mode', 'light-mode');
+    }
 }); 
