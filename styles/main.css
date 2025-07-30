@@ -196,6 +196,11 @@ input[type="email"] {
     user-select: none;
 }
 
+.container.video-container video:hover {
+    filter: brightness(1.25);
+    cursor: pointer;
+}
+
 .video-overlay {
     position: absolute;
     bottom: 24px;
