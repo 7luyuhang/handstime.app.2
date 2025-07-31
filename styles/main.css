@@ -6,21 +6,27 @@
 
 /* Hide Scrollbars */
 body {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 body::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, Opera */
+    display: none;
+    /* Chrome, Safari, Opera */
 }
 
 html {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 html::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, Opera */
+    display: none;
+    /* Chrome, Safari, Opera */
 }
 
 /*Font*/
@@ -37,6 +43,34 @@ a {
 a:hover {
     color: white;
     background-color: black;
+}
+
+/* Tooltip */
+.tooltip-link {
+    position: relative;
+}
+
+.tooltip-link::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 360px;
+    font-size: 0.875em;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 10;
+    margin-bottom: 8px;
+}
+
+.tooltip-link:hover::after {
+    opacity: 1;
+    visibility: visible;
 }
 
 body {
@@ -210,6 +244,7 @@ input[type="email"] {
     pointer-events: none;
 }
 
+
 /*Dark Mode*/
 body.dark-mode {
     background-color: #000000;
@@ -245,6 +280,12 @@ body.dark-mode a:hover {
     background-color: #ffffff;
 }
 
+body.dark-mode .tooltip-link::after {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+
 body.dark-mode input[type="email"] {
     background-color: #000000;
     color: #ffffff;
@@ -265,4 +306,4 @@ body.dark-mode .icon svg path {
 
 body.dark-mode .circle-backgroundimage {
     filter: invert(1);
-} 
+}

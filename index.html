@@ -71,7 +71,8 @@
         </div>
 
         <div class="container">
-            <p>"Shape time with your hands."</p>
+            <!-- Tooltip -->
+            <p>"Shape time with <a href="https://t.me/luyuhang_7" class="tooltip-link" data-tooltip="you design, we build. contact us." target="_blank">your</a> hands."</p>
             <br>
             <p>Hands Time is building time widgets for iPhone.</p>
 
@@ -91,7 +92,7 @@
         <!-- Media -->
         <div class="container">
             <div class="vertical-line">
-                <a href="mailto:handstime.app@gmail.com" target="_blank">Email</a>
+                <a href="mailto:7luyuhang@gmail.com" target="_blank">Email</a>
                 <a href="https://www.instagram.com/handstime.app/" target="_blank">Instagram</a>
                 <a href="https://x.com/handstime_app" target="_blank">X</a>
             </div>
@@ -126,7 +127,19 @@
 
         <!-- Footer -->
         <div class="container">
-            <p class="footer">Crafted with humility toward time, on Earth.</p>
+            <div class="vertical-line">
+            <p class="footer">Crafted with humility toward time.</p>
+            <p class="footer" id="localTime"></p>
+            <script>
+                function updateLocalTime() {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString();
+                    document.getElementById('localTime').textContent = timeString;
+                }
+                updateLocalTime();
+                setInterval(updateLocalTime, 1000);
+            </script>
+            </div>
         </div>
 
         <!-- Circle -->
