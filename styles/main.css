@@ -45,33 +45,6 @@ a:hover {
     background-color: black;
 }
 
-/* Tooltip */
-.tooltip-link {
-    position: relative;
-}
-
-.tooltip-link::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: black;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 360px;
-    font-size: 0.875em;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 10;
-    margin-bottom: 8px;
-}
-
-.tooltip-link:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
 
 body {
     font-family: 'ABCDiatypeSemi-Mono', monospace;
@@ -212,37 +185,7 @@ input[type="email"] {
 }
 
 
-/*Video*/
-.container.video-container {
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-}
 
-.container.video-container video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 28px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.container.video-container video:hover {
-    filter: brightness(1.25);
-    cursor: pointer;
-}
-
-.video-overlay {
-    position: absolute;
-    bottom: 24px;
-    left: 24px;
-    color: white;
-    z-index: 2;
-    pointer-events: none;
-}
 
 
 /*Dark Mode*/
@@ -280,10 +223,7 @@ body.dark-mode a:hover {
     background-color: #ffffff;
 }
 
-body.dark-mode .tooltip-link::after {
-    background-color: #ffffff;
-    color: #000000;
-}
+
 
 
 body.dark-mode input[type="email"] {
@@ -296,9 +236,7 @@ body.dark-mode input[type="email"]::placeholder {
     color: #808080;
 }
 
-body.dark-mode .video-overlay {
-    color: #ffffff;
-}
+
 
 body.dark-mode .icon svg path {
     fill: #ffffff;

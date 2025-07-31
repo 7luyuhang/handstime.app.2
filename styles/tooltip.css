@@ -1,0 +1,105 @@
+/* Tooltip Component Styles */
+
+.tooltip-link {
+    position: relative;
+    text-decoration: underline;
+    cursor: alias;
+    /* Prevent text selection on touch devices */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tooltip-link::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 360px;
+    font-size: 0.875em;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 10;
+    margin-bottom: 8px;
+}
+
+.tooltip-link:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Disable tooltip on mobile devices but keep link styling */
+@media (hover: none) and (pointer: coarse) {
+    .tooltip-link {
+        /* Keep underline for link indication */
+        text-decoration: underline !important;
+        cursor: pointer !important;
+        /* Disable iOS callouts and highlights */
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    
+    /* Hide tooltip bubble completely on mobile */
+    .tooltip-link::after {
+        display: none !important;
+        content: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+    
+    /* Ensure no hover effects on touch devices */
+    .tooltip-link:hover::after {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+}
+
+/* Alternative method using CSS Media Queries Level 4 */
+@media (hover: none), (hover: on-demand) {
+    .tooltip-link::after,
+    .tooltip-link:hover::after {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+}
+
+/* Mobile device specific handling - keep link styling, hide tooltip */
+body.mobile-device .tooltip-link {
+    /* Keep underline to indicate it's a link */
+    text-decoration: underline !important;
+    cursor: pointer !important;
+    /* Prevent iOS callouts and selection */
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+body.mobile-device .tooltip-link::after {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+body.mobile-device .tooltip-link:hover::after {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Dark mode styles */
+body.dark-mode .tooltip-link::after {
+    background-color: #ffffff;
+    color: #000000;
+}

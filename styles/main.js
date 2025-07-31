@@ -143,39 +143,27 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
-// Theme Toggle Functionality
-const icon = document.querySelector('.icon');
-const body = document.body;
 
-// Initialize theme on page load
-function initializeTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-    } else {
-        // Default to light mode
-        body.classList.remove('dark-mode');
+
+// Mobile detection for tooltip handling
+function isMobileDevice() {
+    return (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+        window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0
+    );
+}
+
+// Light mobile detection - only add class for CSS targeting
+function initTooltipHandling() {
+    if (isMobileDevice()) {
+        // Add mobile-specific class to body for CSS targeting
+        document.body.classList.add('mobile-device');
     }
 }
 
-// Toggle theme function
-function toggleTheme() {
-    const isDarkMode = body.classList.contains('dark-mode');
-    
-    if (isDarkMode) {
-        // Currently dark mode -> switch to light mode
-        body.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light');
-    } else {
-        // Currently light mode -> switch to dark mode
-        body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark');
-    }
-}
+// Initialize tooltip handling when DOM is loaded
+document.addEventListener('DOMContentLoaded', initTooltipHandling);
 
-// Add click event to icon
-icon.addEventListener('click', toggleTheme);
-
-// Initialize theme when page loads
-initializeTheme(); 
+ 

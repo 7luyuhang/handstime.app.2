@@ -1,0 +1,44 @@
+/* Video Component Styles */
+
+.container.video-container {
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.container.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 28px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: filter 0.3s ease;
+}
+
+.container.video-container video:hover {
+    filter: brightness(1.5);
+    cursor: crosshair; /* Show horizontal resize cursor to indicate scrubbing */
+}
+
+/* Scrubbing state indicators */
+.container.video-container video.scrubbing {
+    filter: brightness(1.5)
+}
+
+
+.video-overlay {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    color: white;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Dark mode styles */
+body.dark-mode .video-overlay {
+    color: #ffffff;
+}
