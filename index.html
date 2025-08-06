@@ -23,9 +23,11 @@
     <link rel="stylesheet" href="styles/tooltip.css">
     <link rel="stylesheet" href="styles/video.css">
     <link rel="stylesheet" href="styles/qrcode.css">
+    <link rel="stylesheet" href="styles/fullscreen-time.css">
     <script defer src="styles/main.js"></script>
     <script defer src="styles/theme.js"></script>
     <script defer src="styles/video.js"></script>
+    <script defer src="styles/fullscreen-time.js"></script>
 
     <!-- Meta -->
     <meta property="og:title" content="Hands Time">
@@ -101,6 +103,8 @@
             <div class="video-overlay">3.0 available, built on iOS 26.</div>
         </div>
 
+  
+
 
         <!-- Media -->
         <div class="container">
@@ -125,29 +129,37 @@
 
         <!-- Copyright -->
         <div class="container">
-            <p class="footer">Copyright ©
-                <script>document.write(new Date().getFullYear())</script>
-                Negative Time Limited. All rights reserved.
-            </p>
-
-            <br>
-
             <div class="vertical-line">
+                <p class="footer">Copyright ©
+                    <script>document.write(new Date().getFullYear())</script>
+                    Negative Time Limited. All rights reserved.
+                </p>
+
                 <a href="https://www.handstime.app/terms">Terms of Use</a>
                 <a href="https://www.handstime.app/privacy">Privacy Policy</a>
             </div>
+
         </div>
 
         <!-- Footer -->
         <div class="container">
             <div class="vertical-line">
                 <p class="footer">Crafted with humility toward time.</p>
-                <p id="localTime"></p>
+
+                <!-- Time -->
+                <p id="localTime" class="clickable-time tooltip-link" data-tooltip="Be present"></p>
                 <script>
                     function updateLocalTime() {
                         const now = new Date();
                         const timeString = now.toLocaleTimeString();
                         document.getElementById('localTime').textContent = timeString;
+
+                        // Also update fullscreen time if it's active
+                        const fullscreenClock = document.getElementById('fullscreenClock');
+                        const fullscreenOverlay = document.getElementById('fullscreenTime');
+                        if (fullscreenClock && fullscreenOverlay && fullscreenOverlay.classList.contains('active')) {
+                            fullscreenClock.textContent = timeString;
+                        }
                     }
                     updateLocalTime();
                     setInterval(updateLocalTime, 1000);
@@ -164,7 +176,12 @@
         <!-- Container Group end -->
     </div>
 
-
+    <!-- Fullscreen Time -->
+    <div id="fullscreenTime" class="fullscreen-time-overlay">
+        <div class="fullscreen-time-content">
+            <p id="fullscreenClock" class="fullscreen-clock"></p>
+        </div>
+    </div>
 
 </body>
 

@@ -1,0 +1,65 @@
+/* Fullscreen Time */
+/* Created on 2025-08-06, by yuhang */
+
+
+.clickable-time {
+    cursor: pointer;
+    text-decoration: underline;
+    position: relative;
+}
+
+.clickable-time:hover {
+    color: white;
+    background-color: black;
+}
+
+.fullscreen-time-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.fullscreen-time-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fullscreen-time-content {
+    text-align: center;
+    color: black;
+    user-select: none;
+}
+
+/* Clock Number */
+.fullscreen-clock {
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 2rem;
+}
+
+/* Dark mode */
+body.dark-mode .clickable-time:hover {
+    color: #000000;
+    background-color: #ffffff;
+}
+
+body.dark-mode .fullscreen-time-overlay {
+    background-color: #000000;
+}
+
+body.dark-mode .fullscreen-time-content {
+    color: #ffffff;
+}
+
+body.dark-mode .fullscreen-clock {
+    color: #ffffff;
+}
