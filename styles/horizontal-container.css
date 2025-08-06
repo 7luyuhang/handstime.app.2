@@ -1,0 +1,29 @@
+/* Horizontal Container Group Styles */
+.horizontal-mask {
+    width: 360px;
+    height: 360px;
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+}
+
+.horizontal-container-wrapper {
+    width: 360px;
+    height: 100%;
+    position: relative;
+    cursor: grabbing;
+}
+
+.horizontal-container-group {
+    display: flex;
+    gap: 0.25em; /* 每個 container 之間的距離 */
+    transition: transform 0.25s cubic-bezier(0.5, 0, 0, 1);
+    width: calc(360px * 3 + 0.25em * 2); /* 3 containers + 2 個間距 */
+    touch-action: pan-x;
+}
+
+.horizontal-container {
+    flex-shrink: 0;
+    width: 360px;
+    margin-right: 0;
+}
