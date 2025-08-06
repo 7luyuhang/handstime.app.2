@@ -10,7 +10,21 @@ class HorizontalSwiper {
         this.startX = 0;
         this.currentX = 0;
         this.startTransform = 0;
-        this.threshold = 50; // Minimum swipe distance to trigger navigation
+                this.threshold = 50; // Minimum swipe distance to trigger navigation
+        
+        // Setup page indicators
+        this.wrapper = document.querySelector('.horizontal-container-wrapper');
+        if (this.wrapper) {
+            this.pageIndicator = document.createElement('div');
+            this.pageIndicator.classList.add('page-indicator');
+            for (let i = 0; i < this.totalContainers; i++) {
+                const dot = document.createElement('span');
+                dot.classList.add('page-dot');
+                if (i === 0) dot.classList.add('active');
+                this.pageIndicator.appendChild(dot);
+            }
+            this.wrapper.appendChild(this.pageIndicator);
+        }
         
         this.init();
     }
@@ -122,6 +136,15 @@ class HorizontalSwiper {
         // 計算位置時需要考慮 gap 間距
         const translateX = -index * (this.containerWidth + this.gapSize);
         this.containerGroup.style.transform = `translateX(${translateX}px)`;
+        
+        this.updateIndicator();
+    }
+    
+    updateIndicator() {
+        if (!this.pageIndicator) return;
+        Array.from(this.pageIndicator.children).forEach((dot, i) => {
+            dot.classList.toggle('active', i === this.currentIndex);
+        });
     }
 }
 

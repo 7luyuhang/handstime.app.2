@@ -22,6 +22,7 @@ html {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+    scroll-behavior: smooth; /* 平滑滾動 */
 }
 
 html::-webkit-scrollbar {
