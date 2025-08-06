@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/tooltip.css">
     <link rel="stylesheet" href="styles/video.css">
+    <link rel="stylesheet" href="styles/qrcode.css">
     <script defer src="styles/main.js"></script>
     <script defer src="styles/theme.js"></script>
     <script defer src="styles/video.js"></script>
@@ -77,14 +78,21 @@
 
         <div class="container">
             <!-- Tooltip -->
-            <p>"Shape time with <a href="https://t.me/luyuhang_7" class="tooltip-link" data-tooltip="you design, we build. contact us." target="_blank">hands</a>."</p>
+            <p>"Shape time with your <a href="https://t.me/luyuhang_7" class="tooltip-link"
+                    data-tooltip="you design, we build. contact us." target="_blank">hands</a>."</p>
             <br>
             <p>Hands Time is building time widgets for iPhone.</p>
 
             <div class="horizontal-line">
-                <a href="https://apps.apple.com/us/app/hands-time-minimalist-widget/id6462440720"
-                    target="_blank">Download</a>
+                <a href="https://apps.apple.com/us/app/hands-time-minimalist-widget/id6462440720" target="_blank"
+                    class="download-link">Download</a>
+
+                <!-- QR Code -->
+                <div class="qr-code-popup">
+                    <img src="styles/image/qr_code.png" alt="QR Code" class="qr-code-image">
+                </div>
             </div>
+
         </div>
 
         <!-- Video -->
@@ -133,17 +141,17 @@
         <!-- Footer -->
         <div class="container">
             <div class="vertical-line">
-            <p class="footer">Crafted with humility toward time.</p>
-            <p id="localTime"></p>
-            <script>
-                function updateLocalTime() {
-                    const now = new Date();
-                    const timeString = now.toLocaleTimeString();
-                    document.getElementById('localTime').textContent = timeString;
-                }
-                updateLocalTime();
-                setInterval(updateLocalTime, 1000);
-            </script>
+                <p class="footer">Crafted with humility toward time.</p>
+                <p id="localTime"></p>
+                <script>
+                    function updateLocalTime() {
+                        const now = new Date();
+                        const timeString = now.toLocaleTimeString();
+                        document.getElementById('localTime').textContent = timeString;
+                    }
+                    updateLocalTime();
+                    setInterval(updateLocalTime, 1000);
+                </script>
             </div>
         </div>
 

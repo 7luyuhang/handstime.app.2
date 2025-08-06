@@ -1,0 +1,29 @@
+/* QR Code */
+.qr-code-popup {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(5px);
+    transition: opacity 0.25s cubic-bezier(0.5, 0, 0, 1), visibility 0.25s cubic-bezier(0.5, 0, 0, 1), filter 0.25s cubic-bezier(0.5, 0, 0, 1);
+}
+
+
+.qr-code-image {
+    width: 72px;
+    height: 72px;
+}
+
+.download-link:hover + .qr-code-popup {
+    opacity: 1;
+    visibility: visible;
+    filter: blur(0px);
+}
+
+/* Dark mode QR Code */
+body.dark-mode .qr-code-image {
+    filter: invert(1);
+}

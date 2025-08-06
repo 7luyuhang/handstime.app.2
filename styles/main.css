@@ -78,6 +78,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
 }
 
 .container-group {
@@ -136,6 +137,7 @@ body {
     gap: 1em;
     margin-top: 1em;
 }
+
 
 .vertical-line {
     display: flex;
