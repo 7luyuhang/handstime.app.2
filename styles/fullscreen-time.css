@@ -44,6 +44,35 @@
 .fullscreen-clock {
     font-family: 'ABCDiatypeSemi-Mono', monospace;
     font-size: 2rem;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.fullscreen-clock:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Countdown states */
+.fullscreen-clock.countdown-active {
+    color: #FF6B6B;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.fullscreen-clock.countdown-complete {
+    animation: pulse 0.5s ease-in-out 3;
+    color: #51CF66;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 /* Dark mode */
@@ -62,4 +91,16 @@ body.dark-mode .fullscreen-time-content {
 
 body.dark-mode .fullscreen-clock {
     color: #ffffff;
+}
+
+body.dark-mode .fullscreen-clock:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .fullscreen-clock.countdown-active {
+    color: #FF8787;
+}
+
+body.dark-mode .fullscreen-clock.countdown-complete {
+    color: #6BCF7F;
 }
