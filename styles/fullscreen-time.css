@@ -45,35 +45,30 @@
     font-family: 'ABCDiatypeSemi-Mono', monospace;
     font-size: 2rem;
     cursor: pointer;
-    padding: 1rem 2rem;
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
+    width: 360px;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: relative;
 }
 
 .fullscreen-clock:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    outline: 1px solid black;
 }
 
 /* Countdown states */
 .fullscreen-clock.countdown-active {
-    color: #FF6B6B;
-    font-size: 3rem;
-    font-weight: bold;
+    color: black;
+    font-size: 2rem;
+    outline: 1px solid black;
 }
 
 .fullscreen-clock.countdown-complete {
-    animation: pulse 0.5s ease-in-out 3;
-    color: #51CF66;
+    color: black;
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-}
 
 /* Dark mode */
 body.dark-mode .clickable-time:hover {
@@ -94,13 +89,43 @@ body.dark-mode .fullscreen-clock {
 }
 
 body.dark-mode .fullscreen-clock:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    outline: 1px solid white;
 }
 
 body.dark-mode .fullscreen-clock.countdown-active {
-    color: #FF8787;
+    color: white;
+    outline: 1px solid white;
 }
 
 body.dark-mode .fullscreen-clock.countdown-complete {
-    color: #6BCF7F;
+    color: white;
+}
+
+/* Countdown hint text */
+.countdown-hint {
+    position: fixed;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.95);
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 0.875em;
+    color: #808080;
+    opacity: 0;
+    visibility: hidden;
+    filter: blur(2.5px);
+    transition: opacity 0.5s cubic-bezier(0.5, 0, 0, 1), visibility 0.5s cubic-bezier(0.5, 0, 0, 1), filter 0.5s cubic-bezier(0.5, 0, 0, 1), transform 0.5s cubic-bezier(0.5, 0, 0, 1);
+    pointer-events: none;
+    text-align: center;
+}
+
+.countdown-hint.active {
+    opacity: 1;
+    visibility: visible;
+    filter: blur(0px);
+    transform: translateX(-50%) scale(1);
+    mix-blend-mode: difference;
+}
+
+body.dark-mode .countdown-hint {
+    color: #808080;
 }

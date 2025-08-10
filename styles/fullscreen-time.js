@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const localTimeElement = document.getElementById('localTime');
     const fullscreenOverlay = document.getElementById('fullscreenTime');
     const fullscreenClock = document.getElementById('fullscreenClock');
+    const countdownHint = document.getElementById('countdownHint');
     
     // Countdown state management
     let countdownInterval = null;
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Format time for countdown display (MM:SS)
     function formatCountdownTime(milliseconds) {
-        const totalSeconds = Math.ceil(milliseconds / 1000);
+        const totalSeconds = Math.floor(milliseconds / 1000);
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
         return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
@@ -24,8 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update fullscreen time to match local time
     function updateFullscreenTime() {
         if (!isCountdownActive) {
-            // Get the current time from the local time element to ensure sync
-            const currentTime = localTimeElement.textContent || new Date().toLocaleTimeString();
+            // Generate fresh time to avoid conflicts
+            const now = new Date();
+            const currentTime = now.toLocaleTimeString();
             fullscreenClock.textContent = currentTime;
         }
     }
@@ -42,11 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add visual feedback
         fullscreenClock.classList.add('countdown-active');
         
+        // Show countdown hint
+        countdownHint.classList.add('active');
+        
         // Update immediately
         updateCountdown();
         
         // Update every second
-        countdownInterval = setInterval(updateCountdown, 100); // Update every 100ms for smoother display
+        countdownInterval = setInterval(updateCountdown, 1000); // Update every second
     }
     
     // Update countdown display
@@ -82,6 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownEndTime = null;
         isCountdownActive = false;
         fullscreenClock.classList.remove('countdown-active');
+        
+        // Hide countdown hint
+        countdownHint.classList.remove('active');
     }
     
     // Enter fullscreen mode

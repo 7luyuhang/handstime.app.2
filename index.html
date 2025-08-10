@@ -160,7 +160,6 @@
                     <script>document.write(new Date().getFullYear())</script>
                     Negative Time Limited. All rights reserved.
                 </p>
-
                 <a href="https://www.handstime.app/terms">Terms of Use</a>
                 <a href="https://www.handstime.app/privacy">Privacy Policy</a>
             </div>
@@ -173,19 +172,12 @@
                 <p class="footer">Crafted with humility toward time.</p>
 
                 <!-- Time -->
-                <p id="localTime" class="clickable-time tooltip-link" data-tooltip="Be present"></p>
+                <p id="localTime" class="clickable-time tooltip-link" data-tooltip="Focus on present"></p>
                 <script>
                     function updateLocalTime() {
                         const now = new Date();
                         const timeString = now.toLocaleTimeString();
                         document.getElementById('localTime').textContent = timeString;
-
-                        // Also update fullscreen time if it's active
-                        const fullscreenClock = document.getElementById('fullscreenClock');
-                        const fullscreenOverlay = document.getElementById('fullscreenTime');
-                        if (fullscreenClock && fullscreenOverlay && fullscreenOverlay.classList.contains('active')) {
-                            fullscreenClock.textContent = timeString;
-                        }
                     }
                     updateLocalTime();
                     setInterval(updateLocalTime, 1000);
@@ -198,7 +190,7 @@
             <div class="circle"></div>
             <img class="circle-backgroundimage" src="styles/image/pioneer_plaque.png">
         </div>
-
+        
         <!-- Container Group end -->
     </div>
 
@@ -206,6 +198,9 @@
     <div id="fullscreenTime" class="fullscreen-time-overlay">
         <div class="fullscreen-time-content">
             <p id="fullscreenClock" class="fullscreen-clock"></p>
+        </div>
+        <div id="countdownHint" class="countdown-hint">
+            Focus on present. Click circle to cancel.
         </div>
     </div>
 
