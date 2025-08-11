@@ -41,14 +41,22 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownEndTime = Date.now() + COUNTDOWN_DURATION;
         isCountdownActive = true;
         
-        // Add visual feedback
-        fullscreenClock.classList.add('countdown-active');
+        // Add scale effect during transition
+        fullscreenClock.style.transform = 'scale(0.95)';
         
-        // Show countdown hint
-        countdownHint.classList.add('active');
-        
-        // Update immediately
-        updateCountdown();
+        setTimeout(() => {
+            // Add visual feedback
+            fullscreenClock.classList.add('countdown-active');
+            
+            // Show countdown hint
+            countdownHint.classList.add('active');
+            
+            // Update immediately
+            updateCountdown();
+            
+            // Remove scale after transition
+            fullscreenClock.style.transform = '';
+        }, 125); // Half of the transition duration
         
         // Update every second
         countdownInterval = setInterval(updateCountdown, 1000); // Update every second
@@ -86,10 +94,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         countdownEndTime = null;
         isCountdownActive = false;
-        fullscreenClock.classList.remove('countdown-active');
         
-        // Hide countdown hint
-        countdownHint.classList.remove('active');
+        // Add scale effect during transition
+        fullscreenClock.style.transform = 'scale(0.95)';
+        
+        setTimeout(() => {
+            fullscreenClock.classList.remove('countdown-active');
+            
+            // Hide countdown hint
+            countdownHint.classList.remove('active');
+            
+            // Remove scale after transition
+            fullscreenClock.style.transform = '';
+        }, 125); // Half of the transition duration
     }
     
     // Enter fullscreen mode
@@ -128,7 +145,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isCountdownActive) {
             // Stop countdown and return to current time
             stopCountdown();
-            updateFullscreenTime();
+            setTimeout(() => {
+                updateFullscreenTime();
+            }, 125); // Wait for scale transition
         } else {
             // Start 25-minute countdown
             startCountdown();
@@ -140,7 +159,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isCountdownActive) {
             // First click stops countdown
             stopCountdown();
-            updateFullscreenTime();
+            setTimeout(() => {
+                updateFullscreenTime();
+            }, 125); // Wait for scale transition
         } else {
             // Second click (or click when no countdown) exits fullscreen
             exitFullscreenTime();
