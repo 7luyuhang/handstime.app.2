@@ -154,18 +154,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Click anywhere on fullscreen overlay to exit (or stop countdown if active)
+    // Click anywhere on fullscreen overlay to exit (only when no countdown is active)
     fullscreenOverlay.addEventListener('click', function() {
-        if (isCountdownActive) {
-            // First click stops countdown
-            stopCountdown();
-            setTimeout(() => {
-                updateFullscreenTime();
-            }, 125); // Wait for scale transition
-        } else {
-            // Second click (or click when no countdown) exits fullscreen
+        if (!isCountdownActive) {
+            // Only exit fullscreen when no countdown is active
             exitFullscreenTime();
         }
+        // If countdown is active, do nothing (only clicking the clock can cancel it)
     });
     
     // Press Escape key to exit fullscreen
