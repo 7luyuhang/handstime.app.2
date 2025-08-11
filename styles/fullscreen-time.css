@@ -63,7 +63,7 @@
 /* Countdown states */
 .fullscreen-clock.countdown-active {
     color: black;
-    font-size: 2rem;
+    font-size: 2rem; /* font size */
     outline: 1px solid black;
 }
 

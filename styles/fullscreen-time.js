@@ -74,12 +74,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Countdown finished
             fullscreenClock.textContent = '00:00';
             stopCountdown();
-            // Optional: Add some visual/audio feedback for completion
+            // Add visual feedback for completion
             fullscreenClock.classList.add('countdown-complete');
-            setTimeout(() => {
-                fullscreenClock.classList.remove('countdown-complete');
-                updateFullscreenTime(); // Return to showing current time
-            }, 2000);
+            // Keep showing 00:00 until user clicks to reset
         } else {
             // Update display with remaining time
             fullscreenClock.textContent = formatCountdownTime(remainingTime);
@@ -148,6 +145,10 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 updateFullscreenTime();
             }, 125); // Wait for scale transition
+        } else if (fullscreenClock.classList.contains('countdown-complete')) {
+            // Reset from completed state to current time
+            fullscreenClock.classList.remove('countdown-complete');
+            updateFullscreenTime();
         } else {
             // Start 25-minute countdown
             startCountdown();
