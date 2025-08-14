@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let countdownInterval = null;
     let countdownEndTime = null;
     let isCountdownActive = false;
+    let isCountdownComplete = false;
     
     // Constants
     const COUNTDOWN_MINUTES = 25;
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set the end time
         countdownEndTime = Date.now() + COUNTDOWN_DURATION;
         isCountdownActive = true;
+        isCountdownComplete = false;
         
         // Add scale effect during transition
         fullscreenClock.style.transform = 'scale(0.95)';
@@ -73,9 +75,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (remainingTime <= 0) {
             // Countdown finished
             fullscreenClock.textContent = '00:00';
-            stopCountdown();
+            
+            // Clear the interval but keep the state
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+            
+            // Mark as complete but don't reset other states
+            isCountdownActive = false;
+            isCountdownComplete = true;
+            
             // Add visual feedback for completion
             fullscreenClock.classList.add('countdown-complete');
+            // Keep hint visible to guide user
             // Keep showing 00:00 until user clicks to reset
         } else {
             // Update display with remaining time
@@ -91,12 +104,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         countdownEndTime = null;
         isCountdownActive = false;
+        isCountdownComplete = false;
         
         // Add scale effect during transition
         fullscreenClock.style.transform = 'scale(0.95)';
         
         setTimeout(() => {
             fullscreenClock.classList.remove('countdown-active');
+            fullscreenClock.classList.remove('countdown-complete');
             
             // Hide countdown hint
             countdownHint.classList.remove('active');
@@ -120,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fullscreenOverlay.classList.remove('active');
         
         // Stop countdown when exiting fullscreen
-        if (isCountdownActive) {
+        if (isCountdownActive || isCountdownComplete) {
             stopCountdown();
         }
         
@@ -145,10 +160,12 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 updateFullscreenTime();
             }, 125); // Wait for scale transition
-        } else if (fullscreenClock.classList.contains('countdown-complete')) {
+        } else if (isCountdownComplete) {
             // Reset from completed state to current time
-            fullscreenClock.classList.remove('countdown-complete');
-            updateFullscreenTime();
+            stopCountdown();
+            setTimeout(() => {
+                updateFullscreenTime();
+            }, 125);
         } else {
             // Start 25-minute countdown
             startCountdown();
@@ -157,11 +174,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Click anywhere on fullscreen overlay to exit (only when no countdown is active)
     fullscreenOverlay.addEventListener('click', function() {
-        if (!isCountdownActive) {
-            // Only exit fullscreen when no countdown is active
+        if (!isCountdownActive && !isCountdownComplete) {
+            // Only exit fullscreen when no countdown is active or complete
             exitFullscreenTime();
         }
-        // If countdown is active, do nothing (only clicking the clock can cancel it)
+        // If countdown is active or complete, do nothing (only clicking the clock can reset it)
     });
     
     // Press Escape key to exit fullscreen
@@ -176,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update fullscreen time when in normal time mode
     setInterval(() => {
-        if (fullscreenOverlay.classList.contains('active') && !isCountdownActive) {
+        if (fullscreenOverlay.classList.contains('active') && !isCountdownActive && !isCountdownComplete) {
             updateFullscreenTime();
         }
     }, 1000);
