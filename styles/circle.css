@@ -1,0 +1,70 @@
+/* Circle Styles */
+
+/* Container for Circle */
+.container-circle {
+    width: 360px;
+    height: 360px;
+    background-color: #f7f7f7;
+    border-radius: 28px;
+    padding: 0.5em;
+    position: relative;
+}
+
+/* Main Circle Element */
+.circle {
+    width: calc(100% - 1em);
+    height: calc(100% - 1em);
+    background-color: white;
+    border-radius: 100%;
+    position: absolute;
+    cursor: grab;
+    touch-action: none; /* Prevent default touch behaviors for smooth dragging */
+    inset: 0;
+    margin: auto;
+    z-index: 1;
+    
+    /* Performance optimizations */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    
+    
+}
+
+.circle.dragging {
+    cursor: grabbing;
+}
+
+.circle.outside {
+    background-color: black;
+}
+
+/* Circle Background Image */
+.circle-backgroundimage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 5em);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Dark Mode Styles */
+body.dark-mode .container-circle {
+    background-color: #1c1c1c;
+}
+
+body.dark-mode .circle {
+    background-color: #000000;
+}
+
+body.dark-mode .circle.outside {
+    background-color: #ffffff;
+}
+
+body.dark-mode .circle-backgroundimage {
+    filter: invert(1);
+}

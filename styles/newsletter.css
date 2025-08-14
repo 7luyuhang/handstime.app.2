@@ -1,0 +1,50 @@
+/* Newsletter Styles */
+
+/* Newsletter Form Container */
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+}
+
+/* Email Input Field */
+input[type="email"] {
+    width: 100%;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    border: 1px solid transparent;
+    border-radius: 48px;
+    background-color: white;
+    height: 48px;
+    padding-inline: 1em;
+    outline: none;
+}
+
+/* Message Display */
+.message {
+    font-size: 1em;
+    color: #808080;
+    display: none;
+}
+
+.message.success {
+    color: #808080;
+    display: block;
+}
+
+.message.error {
+    color: #808080;
+    display: block;
+}
+
+/* Dark Mode Styles */
+body.dark-mode input[type="email"] {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #1c1c1c;
+}
+
+body.dark-mode input[type="email"]::placeholder {
+    color: #808080;
+}
