@@ -1,0 +1,188 @@
+/* World Clock Styles */
+
+.world-clock-container {
+    padding: 24px;
+}
+
+.world-clock-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+}
+
+.world-clock-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 0;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+}
+
+/* Only apply to default view, not edit mode */
+#worldClockDefault .world-clock-item:first-child {
+    padding-top: 0;
+}
+
+/* Selectable items in edit mode */
+.world-clock-selectable {
+    cursor: pointer;
+    margin: 0 -24px;
+    padding: 0.5em 24px;
+    user-select: none;
+}
+
+.world-clock-selectable:first-child {
+    padding-top: 0;
+}
+
+.world-clock-selectable.disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.world-clock-left { /* Selection & Time */
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+/* Custom checkbox styling */
+.world-clock-checkbox {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    pointer-events: auto;
+}
+
+.world-clock-checkbox:checked {
+    background-color: black;
+    border-color: black;
+}
+
+.world-clock-checkbox:disabled {
+    opacity: 0.5;
+    border-color: black;
+}
+
+/* Edit Controls */
+.world-clock-controls {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-top: 24px;
+}
+
+/* Selection info */
+.world-clock-selection-info {
+    color: #808080;
+    font-size: 1em;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+}
+
+.world-clock-time {
+    font-size: 1em;
+    color: black;
+    font-variant-numeric: tabular-nums;
+}
+
+.world-clock-city {
+    font-size: 1em;
+    color: #808080;
+}
+
+.world-clock-divider {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+/* Edit Button */
+.world-clock-edit-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+}
+
+.world-clock-edit-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+/* Full List View */
+.world-clock-full-list {
+    max-height: 312px;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.world-clock-full-list.scrolled {
+    border-top-color: rgba(128, 128, 128, 0.1);
+}
+
+.world-clock-full-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Dark Mode */
+body.dark-mode .world-clock-time {
+    color: white;
+}
+
+body.dark-mode .world-clock-city {
+    color: #808080;
+}
+
+body.dark-mode .world-clock-divider {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+body.dark-mode .world-clock-edit-btn {
+    color: white;
+}
+
+body.dark-mode .world-clock-edit-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+body.dark-mode .world-clock-checkbox {
+    border-color: white;
+}
+
+body.dark-mode .world-clock-checkbox:checked {
+    background-color: white;
+    border-color: white;
+}
+
+body.dark-mode .world-clock-checkbox:disabled {
+    border-color: white;
+}
+
+body.dark-mode .world-clock-selection-info {
+    color: #808080;
+}
+
+body.dark-mode .world-clock-full-list {
+    border-bottom-color: rgba(128, 128, 128, 0.1);
+}
+
+body.dark-mode .world-clock-full-list.scrolled {
+    border-top-color: rgba(128, 128, 128, 0.1);
+}

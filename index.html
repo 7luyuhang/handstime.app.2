@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="styles/fullscreen-time.css">
     <link rel="stylesheet" href="styles/horizontal-container.css">
     <link rel="stylesheet" href="styles/two-hands.css">
+    <link rel="stylesheet" href="styles/world-clock.css">
 
     <!-- JS -->
     <script defer src="styles/smooth-drag.js"></script>
@@ -38,6 +39,7 @@
     <script defer src="styles/video.js"></script>
     <script defer src="styles/fullscreen-time.js"></script>
     <script defer src="styles/horizontal-swiper.js"></script>
+    <script defer src="styles/world-clock.js"></script>
 
     <!-- Meta -->
     <meta property="og:title" content="Hands Time">
@@ -119,22 +121,26 @@
                 <div class="horizontal-container-group">
                     <!-- Intro 1 -->
                     <div class="container horizontal-container">
-                        <p>Made for Minimalist. <span style="color: #808080">7 Themes, 10+ Styles available and more coming soon.</span>
+                        <p>Made for Minimalist. <span style="color: #808080">7 Themes, 10+ Styles available and more
+                                coming soon.</span>
                         </p>
                     </div>
 
                     <!-- Intro 2 -->
                     <div class="container horizontal-container">
-                        <p>Heartbeats of Time. <span style="color: #808080">Animated clock hands move seamlessly and fluidly.</span></p>
+                        <p>Heartbeats of Time. <span style="color: #808080">Animated clock hands move seamlessly and
+                                fluidly.</span></p>
                     </div>
 
                     <!-- Intro 3 -->
                     <div class="container horizontal-container">
-                        <p>Time Flies, Memories Stay. <span style="color: #808080">Personalise backgrounds with your favourite images and colours.</span></p>
+                        <p>Time Flies, Memories Stay. <span style="color: #808080">Personalise backgrounds with your
+                                favourite images and colours.</span></p>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Media -->
         <div class="container">
@@ -170,13 +176,15 @@
 
         </div>
 
+
+
         <!-- Footer -->
         <div class="container">
             <div class="vertical-line">
                 <p class="footer">Crafted with humility toward time.</p>
 
                 <!-- Time -->
-                <p id="localTime" class="clickable-time tooltip-link" data-tooltip="Focus on present"></p>
+                <p id="localTime" class="clickable-time tooltip-link" data-tooltip="Focus on present, 25 mins."></p>
                 <script>
                     function updateLocalTime() {
                         const now = new Date();
@@ -192,12 +200,37 @@
             <img src="styles/image/2_hands.png" alt="Two Hands" class="two-hands-image">
         </div>
 
-        <!-- Circle -->
+
+        <!-- World Clock -->
+        <div class="container world-clock-container">
+            <!-- Default View (will be populated dynamically) -->
+            <div class="world-clock-list" id="worldClockDefault">
+                <!-- Default cities will be populated here by JavaScript -->
+            </div>
+            
+            <!-- Full List View (Hidden by default) -->
+            <div class="world-clock-list world-clock-full-list" id="worldClockFull" style="display: none;">
+                <!-- Cities will be populated here by JavaScript -->
+            </div>
+            
+            <!-- Edit Controls -->
+            <div class="world-clock-controls">
+                <button class="world-clock-edit-btn" id="worldClockEditBtn">Edit</button>
+                <!-- Selection info (hidden by default) -->
+                <div class="world-clock-selection-info" id="worldClockSelectionInfo" style="display: none;">
+                    <span id="selectionCount">0</span> of 5 cities selected
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Circle Container -->
         <div class="container-circle">
             <div class="circle"></div>
             <img class="circle-backgroundimage" src="styles/image/pioneer_plaque.png">
         </div>
-        
+
+
         <!-- Container Group end -->
     </div>
 
@@ -205,7 +238,7 @@
     <div id="fullscreenTime" class="fullscreen-time-overlay">
         <!-- Cancel Button -->
         <button id="fullscreenCancelBtn" class="fullscreen-cancel-btn">Cancel</button>
-        
+
         <div class="fullscreen-time-content">
             <p id="fullscreenClock" class="fullscreen-clock"></p>
         </div>

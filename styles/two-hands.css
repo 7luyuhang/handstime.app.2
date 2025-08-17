@@ -15,7 +15,7 @@
 
 
 .two-hands-image {
-    height: 40px;
+    height: 48px;
 }
 
 .container:has(.clickable-time:hover) .two-hands-image {
