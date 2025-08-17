@@ -114,15 +114,23 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderDefaultView() {
         defaultList.innerHTML = '';
         
-        selectedCities.forEach((timezone, index) => {
-            const city = allCities.find(c => c.timezone === timezone);
-            if (city) {
-                if (index > 0) {
-                    defaultList.appendChild(createDivider());
+        // If no cities selected, show prompt message
+        if (selectedCities.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.className = 'world-clock-empty-message';
+            emptyMessage.textContent = 'Select time around the world.';
+            defaultList.appendChild(emptyMessage);
+        } else {
+            selectedCities.forEach((timezone, index) => {
+                const city = allCities.find(c => c.timezone === timezone);
+                if (city) {
+                    if (index > 0) {
+                        defaultList.appendChild(createDivider());
+                    }
+                    defaultList.appendChild(createClockItem(city.timezone, city.name));
                 }
-                defaultList.appendChild(createClockItem(city.timezone, city.name));
-            }
-        });
+            });
+        }
     }
     
     // Render full list view
