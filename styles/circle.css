@@ -18,19 +18,15 @@
     border-radius: 100%;
     position: absolute;
     cursor: grab;
-    touch-action: none; /* Prevent default touch behaviors for smooth dragging */
+    touch-action: auto;
+    transition: transform 0.4s cubic-bezier(0.6, 0, 0, 1);
     inset: 0;
     margin: auto;
     z-index: 1;
-    
-    /* Performance optimizations */
-    will-change: transform;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
 }
 
 .circle.dragging {
+    transition: none;
     cursor: grabbing;
 }
 

@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fullscreenOverlay = document.getElementById('fullscreenTime');
     const fullscreenClock = document.getElementById('fullscreenClock');
     const countdownHint = document.getElementById('countdownHint');
+    const cancelButton = document.getElementById('fullscreenCancelBtn');
     
     // Countdown state management
     let countdownInterval = null;
@@ -179,6 +180,12 @@ document.addEventListener('DOMContentLoaded', function() {
             exitFullscreenTime();
         }
         // If countdown is active or complete, do nothing (only clicking the clock can reset it)
+    });
+    
+    // Click cancel button to exit fullscreen
+    cancelButton.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event bubbling
+        exitFullscreenTime();
     });
     
     // Press Escape key to exit fullscreen

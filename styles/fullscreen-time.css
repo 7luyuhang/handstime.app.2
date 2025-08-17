@@ -8,6 +8,28 @@
     position: relative;
 }
 
+/* Cancel Button */
+.fullscreen-cancel-btn {
+    position: fixed;
+    top: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+    z-index: 1001;
+}
+
+.fullscreen-cancel-btn:hover {
+    color: white;
+    background-color: black;
+}
+
 .clickable-time:hover {
     color: white;
     background-color: black;
@@ -78,6 +100,16 @@ body.dark-mode .clickable-time:hover {
     background-color: #ffffff;
 }
 
+body.dark-mode .fullscreen-cancel-btn {
+    color: white;
+    text-decoration: underline;
+}
+
+body.dark-mode .fullscreen-cancel-btn:hover {
+    color: black;
+    background-color: white;
+}
+
 body.dark-mode .fullscreen-time-overlay {
     background-color: #000000;
 }
@@ -106,7 +138,7 @@ body.dark-mode .fullscreen-clock.countdown-complete {
 /* Countdown hint text */
 .countdown-hint {
     position: fixed;
-    bottom: 48px;
+    bottom: 2em;
     left: 50%;
     transform: translateX(-50%) scale(0.95);
     font-family: 'ABCDiatypeSemi-Mono', monospace;
