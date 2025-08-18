@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { timezone: 'Asia/Kolkata', name: 'Mumbai' },
         { timezone: 'America/New_York', name: 'New York' },
         { timezone: 'Europe/Paris', name: 'Paris' },
-        { timezone: 'America/Los_Angeles', name: 'San Francisco' },
+        { timezone: 'America/Los_Angeles', name: 'Los Angeles' },
         { timezone: 'America/Sao_Paulo', name: 'São Paulo' },
         { timezone: 'Asia/Seoul', name: 'Seoul' },
         { timezone: 'Asia/Shanghai', name: 'Shanghai' },
@@ -234,6 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
             renderFullList();
             defaultList.style.display = 'none';
             fullList.style.display = 'flex';
+            fullList.scrollTop = 0; // Reset scroll position to top
+            fullList.classList.remove('scrolled'); // Reset scrolled state
             if (selectionInfo) {
                 selectionInfo.style.display = 'block';
             }
