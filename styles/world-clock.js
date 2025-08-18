@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fullList = document.getElementById('worldClockFull');
     const selectionCount = document.getElementById('selectionCount');
     const selectionInfo = document.getElementById('worldClockSelectionInfo');
+    const controlsContainer = document.querySelector('.world-clock-controls');
     
     let isEditMode = false;
     let selectedCities = [];
@@ -237,6 +238,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectionInfo.style.display = 'block';
             }
             editBtn.textContent = 'Done';
+            editBtn.classList.remove('world-clock-edit-btn');
+            editBtn.classList.add('world-clock-done-btn');
+            if (controlsContainer) {
+                controlsContainer.classList.remove('edit-mode');
+                controlsContainer.classList.add('done-mode');
+            }
         } else {
             // Exiting edit mode - save selections
             saveSelectedCities();
@@ -251,6 +258,12 @@ document.addEventListener('DOMContentLoaded', function() {
             fullList.scrollTop = 0;
             fullList.classList.remove('scrolled');
             editBtn.textContent = 'Edit';
+            editBtn.classList.remove('world-clock-done-btn');
+            editBtn.classList.add('world-clock-edit-btn');
+            if (controlsContainer) {
+                controlsContainer.classList.remove('done-mode');
+                controlsContainer.classList.add('edit-mode');
+            }
         }
     }
     
@@ -258,6 +271,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
         loadSelectedCities();
         renderDefaultView();
+        
+        // Set initial mode class
+        if (controlsContainer) {
+            controlsContainer.classList.add('edit-mode');
+        }
         
         // Add event listener to edit button
         if (editBtn) {

@@ -173,14 +173,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Click anywhere on fullscreen overlay to exit (only when no countdown is active)
-    fullscreenOverlay.addEventListener('click', function() {
-        if (!isCountdownActive && !isCountdownComplete) {
-            // Only exit fullscreen when no countdown is active or complete
-            exitFullscreenTime();
-        }
-        // If countdown is active or complete, do nothing (only clicking the clock can reset it)
-    });
+    // Remove click to exit functionality - only use Cancel button
+    // fullscreenOverlay.addEventListener('click', function() {
+    //     if (!isCountdownActive && !isCountdownComplete) {
+    //         // Only exit fullscreen when no countdown is active or complete
+    //         exitFullscreenTime();
+    //     }
+    //     // If countdown is active or complete, do nothing (only clicking the clock can reset it)
+    // });
     
     // Click cancel button to exit fullscreen
     cancelButton.addEventListener('click', function(e) {

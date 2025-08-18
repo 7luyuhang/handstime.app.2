@@ -78,6 +78,13 @@
     display: flex;
     align-items: center;
     gap: 1em;
+}
+
+.world-clock-controls.edit-mode { /* Edit */
+    margin-top: 0.75em;
+}
+
+.world-clock-controls.done-mode { /* Done */
     margin-top: 24px;
 }
 
@@ -130,6 +137,23 @@
     background-color: black;
 }
 
+/* Done Button */
+.world-clock-done-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+}
+
+.world-clock-done-btn:hover {
+    color: white;
+    background-color: black;
+}
+
 /* Full List View */
 .world-clock-full-list {
     max-height: 312px;
@@ -166,6 +190,15 @@ body.dark-mode .world-clock-edit-btn {
 }
 
 body.dark-mode .world-clock-edit-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+body.dark-mode .world-clock-done-btn {
+    color: white;
+}
+
+body.dark-mode .world-clock-done-btn:hover {
     color: black;
     background-color: white;
 }
