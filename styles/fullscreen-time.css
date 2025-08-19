@@ -29,6 +29,27 @@
     background-color: black;
 }
 
+/* Full Screen Button */
+.fullscreen-mode-btn {
+    position: fixed;
+    top: 2em;
+    right: 2em;
+    background: transparent;
+    border: none;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+    z-index: 1001;
+    text-align: right;
+}
+
+.fullscreen-mode-btn:hover {
+    color: white;
+    background-color: black;
+}
+
 .clickable-time:hover {
     color: white;
     background-color: black;
@@ -105,6 +126,16 @@ body.dark-mode .fullscreen-cancel-btn {
 }
 
 body.dark-mode .fullscreen-cancel-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+body.dark-mode .fullscreen-mode-btn {
+    color: white;
+    text-decoration: underline;
+}
+
+body.dark-mode .fullscreen-mode-btn:hover {
     color: black;
     background-color: white;
 }

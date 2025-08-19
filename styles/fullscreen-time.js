@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fullscreenClock = document.getElementById('fullscreenClock');
     const countdownHint = document.getElementById('countdownHint');
     const cancelButton = document.getElementById('fullscreenCancelBtn');
+    const fullscreenModeButton = document.getElementById('fullscreenModeBtn');
     
     // Countdown state management
     let countdownInterval = null;
@@ -186,6 +187,35 @@ document.addEventListener('DOMContentLoaded', function() {
     cancelButton.addEventListener('click', function(e) {
         e.stopPropagation(); // Prevent event bubbling
         exitFullscreenTime();
+    });
+    
+    // Click Full Screen button to enter browser fullscreen mode
+    fullscreenModeButton.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event bubbling
+        
+        // Toggle fullscreen mode
+        if (!document.fullscreenElement) {
+            // Enter fullscreen
+            document.documentElement.requestFullscreen().catch(err => {
+                console.log(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        } else {
+            // Exit fullscreen
+            document.exitFullscreen().catch(err => {
+                console.log(`Error attempting to exit fullscreen: ${err.message}`);
+            });
+        }
+    });
+    
+    // Update button text based on fullscreen state
+    document.addEventListener('fullscreenchange', function() {
+        if (fullscreenModeButton) {
+            if (document.fullscreenElement) {
+                fullscreenModeButton.textContent = 'Collapse';
+            } else {
+                fullscreenModeButton.textContent = 'Expand';
+            }
+        }
     });
     
     // Press Escape key to exit fullscreen
