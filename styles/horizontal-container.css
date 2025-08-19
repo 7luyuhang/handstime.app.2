@@ -19,7 +19,7 @@
     gap: 0.25em;
     transition: transform 0.25s cubic-bezier(0.5, 0, 0, 1);
     width: calc(360px * 3 + 0.25em * 2);
-    touch-action: pan-x;
+    touch-action: auto; /* Allow both vertical and horizontal touch gestures */
 }
 
 .horizontal-container {

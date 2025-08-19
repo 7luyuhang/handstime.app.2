@@ -71,8 +71,39 @@ function initVideoScrubbing() {
     });
 }
 
+// Ensure video plays on mobile devices
+function ensureVideoPlayback() {
+    const videos = document.querySelectorAll('.container.video-container video');
+    videos.forEach(video => {
+        // Try to play the video
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // Auto-play was prevented, try again on user interaction
+                console.log('Autoplay prevented, will retry on user interaction');
+                
+                // Add a one-time event listener for user interaction
+                const startPlayback = () => {
+                    video.play().catch(e => console.log('Video play failed:', e));
+                    // Remove listeners after first interaction
+                    document.removeEventListener('touchstart', startPlayback);
+                    document.removeEventListener('click', startPlayback);
+                };
+                
+                // Listen for first user interaction
+                document.addEventListener('touchstart', startPlayback, { once: true });
+                document.addEventListener('click', startPlayback, { once: true });
+            });
+        }
+    });
+}
+
 // Initialize video scrubbing when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Small delay to ensure video elements are ready
-    setTimeout(initVideoScrubbing, 200);
+    setTimeout(() => {
+        initVideoScrubbing();
+        ensureVideoPlayback();
+    }, 200);
 });

@@ -60,10 +60,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create clock item HTML
     function createClockItem(timezone, name, includeCheckbox = false) {
         const item = document.createElement('div');
-        item.className = 'world-clock-item';
         if (includeCheckbox) {
-            item.classList.add('world-clock-selectable');
+            item.className = 'world-clock-selectable';
             item.setAttribute('data-timezone', timezone);
+        } else {
+            item.className = 'world-clock-item';
         }
         
         const leftContent = document.createElement('div');

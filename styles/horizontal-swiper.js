@@ -48,16 +48,33 @@ class HorizontalSwiper {
     
     handleTouchStart(e) {
         this.startDrag(e.touches[0].clientX);
+        this.startY = e.touches[0].clientY;
+        this.isHorizontalSwipe = null; // Reset swipe direction detection
     }
     
     handleTouchMove(e) {
         if (!this.isDragging) return;
-        e.preventDefault();
-        this.updateDrag(e.touches[0].clientX);
+        
+        // Detect swipe direction on first move
+        if (this.isHorizontalSwipe === null) {
+            const deltaX = Math.abs(e.touches[0].clientX - this.startX);
+            const deltaY = Math.abs(e.touches[0].clientY - this.startY);
+            
+            // Determine if this is a horizontal or vertical swipe
+            // Threshold: if horizontal movement is greater, it's a horizontal swipe
+            this.isHorizontalSwipe = deltaX > deltaY * 0.5; // More lenient for vertical scrolling
+        }
+        
+        // Only prevent default and handle swipe if it's horizontal
+        if (this.isHorizontalSwipe) {
+            e.preventDefault();
+            this.updateDrag(e.touches[0].clientX);
+        }
     }
     
     handleTouchEnd(e) {
         this.endDrag();
+        this.isHorizontalSwipe = null; // Reset for next interaction
     }
     
     handleMouseStart(e) {

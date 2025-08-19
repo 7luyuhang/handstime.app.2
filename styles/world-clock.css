@@ -28,9 +28,13 @@
 
 /* Selectable items in edit mode */
 .world-clock-selectable {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 0;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
     cursor: pointer;
     margin: 0;
-    padding: 0.5em 0;
     user-select: none;
 }
 
@@ -40,10 +44,10 @@
 
 .world-clock-selectable.disabled {
     opacity: 0.5;
-    cursor: default;
+    cursor: not-allowed;
 }
 
-.world-clock-left { /* Selection & Time */
+.world-clock-left { /* Checkbox & Time */
     display: flex;
     align-items: center;
     gap: 1.5em;
@@ -63,11 +67,13 @@
     cursor: pointer;
     outline: none;
     pointer-events: auto;
+    opacity: 0.5; /* 50% opacity when not checked */
 }
 
 .world-clock-checkbox:checked {
     background-color: black;
     border-color: black;
+    opacity: 1; /* Full opacity when checked */
 }
 
 .world-clock-checkbox:disabled {
@@ -213,11 +219,13 @@ body.dark-mode .world-clock-done-btn:hover {
 
 body.dark-mode .world-clock-checkbox {
     border-color: white;
+    opacity: 0.5; /* 50% opacity when not checked */
 }
 
 body.dark-mode .world-clock-checkbox:checked {
     background-color: white;
     border-color: white;
+    opacity: 1; /* Full opacity when checked */
 }
 
 body.dark-mode .world-clock-checkbox:disabled {

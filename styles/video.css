@@ -16,6 +16,8 @@
     -ms-user-select: none;
     user-select: none;
     transition: filter 0.3s ease;
+    -webkit-playsinline: true; /* iOS Safari specific */
+    pointer-events: auto;
 }
 
 .container.video-container video:hover {
