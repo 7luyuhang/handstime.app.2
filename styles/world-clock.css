@@ -2,6 +2,7 @@
 
 .world-clock-container {
     padding: 24px 0;
+    position: relative;
 }
 
 .world-clock-list {
@@ -83,7 +84,10 @@
 }
 
 .world-clock-controls.edit-mode { /* Edit */
-    margin-top: 0.75em;
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
 }
 
 .world-clock-controls.done-mode { /* Done */
@@ -119,7 +123,7 @@
 .world-clock-divider {
     width: 100%;
     height: 1px;
-    background-color: rgba(128, 128, 128, 0.1);
+    background-color: rgba(128, 128, 128, 0.15);
     padding: 0 24px;
 }
 
@@ -186,7 +190,7 @@ body.dark-mode .world-clock-city {
 }
 
 body.dark-mode .world-clock-divider {
-    background-color: rgba(128, 128, 128, 0.1);
+    background-color: rgba(128, 128, 128, 0.15);
 }
 
 body.dark-mode .world-clock-edit-btn {
