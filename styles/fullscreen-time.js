@@ -6,12 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const countdownHint = document.getElementById('countdownHint');
     const cancelButton = document.getElementById('fullscreenCancelBtn');
     const fullscreenModeButton = document.getElementById('fullscreenModeBtn');
+    const timeFormatButton = document.getElementById('timeFormatBtn');
     
     // Countdown state management
     let countdownInterval = null;
     let countdownEndTime = null;
     let isCountdownActive = false;
     let isCountdownComplete = false;
+    
+    // Time format state: 0 = 24H, 1 = 12H
+    let timeFormatMode = 0;
+    const timeFormatLabels = ['24H', '12H'];
     
     // Constants
     const COUNTDOWN_MINUTES = 25;
@@ -25,12 +30,31 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
     
+    // Format time based on current format mode
+    function formatTimeDisplay(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+        let timeString = '';
+        
+        if (timeFormatMode === 0) {
+            // 24H format
+            timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        } else {
+            // 12H format without AM/PM
+            hours = hours % 12 || 12;
+            timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        return timeString;
+    }
+    
     // Update fullscreen time to match local time
     function updateFullscreenTime() {
         if (!isCountdownActive) {
             // Generate fresh time to avoid conflicts
             const now = new Date();
-            const currentTime = now.toLocaleTimeString();
+            const currentTime = formatTimeDisplay(now);
             fullscreenClock.textContent = currentTime;
         }
     }
@@ -217,6 +241,34 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    // Click Time Format button to cycle through formats
+    if (timeFormatButton) {
+        timeFormatButton.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent event bubbling
+            
+            // Cycle through formats: 0 -> 1 -> 0
+            timeFormatMode = (timeFormatMode + 1) % 2;
+            
+            // Update button text
+            timeFormatButton.textContent = timeFormatLabels[timeFormatMode];
+            
+            // Update the displayed time immediately
+            updateFullscreenTime();
+            
+            // Save preference to localStorage
+            localStorage.setItem('preferredTimeFormat', timeFormatMode);
+        });
+    }
+    
+    // Load saved time format preference
+    const savedFormat = localStorage.getItem('preferredTimeFormat');
+    if (savedFormat !== null) {
+        timeFormatMode = Math.min(parseInt(savedFormat), 1); // Ensure it's 0 or 1
+        if (timeFormatButton) {
+            timeFormatButton.textContent = timeFormatLabels[timeFormatMode];
+        }
+    }
     
     // Press Escape key to exit fullscreen
     document.addEventListener('keydown', function(e) {

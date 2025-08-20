@@ -11,7 +11,7 @@
 /* Cancel Button */
 .fullscreen-cancel-btn {
     position: fixed;
-    top: 2em;
+    bottom: 2em;
     left: 2em;
     background: transparent;
     border: none;
@@ -29,10 +29,32 @@
     background-color: black;
 }
 
+/* Time Format Button */
+.time-format-btn {
+    position: fixed;
+    bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: none;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+    z-index: 1001;
+    text-align: center;
+}
+
+.time-format-btn:hover {
+    color: white;
+    background-color: black;
+}
+
 /* Full Screen Button */
 .fullscreen-mode-btn {
     position: fixed;
-    top: 2em;
+    bottom: 2em;
     right: 2em;
     background: transparent;
     border: none;
@@ -130,6 +152,16 @@ body.dark-mode .fullscreen-cancel-btn:hover {
     background-color: white;
 }
 
+body.dark-mode .time-format-btn {
+    color: white;
+    text-decoration: underline;
+}
+
+body.dark-mode .time-format-btn:hover {
+    color: black;
+    background-color: white;
+}
+
 body.dark-mode .fullscreen-mode-btn {
     color: white;
     text-decoration: underline;
@@ -168,7 +200,7 @@ body.dark-mode .fullscreen-clock.countdown-complete {
 /* Countdown hint text */
 .countdown-hint {
     position: fixed;
-    bottom: 2em;
+    top: 2em;
     left: 50%;
     transform: translateX(-50%) scale(0.95);
     font-family: 'ABCDiatypeSemi-Mono', monospace;

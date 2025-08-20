@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Get elements
     const editBtn = document.getElementById('worldClockEditBtn');
+    const resetBtn = document.getElementById('worldClockResetBtn');
     const defaultList = document.getElementById('worldClockDefault');
     const fullList = document.getElementById('worldClockFull');
     const selectionCount = document.getElementById('selectionCount');
@@ -226,6 +227,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Reset to default cities
+    function resetToDefaults() {
+        selectedCities = [...defaultCities];
+        saveSelectedCities();
+        renderFullList();
+        updateSelectionCount();
+    }
+    
     // Toggle between default and full list
     function toggleEditMode() {
         isEditMode = !isEditMode;
@@ -239,6 +248,9 @@ document.addEventListener('DOMContentLoaded', function() {
             fullList.classList.remove('scrolled'); // Reset scrolled state
             if (selectionInfo) {
                 selectionInfo.style.display = 'block';
+            }
+            if (resetBtn) {
+                resetBtn.style.display = 'block';
             }
             editBtn.textContent = 'Done';
             editBtn.classList.remove('world-clock-edit-btn');
@@ -255,6 +267,9 @@ document.addEventListener('DOMContentLoaded', function() {
             fullList.style.display = 'none';
             if (selectionInfo) {
                 selectionInfo.style.display = 'none';
+            }
+            if (resetBtn) {
+                resetBtn.style.display = 'none';
             }
             // Remove scroll listener and reset scroll position
             fullList.removeEventListener('scroll', handleScroll);
@@ -283,6 +298,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add event listener to edit button
         if (editBtn) {
             editBtn.addEventListener('click', toggleEditMode);
+        }
+        
+        // Add event listener to reset button
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetToDefaults);
         }
         
         // Update clocks immediately

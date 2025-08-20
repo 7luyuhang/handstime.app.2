@@ -87,6 +87,7 @@
     align-items: center;
     gap: 1em;
     padding: 0 24px;
+    position: relative;
 }
 
 .world-clock-controls.edit-mode { /* Edit */
@@ -98,6 +99,7 @@
 
 .world-clock-controls.done-mode { /* Done */
     margin-top: 24px;
+    width: 100%;
 }
 
 /* Selection info */
@@ -167,6 +169,27 @@
     background-color: black;
 }
 
+/* Reset Button */
+.world-clock-reset-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.world-clock-reset-btn:hover {
+    color: white;
+    background-color: black;
+}
+
 /* Full List View */
 .world-clock-full-list {
     max-height: 312px;
@@ -213,6 +236,15 @@ body.dark-mode .world-clock-done-btn {
 }
 
 body.dark-mode .world-clock-done-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+body.dark-mode .world-clock-reset-btn {
+    color: white;
+}
+
+body.dark-mode .world-clock-reset-btn:hover {
     color: black;
     background-color: white;
 }

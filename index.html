@@ -218,6 +218,8 @@
             <!-- Edit Controls -->
             <div class="world-clock-controls">
                 <button class="world-clock-edit-btn" id="worldClockEditBtn">Edit</button>
+                <!-- Reset button (hidden by default) -->
+                <button class="world-clock-reset-btn" id="worldClockResetBtn" style="display: none;">Reset</button>
                 <!-- Selection info (hidden by default) -->
                 <div class="world-clock-selection-info" id="worldClockSelectionInfo" style="display: none;">
                     <span id="selectionCount">0</span> of 5 selected.
@@ -240,6 +242,9 @@
     <div id="fullscreenTime" class="fullscreen-time-overlay">
         <!-- Cancel Button -->
         <button id="fullscreenCancelBtn" class="fullscreen-cancel-btn">Cancel</button>
+        
+        <!-- Time Format Button -->
+        <button id="timeFormatBtn" class="time-format-btn">24H</button>
         
         <!-- Full Screen Button -->
         <button id="fullscreenModeBtn" class="fullscreen-mode-btn">Expand</button>
