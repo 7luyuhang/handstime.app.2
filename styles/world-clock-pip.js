@@ -1,0 +1,295 @@
+// World Clock Picture-in-Picture functionality
+// Using Document Picture-in-Picture API for arbitrary HTML content
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if Document Picture-in-Picture API is supported
+    const isPiPSupported = 'documentPictureInPicture' in window;
+    
+    if (!isPiPSupported) {
+        console.log('Document Picture-in-Picture API is not supported in this browser');
+        return;
+    }
+    
+    let pipWindow = null;
+    let updateInterval = null;
+    
+    // Get the world clock container
+    const worldClockContainer = document.querySelector('.world-clock-container');
+    
+    if (!worldClockContainer) {
+        console.log('World clock container not found');
+        return;
+    }
+    
+    // Add click handler to world clock container
+    worldClockContainer.style.cursor = 'pointer';
+    worldClockContainer.title = 'Click to open in Picture-in-Picture';
+    
+    // Function to get selected cities from localStorage
+    function getSelectedCities() {
+        const saved = localStorage.getItem('selectedWorldClocks');
+        if (saved) {
+            return JSON.parse(saved);
+        }
+        // Default cities if none saved
+        return [
+            'Europe/London',
+            'America/New_York',
+            'America/Los_Angeles',
+            'Asia/Tokyo',
+            'Asia/Shanghai'
+        ];
+    }
+    
+    // Function to get city name from timezone
+    function getCityName(timezone) {
+        const cityMap = {
+            'Pacific/Auckland': 'Auckland',
+            'Europe/Berlin': 'Berlin',
+            'America/Chicago': 'Chicago',
+            'Asia/Dubai': 'Dubai',
+            'Asia/Hong_Kong': 'Hong Kong',
+            'Europe/London': 'London',
+            'Europe/Moscow': 'Moscow',
+            'Asia/Kolkata': 'Mumbai',
+            'America/New_York': 'New York',
+            'Europe/Paris': 'Paris',
+            'America/Los_Angeles': 'Los Angeles',
+            'America/Sao_Paulo': 'São Paulo',
+            'Asia/Seoul': 'Seoul',
+            'Asia/Shanghai': 'Shanghai',
+            'Asia/Singapore': 'Singapore',
+            'Australia/Sydney': 'Sydney',
+            'Asia/Tokyo': 'Tokyo'
+        };
+        return cityMap[timezone] || timezone.split('/').pop().replace('_', ' ');
+    }
+    
+    // Function to format time for a specific timezone
+    function formatTimeForTimezone(timezone) {
+        try {
+            const now = new Date();
+            const options = {
+                timeZone: timezone,
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            };
+            return now.toLocaleTimeString('en-US', options);
+        } catch (error) {
+            console.error(`Error formatting time for ${timezone}:`, error);
+            return '--:--';
+        }
+    }
+    
+    // Function to create PiP content
+    function createPiPContent() {
+        const selectedCities = getSelectedCities();
+        
+        // Create HTML structure for PiP window
+        const container = document.createElement('div');
+        container.style.cssText = `
+            padding: 20px;
+            font-family: 'ABCDiatypeSemi-Mono', monospace, system-ui, -apple-system, sans-serif;
+            background: white;
+            color: black;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        `;
+        
+        // Add title
+        const title = document.createElement('div');
+        title.textContent = 'World Clock';
+        title.style.cssText = `
+            font-size: 14px;
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+            margin-bottom: 4px;
+        `;
+        container.appendChild(title);
+        
+        // Add clock items
+        selectedCities.forEach((timezone, index) => {
+            const clockItem = document.createElement('div');
+            clockItem.style.cssText = `
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 6px 0;
+                ${index > 0 ? 'border-top: 1px solid rgba(128, 128, 128, 0.1);' : ''}
+            `;
+            
+            const timeSpan = document.createElement('span');
+            timeSpan.className = 'pip-clock-time';
+            timeSpan.setAttribute('data-timezone', timezone);
+            timeSpan.style.cssText = `
+                font-size: 16px;
+                font-weight: 500;
+                font-variant-numeric: tabular-nums;
+            `;
+            timeSpan.textContent = formatTimeForTimezone(timezone);
+            
+            const citySpan = document.createElement('span');
+            citySpan.style.cssText = `
+                font-size: 14px;
+                color: #666;
+            `;
+            citySpan.textContent = getCityName(timezone);
+            
+            clockItem.appendChild(timeSpan);
+            clockItem.appendChild(citySpan);
+            container.appendChild(clockItem);
+        });
+        
+        // Add close button
+        const closeBtn = document.createElement('button');
+        closeBtn.textContent = 'Close';
+        closeBtn.style.cssText = `
+            margin-top: auto;
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid #333;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 12px;
+        `;
+        closeBtn.onclick = closePiP;
+        container.appendChild(closeBtn);
+        
+        return container;
+    }
+    
+    // Function to update times in PiP window
+    function updatePiPTimes() {
+        if (!pipWindow) return;
+        
+        const clockElements = pipWindow.document.querySelectorAll('.pip-clock-time');
+        clockElements.forEach(element => {
+            const timezone = element.getAttribute('data-timezone');
+            if (timezone) {
+                element.textContent = formatTimeForTimezone(timezone);
+            }
+        });
+    }
+    
+    // Function to open Picture-in-Picture
+    async function openPiP() {
+        try {
+            // Close existing PiP if any
+            if (pipWindow) {
+                closePiP();
+            }
+            
+            // Open new PiP window
+            pipWindow = await window.documentPictureInPicture.requestWindow({
+                width: 280,
+                height: 320
+            });
+            
+            // Copy font file to PiP window if available
+            const fontLink = document.querySelector('link[href*="font"]');
+            if (fontLink) {
+                const newFontLink = pipWindow.document.createElement('link');
+                newFontLink.rel = 'stylesheet';
+                newFontLink.href = fontLink.href;
+                pipWindow.document.head.appendChild(newFontLink);
+            }
+            
+            // Add font-face declaration directly
+            const style = pipWindow.document.createElement('style');
+            style.textContent = `
+                @font-face {
+                    font-family: 'ABCDiatypeSemi-Mono';
+                    src: url('${window.location.origin}/styles/font/ABCDiatypeSemi-Mono-Regular.otf') format('opentype');
+                    font-weight: normal;
+                    font-style: normal;
+                }
+                body {
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                }
+            `;
+            pipWindow.document.head.appendChild(style);
+            
+            // Set window title
+            pipWindow.document.title = 'World Clock - Picture in Picture';
+            
+            // Add content to PiP window
+            const content = createPiPContent();
+            pipWindow.document.body.appendChild(content);
+            
+            // Start updating times
+            updateInterval = setInterval(updatePiPTimes, 1000);
+            
+            // Handle PiP window close
+            pipWindow.addEventListener('pagehide', () => {
+                closePiP();
+            });
+            
+            console.log('Picture-in-Picture window opened successfully');
+            
+        } catch (error) {
+            console.error('Failed to open Picture-in-Picture:', error);
+            
+            // Provide user feedback
+            if (error.name === 'NotAllowedError') {
+                alert('Picture-in-Picture permission was denied. Please allow PiP for this site.');
+            } else if (error.name === 'NotSupportedError') {
+                alert('Document Picture-in-Picture is not supported in your browser. Please use Chrome 116 or later.');
+            } else {
+                alert('Failed to open Picture-in-Picture window. Please try again.');
+            }
+        }
+    }
+    
+    // Function to close Picture-in-Picture
+    function closePiP() {
+        if (updateInterval) {
+            clearInterval(updateInterval);
+            updateInterval = null;
+        }
+        
+        if (pipWindow) {
+            pipWindow.close();
+            pipWindow = null;
+        }
+        
+        console.log('Picture-in-Picture window closed');
+    }
+    
+    // Add click event listener to world clock container
+    worldClockContainer.addEventListener('click', function(e) {
+        // Don't trigger if clicking on buttons or interactive elements
+        if (e.target.closest('button') || 
+            e.target.closest('input') || 
+            e.target.closest('.world-clock-selectable')) {
+            return;
+        }
+        
+        // Toggle PiP
+        if (pipWindow) {
+            closePiP();
+        } else {
+            openPiP();
+        }
+    });
+    
+    // Optional: Add visual feedback on hover
+    worldClockContainer.addEventListener('mouseenter', function() {
+        if (!pipWindow) {
+            this.style.opacity = '0.9';
+        }
+    });
+    
+    worldClockContainer.addEventListener('mouseleave', function() {
+        this.style.opacity = '1';
+    });
+    
+    // Clean up on page unload
+    window.addEventListener('beforeunload', closePiP);
+});
