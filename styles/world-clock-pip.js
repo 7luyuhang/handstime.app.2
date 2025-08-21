@@ -1,30 +1,29 @@
 // World Clock Picture-in-Picture functionality
 // Using Document Picture-in-Picture API for arbitrary HTML content
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Check if Document Picture-in-Picture API is supported
     const isPiPSupported = 'documentPictureInPicture' in window;
-    
+
     if (!isPiPSupported) {
         console.log('Document Picture-in-Picture API is not supported in this browser');
         return;
     }
-    
+
     let pipWindow = null;
     let updateInterval = null;
-    
+
     // Get the world clock container
     const worldClockContainer = document.querySelector('.world-clock-container');
-    
+
     if (!worldClockContainer) {
         console.log('World clock container not found');
         return;
     }
-    
+
     // Add click handler to world clock container
     worldClockContainer.style.cursor = 'pointer';
-    worldClockContainer.title = 'Click to open in Picture-in-Picture';
-    
+
     // Function to get selected cities from localStorage
     function getSelectedCities() {
         const saved = localStorage.getItem('selectedWorldClocks');
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'Asia/Shanghai'
         ];
     }
-    
+
     // Function to get city name from timezone
     function getCityName(timezone) {
         const cityMap = {
@@ -64,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         return cityMap[timezone] || timezone.split('/').pop().replace('_', ' ');
     }
-    
+
     // Function to format time for a specific timezone
     function formatTimeForTimezone(timezone) {
         try {
@@ -81,36 +80,26 @@ document.addEventListener('DOMContentLoaded', function() {
             return '--:--';
         }
     }
-    
+
     // Function to create PiP content
     function createPiPContent() {
         const selectedCities = getSelectedCities();
-        
+
+        // Check if dark mode is active
+        const isDarkMode = document.body.classList.contains('dark-mode');
+
         // Create HTML structure for PiP window
         const container = document.createElement('div');
         container.style.cssText = `
-            padding: 20px;
+            padding: 24px;
             font-family: 'ABCDiatypeSemi-Mono', monospace, system-ui, -apple-system, sans-serif;
-            background: white;
-            color: black;
+            background: ${isDarkMode ? '#000000' : 'white'};
+            color: ${isDarkMode ? 'white' : 'black'};
             height: 100%;
             display: flex;
             flex-direction: column;
-            gap: 12px;
         `;
-        
-        // Add title
-        const title = document.createElement('div');
-        title.textContent = 'World Clock';
-        title.style.cssText = `
-            font-size: 14px;
-            font-weight: 600;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
-            margin-bottom: 4px;
-        `;
-        container.appendChild(title);
-        
+
         // Add clock items
         selectedCities.forEach((timezone, index) => {
             const clockItem = document.createElement('div');
@@ -118,55 +107,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 6px 0;
-                ${index > 0 ? 'border-top: 1px solid rgba(128, 128, 128, 0.1);' : ''}
+                padding: ${index > 0 ? '10px 0 10px 0' : '0 0 10px 0'};
+                ${index > 0 ? 'border-top: 1px solid rgba(128, 128, 128, 0.15);' : ''}
             `;
-            
+
             const timeSpan = document.createElement('span');
             timeSpan.className = 'pip-clock-time';
             timeSpan.setAttribute('data-timezone', timezone);
             timeSpan.style.cssText = `
-                font-size: 16px;
-                font-weight: 500;
+                font-size: 1em;
                 font-variant-numeric: tabular-nums;
+                color: ${isDarkMode ? 'white' : 'black'};
             `;
             timeSpan.textContent = formatTimeForTimezone(timezone);
-            
+
             const citySpan = document.createElement('span');
             citySpan.style.cssText = `
-                font-size: 14px;
-                color: #666;
+                font-size: 1em;
+                color: ${isDarkMode ? '#808080' : '#808080'};
             `;
             citySpan.textContent = getCityName(timezone);
-            
+
             clockItem.appendChild(timeSpan);
             clockItem.appendChild(citySpan);
             container.appendChild(clockItem);
         });
-        
-        // Add close button
-        const closeBtn = document.createElement('button');
-        closeBtn.textContent = 'Close';
-        closeBtn.style.cssText = `
-            margin-top: auto;
-            padding: 6px 12px;
-            background: transparent;
-            border: 1px solid #333;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 12px;
-        `;
-        closeBtn.onclick = closePiP;
-        container.appendChild(closeBtn);
-        
+
         return container;
     }
-    
+
     // Function to update times in PiP window
     function updatePiPTimes() {
         if (!pipWindow) return;
-        
+
         const clockElements = pipWindow.document.querySelectorAll('.pip-clock-time');
         clockElements.forEach(element => {
             const timezone = element.getAttribute('data-timezone');
@@ -175,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Function to open Picture-in-Picture
     async function openPiP() {
         try {
@@ -183,13 +156,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (pipWindow) {
                 closePiP();
             }
-            
+
             // Open new PiP window
             pipWindow = await window.documentPictureInPicture.requestWindow({
-                width: 280,
-                height: 320
+                width: 360,
+                height: 360
             });
-            
+
             // Copy font file to PiP window if available
             const fontLink = document.querySelector('link[href*="font"]');
             if (fontLink) {
@@ -198,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 newFontLink.href = fontLink.href;
                 pipWindow.document.head.appendChild(newFontLink);
             }
-            
+
             // Add font-face declaration directly
             const style = pipWindow.document.createElement('style');
             style.textContent = `
@@ -212,30 +185,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     margin: 0;
                     padding: 0;
                     overflow: hidden;
+                    background: ${document.body.classList.contains('dark-mode') ? '#000000' : 'white'};
                 }
             `;
             pipWindow.document.head.appendChild(style);
-            
+
             // Set window title
             pipWindow.document.title = 'World Clock - Picture in Picture';
-            
+
             // Add content to PiP window
             const content = createPiPContent();
             pipWindow.document.body.appendChild(content);
-            
+
             // Start updating times
             updateInterval = setInterval(updatePiPTimes, 1000);
-            
+
             // Handle PiP window close
             pipWindow.addEventListener('pagehide', () => {
                 closePiP();
             });
-            
+
             console.log('Picture-in-Picture window opened successfully');
-            
+
         } catch (error) {
             console.error('Failed to open Picture-in-Picture:', error);
-            
+
             // Provide user feedback
             if (error.name === 'NotAllowedError') {
                 alert('Picture-in-Picture permission was denied. Please allow PiP for this site.');
@@ -246,31 +220,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-    
+
     // Function to close Picture-in-Picture
     function closePiP() {
         if (updateInterval) {
             clearInterval(updateInterval);
             updateInterval = null;
         }
-        
+
         if (pipWindow) {
             pipWindow.close();
             pipWindow = null;
         }
-        
+
         console.log('Picture-in-Picture window closed');
     }
-    
+
     // Add click event listener to world clock container
-    worldClockContainer.addEventListener('click', function(e) {
+    worldClockContainer.addEventListener('click', function (e) {
         // Don't trigger if clicking on buttons or interactive elements
-        if (e.target.closest('button') || 
-            e.target.closest('input') || 
+        if (e.target.closest('button') ||
+            e.target.closest('input') ||
             e.target.closest('.world-clock-selectable')) {
             return;
         }
-        
+
         // Toggle PiP
         if (pipWindow) {
             closePiP();
@@ -278,18 +252,47 @@ document.addEventListener('DOMContentLoaded', function() {
             openPiP();
         }
     });
-    
-    // Optional: Add visual feedback on hover
-    worldClockContainer.addEventListener('mouseenter', function() {
-        if (!pipWindow) {
-            this.style.opacity = '0.9';
-        }
-    });
-    
-    worldClockContainer.addEventListener('mouseleave', function() {
-        this.style.opacity = '1';
-    });
-    
+
     // Clean up on page unload
     window.addEventListener('beforeunload', closePiP);
+
+    // Listen for theme changes and update PiP window if open
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                // Theme has changed, update PiP window if it's open
+                if (pipWindow) {
+                    const isDarkMode = document.body.classList.contains('dark-mode');
+
+                    // Update background color
+                    pipWindow.document.body.style.background = isDarkMode ? '#black' : 'white';
+
+                    // Update all text colors
+                    const container = pipWindow.document.querySelector('div');
+                    if (container) {
+                        container.style.background = isDarkMode ? '#black' : 'white';
+                        container.style.color = isDarkMode ? 'white' : 'black';
+                    }
+
+                    // Update clock times
+                    const times = pipWindow.document.querySelectorAll('.pip-clock-time');
+                    times.forEach(time => {
+                        time.style.color = isDarkMode ? 'white' : 'black';
+                    });
+
+                    // Update city names
+                    const cities = pipWindow.document.querySelectorAll('.pip-clock-time + span');
+                    cities.forEach(city => {
+                        city.style.color = isDarkMode ? '#808080' : '#808080';
+                    });
+                }
+            }
+        });
+    });
+
+    // Start observing body for class changes
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class']
+    });
 });
