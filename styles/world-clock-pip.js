@@ -245,6 +245,15 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        // Add scale effect on click
+        worldClockContainer.style.transform = 'scale(0.98)'; // Hover scale effct
+        worldClockContainer.style.transition = 'transform 0.25s cubic-bezier(0.5, 0, 0, 1)';
+        
+        // Reset scale after animation
+        setTimeout(() => {
+            worldClockContainer.style.transform = 'scale(1)';
+        }, 250);
+
         // Toggle PiP
         if (pipWindow) {
             closePiP();

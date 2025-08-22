@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
         isCountdownActive = true;
         isCountdownComplete = false;
         
+        // Hide time format button during countdown
+        if (timeFormatButton) {
+            timeFormatButton.style.display = 'none';
+        }
+        
         // Add scale effect during transition
         fullscreenClock.style.transform = 'scale(0.95)';
         
@@ -131,6 +136,11 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownEndTime = null;
         isCountdownActive = false;
         isCountdownComplete = false;
+        
+        // Show time format button when countdown stops
+        if (timeFormatButton) {
+            timeFormatButton.style.display = '';
+        }
         
         // Add scale effect during transition
         fullscreenClock.style.transform = 'scale(0.95)';
