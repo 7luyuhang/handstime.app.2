@@ -192,11 +192,36 @@
                 <script>
                     function updateLocalTime() {
                         const now = new Date();
-                        const timeString = now.toLocaleTimeString();
+                        
+                        // Get saved time format preference (0 = 24H, 1 = 12H)
+                        const savedFormat = localStorage.getItem('preferredTimeFormat');
+                        const timeFormatMode = savedFormat !== null ? parseInt(savedFormat) : 0;
+                        
+                        let hours = now.getHours();
+                        let minutes = now.getMinutes();
+                        let seconds = now.getSeconds();
+                        let timeString = '';
+                        
+                        if (timeFormatMode === 0) {
+                            // 24H format
+                            timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        } else {
+                            // 12H format without AM/PM
+                            hours = hours % 12 || 12;
+                            timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        }
+                        
                         document.getElementById('localTime').textContent = timeString;
                     }
                     updateLocalTime();
                     setInterval(updateLocalTime, 1000);
+                    
+                    // Listen for storage changes to update format immediately
+                    window.addEventListener('storage', function(e) {
+                        if (e.key === 'preferredTimeFormat') {
+                            updateLocalTime();
+                        }
+                    });
                 </script>
 
             </div>

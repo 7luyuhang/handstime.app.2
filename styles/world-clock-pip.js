@@ -98,7 +98,22 @@ document.addEventListener('DOMContentLoaded', function () {
             height: 100%;
             display: flex;
             flex-direction: column;
+            ${selectedCities.length === 0 ? 'justify-content: center; align-items: center;' : ''}
         `;
+
+        // If no cities selected, show empty message
+        if (selectedCities.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.style.cssText = `
+                font-family: 'ABCDiatypeSemi-Mono', monospace;
+                color: ${isDarkMode ? '#808080' : '#808080'};
+                font-size: 1em;
+                text-align: center;
+            `;
+            emptyMessage.textContent = 'Select time around the world.';
+            container.appendChild(emptyMessage);
+            return container;
+        }
 
         // Add clock items
         selectedCities.forEach((timezone, index) => {
@@ -115,6 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
             timeSpan.className = 'pip-clock-time';
             timeSpan.setAttribute('data-timezone', timezone);
             timeSpan.style.cssText = `
+                font-family: 'ABCDiatypeSemi-Mono', monospace;
                 font-size: 1em;
                 font-variant-numeric: tabular-nums;
                 color: ${isDarkMode ? 'white' : 'black'};
@@ -123,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const citySpan = document.createElement('span');
             citySpan.style.cssText = `
+                font-family: 'ABCDiatypeSemi-Mono', monospace;
                 font-size: 1em;
                 color: ${isDarkMode ? '#808080' : '#808080'};
             `;
@@ -160,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Open new PiP window
             pipWindow = await window.documentPictureInPicture.requestWindow({
                 width: 360,
-                height: 360
+                height: 360 // Allow user to resize if needed
             });
 
             // Copy font file to PiP window if available
@@ -180,12 +197,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     src: url('${window.location.origin}/styles/font/ABCDiatypeSemi-Mono-Regular.otf') format('opentype');
                     font-weight: normal;
                     font-style: normal;
+                    font-display: swap;
                 }
                 body {
                     margin: 0;
                     padding: 0;
                     overflow: hidden;
                     background: ${document.body.classList.contains('dark-mode') ? '#000000' : 'white'};
+                    height: 100vh;
+                    width: 100vw;
+                    font-family: 'ABCDiatypeSemi-Mono', monospace, system-ui, -apple-system, sans-serif;
+                }
+                * {
+                    font-family: 'ABCDiatypeSemi-Mono', monospace, system-ui, -apple-system, sans-serif;
                 }
             `;
             pipWindow.document.head.appendChild(style);
@@ -294,6 +318,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     cities.forEach(city => {
                         city.style.color = isDarkMode ? '#808080' : '#808080';
                     });
+                    
+                    // Update empty message if exists
+                    const emptyMessage = pipWindow.document.querySelector('div[style*="text-align: center"]');
+                    if (emptyMessage && emptyMessage.textContent === 'Select time around the world.') {
+                        emptyMessage.style.color = isDarkMode ? '#808080' : '#808080';
+                    }
                 }
             }
         });

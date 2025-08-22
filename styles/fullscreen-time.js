@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show countdown hint
             countdownHint.classList.add('active');
             
+            
             // Update immediately
             updateCountdown();
             
@@ -152,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hide countdown hint
             countdownHint.classList.remove('active');
             
+            
             // Remove scale after transition
             fullscreenClock.style.transform = '';
         }, 125); // Half of the transition duration
@@ -161,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function enterFullscreenTime() {
         fullscreenOverlay.classList.add('active');
         updateFullscreenTime();
+        
         
         // Disable body scroll
         document.body.style.overflow = 'hidden';
@@ -268,6 +271,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Save preference to localStorage
             localStorage.setItem('preferredTimeFormat', timeFormatMode);
+            
+            // Trigger update of main page time display
+            if (typeof updateLocalTime === 'function') {
+                updateLocalTime();
+            }
         });
     }
     
