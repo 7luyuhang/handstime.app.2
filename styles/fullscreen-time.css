@@ -29,12 +29,20 @@
     background-color: black;
 }
 
-/* Time Format Button */
-.time-format-btn {
+/* Bottom Controls Group */
+.bottom-controls-group {
     position: fixed;
     bottom: 2em;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    z-index: 1001;
+}
+
+/* Time Format Button */
+.time-format-btn {
     background: transparent;
     border: none;
     font-family: 'ABCDiatypeSemi-Mono', monospace;
@@ -42,11 +50,32 @@
     cursor: pointer;
     color: black;
     text-decoration: underline;
-    z-index: 1001;
-    text-align: center;
 }
 
 .time-format-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+/* Vertical Divider */
+.vertical-divider {
+    width: 1px;
+    height: 15px;
+    background-color: black;
+}
+
+/* Background Toggle Button */
+.background-toggle-btn {
+    background: transparent;
+    border: none;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+}
+
+.background-toggle-btn:hover {
     color: white;
     background-color: black;
 }
@@ -80,6 +109,17 @@
 /* Dark mode hover effect for clickable-time */
 body.dark-mode .clickable-time:hover {
     color: black;
+    background-color: white;
+}
+
+/* Dark mode for bottom controls group */
+body.dark-mode .bottom-controls-group .time-format-btn:hover,
+body.dark-mode .bottom-controls-group .background-toggle-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+body.dark-mode .bottom-controls-group .vertical-divider {
     background-color: white;
 }
 
@@ -144,6 +184,40 @@ body.dark-mode .clickable-time:hover {
 /* Fullscreen time has its own color rules independent of site theme */
 /* Text colors are handled by background-selector.css based on selected background */
 
+/* Hover styles for light backgrounds */
+/* When background is light (bg-1, bg-2, bg-3, bg-4), buttons need white text on black background */
+.fullscreen-time-overlay.bg-1 .fullscreen-cancel-btn:hover,
+.fullscreen-time-overlay.bg-2 .fullscreen-cancel-btn:hover,
+.fullscreen-time-overlay.bg-3 .fullscreen-cancel-btn:hover,
+.fullscreen-time-overlay.bg-4 .fullscreen-cancel-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+.fullscreen-time-overlay.bg-1 .bottom-controls-group .time-format-btn:hover,
+.fullscreen-time-overlay.bg-2 .bottom-controls-group .time-format-btn:hover,
+.fullscreen-time-overlay.bg-3 .bottom-controls-group .time-format-btn:hover,
+.fullscreen-time-overlay.bg-4 .bottom-controls-group .time-format-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+.fullscreen-time-overlay.bg-1 .bottom-controls-group .background-toggle-btn:hover,
+.fullscreen-time-overlay.bg-2 .bottom-controls-group .background-toggle-btn:hover,
+.fullscreen-time-overlay.bg-3 .bottom-controls-group .background-toggle-btn:hover,
+.fullscreen-time-overlay.bg-4 .bottom-controls-group .background-toggle-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+.fullscreen-time-overlay.bg-1 .fullscreen-mode-btn:hover,
+.fullscreen-time-overlay.bg-2 .fullscreen-mode-btn:hover,
+.fullscreen-time-overlay.bg-3 .fullscreen-mode-btn:hover,
+.fullscreen-time-overlay.bg-4 .fullscreen-mode-btn:hover {
+    color: white;
+    background-color: black;
+}
+
 /* Hover styles for dark backgrounds */
 /* When background is dark (bg-5, bg-6, bg-7), buttons need inverted hover colors */
 .fullscreen-time-overlay.bg-5 .fullscreen-cancel-btn:hover,
@@ -153,9 +227,16 @@ body.dark-mode .clickable-time:hover {
     background-color: white;
 }
 
-.fullscreen-time-overlay.bg-5 .time-format-btn:hover,
-.fullscreen-time-overlay.bg-6 .time-format-btn:hover,
-.fullscreen-time-overlay.bg-7 .time-format-btn:hover {
+.fullscreen-time-overlay.bg-5 .bottom-controls-group .time-format-btn:hover,
+.fullscreen-time-overlay.bg-6 .bottom-controls-group .time-format-btn:hover,
+.fullscreen-time-overlay.bg-7 .bottom-controls-group .time-format-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+.fullscreen-time-overlay.bg-5 .bottom-controls-group .background-toggle-btn:hover,
+.fullscreen-time-overlay.bg-6 .bottom-controls-group .background-toggle-btn:hover,
+.fullscreen-time-overlay.bg-7 .bottom-controls-group .background-toggle-btn:hover {
     color: black;
     background-color: white;
 }
