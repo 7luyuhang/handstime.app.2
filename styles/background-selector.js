@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const backgroundOptions = document.querySelectorAll('.background-option');
     
     // State
-    let currentBackground = 'bg-1';
+    let currentBackground = 'bg-4'; // Default to gray (#808080)
     
     // Initialize background selector
     function initBackgroundSelector() {
@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const savedBackground = localStorage.getItem('preferredBackground');
         if (savedBackground) {
             currentBackground = savedBackground;
+            applyBackground(currentBackground);
+        } else {
+            // Apply default background if no saved preference
             applyBackground(currentBackground);
         }
         
@@ -55,17 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save preference to localStorage
         localStorage.setItem('preferredBackground', bgClass);
         
-        // Optional: Add a subtle animation effect
-        if (fullscreenOverlay) {
-            fullscreenOverlay.style.transition = 'background 0.3s ease';
-        }
+        // Animation removed for instant background switching
     }
     
     // Public API (if needed by other scripts)
     window.backgroundSelector = {
         getCurrentBackground: () => currentBackground,
         setBackground: (bg) => selectBackground(bg),
-        reset: () => selectBackground('bg-1')
+        reset: () => selectBackground('bg-4') // Reset to default gray
     };
     
     // Initialize

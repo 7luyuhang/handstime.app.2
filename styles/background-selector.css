@@ -31,12 +31,6 @@
 }
 
 
-.background-option.active {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-
-
 /* Background solid color previews */
 /* 7 evenly distributed grays from white to black */
 .bg-gradient-1 {

@@ -52,7 +52,7 @@
 }
 
 /* Full Screen Button */
-.fullscreen-mode-btn {
+.fullscreen-mode-btn { /* full screen large time */
     position: fixed;
     bottom: 2em;
     right: 2em;
@@ -76,6 +76,13 @@
     color: white;
     background-color: black;
 }
+
+/* Dark mode hover effect for clickable-time */
+body.dark-mode .clickable-time:hover {
+    color: black;
+    background-color: white;
+}
+
 
 .fullscreen-time-overlay {
     position: fixed;
@@ -121,6 +128,7 @@
 }
 
 
+
 /* Countdown states */
 .fullscreen-clock.countdown-active {
     color: black;
@@ -135,6 +143,43 @@
 
 /* Fullscreen time has its own color rules independent of site theme */
 /* Text colors are handled by background-selector.css based on selected background */
+
+/* Hover styles for dark backgrounds */
+/* When background is dark (bg-5, bg-6, bg-7), buttons need inverted hover colors */
+.fullscreen-time-overlay.bg-5 .fullscreen-cancel-btn:hover,
+.fullscreen-time-overlay.bg-6 .fullscreen-cancel-btn:hover,
+.fullscreen-time-overlay.bg-7 .fullscreen-cancel-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+.fullscreen-time-overlay.bg-5 .time-format-btn:hover,
+.fullscreen-time-overlay.bg-6 .time-format-btn:hover,
+.fullscreen-time-overlay.bg-7 .time-format-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+.fullscreen-time-overlay.bg-5 .fullscreen-mode-btn:hover,
+.fullscreen-time-overlay.bg-6 .fullscreen-mode-btn:hover,
+.fullscreen-time-overlay.bg-7 .fullscreen-mode-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+.fullscreen-time-overlay.bg-5 .clickable-time:hover,
+.fullscreen-time-overlay.bg-6 .clickable-time:hover,
+.fullscreen-time-overlay.bg-7 .clickable-time:hover {
+    color: black;
+    background-color: white;
+}
+
+/* Clock hover for dark backgrounds */
+.fullscreen-time-overlay.bg-5 .fullscreen-clock:hover,
+.fullscreen-time-overlay.bg-6 .fullscreen-clock:hover,
+.fullscreen-time-overlay.bg-7 .fullscreen-clock:hover {
+    outline: 1px solid white;
+}
 
 /* Countdown hint text */
 .countdown-hint {
