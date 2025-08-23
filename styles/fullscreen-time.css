@@ -133,66 +133,8 @@
 }
 
 
-/* Dark mode */
-body.dark-mode .clickable-time:hover {
-    color: #000000;
-    background-color: #ffffff;
-}
-
-body.dark-mode .fullscreen-cancel-btn {
-    color: white;
-    text-decoration: underline;
-}
-
-body.dark-mode .fullscreen-cancel-btn:hover {
-    color: black;
-    background-color: white;
-}
-
-body.dark-mode .time-format-btn {
-    color: white;
-    text-decoration: underline;
-}
-
-body.dark-mode .time-format-btn:hover {
-    color: black;
-    background-color: white;
-}
-
-body.dark-mode .fullscreen-mode-btn {
-    color: white;
-    text-decoration: underline;
-}
-
-body.dark-mode .fullscreen-mode-btn:hover {
-    color: black;
-    background-color: white;
-}
-
-body.dark-mode .fullscreen-time-overlay {
-    background-color: #000000;
-}
-
-body.dark-mode .fullscreen-time-content {
-    color: #ffffff;
-}
-
-body.dark-mode .fullscreen-clock {
-    color: #ffffff;
-}
-
-body.dark-mode .fullscreen-clock:hover {
-    outline: 1px solid white;
-}
-
-body.dark-mode .fullscreen-clock.countdown-active {
-    color: white;
-    outline: 1px solid white;
-}
-
-body.dark-mode .fullscreen-clock.countdown-complete {
-    color: white;
-}
+/* Fullscreen time has its own color rules independent of site theme */
+/* Text colors are handled by background-selector.css based on selected background */
 
 /* Countdown hint text */
 .countdown-hint {
@@ -219,6 +161,3 @@ body.dark-mode .fullscreen-clock.countdown-complete {
     mix-blend-mode: difference;
 }
 
-body.dark-mode .countdown-hint {
-    color: #808080;
-}

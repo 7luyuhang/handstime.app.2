@@ -30,14 +30,12 @@
     transition: transform 0.25s cubic-bezier(0.5, 0, 0, 1);
 }
 
+
 .background-option.active {
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode styles */
-body.dark-mode .background-option.active {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
+
 
 /* Background solid color previews */
 /* 7 evenly distributed grays from white to black */
@@ -70,32 +68,33 @@ body.dark-mode .background-option.active {
 }
 
 /* Apply backgrounds to fullscreen overlay */
+/* Use !important to override dark mode styles */
 .fullscreen-time-overlay.bg-1 {
-    background: #ffffff;
+    background: #ffffff !important;
 }
 
 .fullscreen-time-overlay.bg-2 {
-    background: #d5d5d5;
+    background: #d5d5d5 !important;
 }
 
 .fullscreen-time-overlay.bg-3 {
-    background: #aaaaaa;
+    background: #aaaaaa !important;
 }
 
 .fullscreen-time-overlay.bg-4 {
-    background: #808080;
+    background: #808080 !important;
 }
 
 .fullscreen-time-overlay.bg-5 {
-    background: #555555;
+    background: #555555 !important;
 }
 
 .fullscreen-time-overlay.bg-6 {
-    background: #2b2b2b;
+    background: #2b2b2b !important;
 }
 
 .fullscreen-time-overlay.bg-7 {
-    background: #000000;
+    background: #000000 !important;
 }
 
 /* Text color adjustments for dark backgrounds */
@@ -124,9 +123,4 @@ body.dark-mode .background-option.active {
     outline: 1px solid white;
 }
 
-/* Active state adjustments for dark backgrounds */
-.fullscreen-time-overlay.bg-5 .background-option.active,
-.fullscreen-time-overlay.bg-6 .background-option.active,
-.fullscreen-time-overlay.bg-7 .background-option.active {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
+
