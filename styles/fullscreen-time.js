@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cancelButton = document.getElementById('fullscreenCancelBtn');
     const fullscreenModeButton = document.getElementById('fullscreenModeBtn');
     const timeFormatButton = document.getElementById('timeFormatBtn');
+    const bottomControlsGroup = document.querySelector('.bottom-controls-group');
     
     // Countdown state management
     let countdownInterval = null;
@@ -69,9 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
         isCountdownActive = true;
         isCountdownComplete = false;
         
-        // Hide time format button during countdown
-        if (timeFormatButton) {
-            timeFormatButton.style.display = 'none';
+        // Hide bottom controls during countdown
+        if (bottomControlsGroup) {
+            bottomControlsGroup.style.display = 'none';
         }
         
         // Add scale effect during transition
@@ -138,9 +139,9 @@ document.addEventListener('DOMContentLoaded', function() {
         isCountdownActive = false;
         isCountdownComplete = false;
         
-        // Show time format button when countdown stops
-        if (timeFormatButton) {
-            timeFormatButton.style.display = '';
+        // Show bottom controls when countdown stops
+        if (bottomControlsGroup) {
+            bottomControlsGroup.style.display = '';
         }
         
         // Add scale effect during transition
@@ -172,6 +173,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Exit fullscreen mode
     function exitFullscreenTime() {
         fullscreenOverlay.classList.remove('active');
+        
+        // Hide background selector when exiting
+        if (window.backgroundSelector && window.backgroundSelector.hideSelector) {
+            window.backgroundSelector.hideSelector();
+        }
         
         // Stop countdown when exiting fullscreen
         if (isCountdownActive || isCountdownComplete) {

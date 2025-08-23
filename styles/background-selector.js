@@ -5,9 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get DOM elements
     const fullscreenOverlay = document.getElementById('fullscreenTime');
     const backgroundOptions = document.querySelectorAll('.background-option');
+    const backgroundToggleBtn = document.getElementById('backgroundToggleBtn');
     
     // State
     let currentBackground = 'bg-4'; // Default to gray (#808080)
+    let isSelectorVisible = false;
     
     // Initialize background selector
     function initBackgroundSelector() {
@@ -29,6 +31,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectBackground(newBackground);
             });
         });
+        
+        // Add click handler for Background toggle button
+        if (backgroundToggleBtn) {
+            backgroundToggleBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleBackgroundSelector();
+            });
+        }
+    }
+    
+    // Toggle background selector visibility
+    function toggleBackgroundSelector() {
+        isSelectorVisible = !isSelectorVisible;
+        
+        if (isSelectorVisible) {
+            fullscreenOverlay.classList.add('show-background-selector');
+        } else {
+            fullscreenOverlay.classList.remove('show-background-selector');
+        }
     }
     
     // Apply background to overlay
@@ -65,7 +86,12 @@ document.addEventListener('DOMContentLoaded', function() {
     window.backgroundSelector = {
         getCurrentBackground: () => currentBackground,
         setBackground: (bg) => selectBackground(bg),
-        reset: () => selectBackground('bg-4') // Reset to default gray
+        reset: () => selectBackground('bg-4'), // Reset to default gray
+        toggleSelector: () => toggleBackgroundSelector(),
+        hideSelector: () => {
+            isSelectorVisible = false;
+            fullscreenOverlay.classList.remove('show-background-selector');
+        }
     };
     
     // Initialize

@@ -81,7 +81,7 @@
 }
 
 /* Full Screen Button */
-.fullscreen-mode-btn { /* full screen large time */
+.fullscreen-mode-btn { 
     position: fixed;
     bottom: 2em;
     right: 2em;
