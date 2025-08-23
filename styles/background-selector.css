@@ -1,0 +1,132 @@
+/* Background Selector Styles */
+/* Fullscreen time background switcher */
+
+/* Main selector container */
+.background-selector {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;  /* Lower than buttons (1001) */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s cubic-bezier(0.5, 0, 0, 1), visibility 0.25s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.fullscreen-time-overlay.active .background-selector {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Individual background option */
+.background-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.background-option.active {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode styles */
+body.dark-mode .background-option.active {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Background solid color previews */
+/* 7 evenly distributed grays from white to black */
+.bg-gradient-1 {
+    background: #ffffff;  /* L: 100% */
+}
+
+.bg-gradient-2 {
+    background: #d5d5d5;  /* L: 83.3% */
+}
+
+.bg-gradient-3 {
+    background: #aaaaaa;  /* L: 66.7% */
+}
+
+.bg-gradient-4 {
+    background: #808080;  /* L: 50% */
+}
+
+.bg-gradient-5 {
+    background: #555555;  /* L: 33.3% */
+}
+
+.bg-gradient-6 {
+    background: #2b2b2b;  /* L: 16.7% */
+}
+
+.bg-gradient-7 {
+    background: #000000;  /* L: 0% */
+}
+
+/* Apply backgrounds to fullscreen overlay */
+.fullscreen-time-overlay.bg-1 {
+    background: #ffffff;
+}
+
+.fullscreen-time-overlay.bg-2 {
+    background: #d5d5d5;
+}
+
+.fullscreen-time-overlay.bg-3 {
+    background: #aaaaaa;
+}
+
+.fullscreen-time-overlay.bg-4 {
+    background: #808080;
+}
+
+.fullscreen-time-overlay.bg-5 {
+    background: #555555;
+}
+
+.fullscreen-time-overlay.bg-6 {
+    background: #2b2b2b;
+}
+
+.fullscreen-time-overlay.bg-7 {
+    background: #000000;
+}
+
+/* Text color adjustments for dark backgrounds */
+.fullscreen-time-overlay.bg-5 .fullscreen-time-content,
+.fullscreen-time-overlay.bg-5 .fullscreen-clock,
+.fullscreen-time-overlay.bg-5 .fullscreen-cancel-btn,
+.fullscreen-time-overlay.bg-5 .time-format-btn,
+.fullscreen-time-overlay.bg-5 .fullscreen-mode-btn,
+.fullscreen-time-overlay.bg-6 .fullscreen-time-content,
+.fullscreen-time-overlay.bg-6 .fullscreen-clock,
+.fullscreen-time-overlay.bg-6 .fullscreen-cancel-btn,
+.fullscreen-time-overlay.bg-6 .time-format-btn,
+.fullscreen-time-overlay.bg-6 .fullscreen-mode-btn,
+.fullscreen-time-overlay.bg-7 .fullscreen-time-content,
+.fullscreen-time-overlay.bg-7 .fullscreen-clock,
+.fullscreen-time-overlay.bg-7 .fullscreen-cancel-btn,
+.fullscreen-time-overlay.bg-7 .time-format-btn,
+.fullscreen-time-overlay.bg-7 .fullscreen-mode-btn {
+    color: white;
+}
+
+/* Countdown state adjustments for dark backgrounds */
+.fullscreen-time-overlay.bg-5 .fullscreen-clock.countdown-active,
+.fullscreen-time-overlay.bg-6 .fullscreen-clock.countdown-active,
+.fullscreen-time-overlay.bg-7 .fullscreen-clock.countdown-active {
+    outline: 1px solid white;
+}
+
+/* Active state adjustments for dark backgrounds */
+.fullscreen-time-overlay.bg-5 .background-option.active,
+.fullscreen-time-overlay.bg-6 .background-option.active,
+.fullscreen-time-overlay.bg-7 .background-option.active {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
