@@ -64,7 +64,7 @@
 /* Vertical Divider */
 .vertical-divider {
     width: 1px;
-    height: 15px;
+    height: 16px;
     background-color: black;
 }
 
@@ -80,6 +80,22 @@
 }
 
 .background-toggle-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+/* Set Timer Button */
+.set-timer-btn {
+    background: transparent;
+    border: none;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+}
+
+.set-timer-btn:hover {
     color: white;
     background-color: black;
 }
@@ -114,7 +130,8 @@ body.dark-mode .clickable-time:hover {
 
 /* Dark mode for bottom controls group */
 body.dark-mode .bottom-controls-group .time-format-btn:hover,
-body.dark-mode .bottom-controls-group .background-toggle-btn:hover {
+body.dark-mode .bottom-controls-group .background-toggle-btn:hover,
+body.dark-mode .bottom-controls-group .set-timer-btn:hover {
     color: black;
     background-color: white;
 }
@@ -184,6 +201,14 @@ body.dark-mode .bottom-controls-group .vertical-divider {
 /* Fullscreen time has its own color rules independent of site theme */
 /* Text colors are handled by background-selector.css based on selected background */
 
+/* Text colors for light backgrounds */
+.fullscreen-time-overlay.bg-1 .bottom-controls-group .set-timer-btn,
+.fullscreen-time-overlay.bg-2 .bottom-controls-group .set-timer-btn,
+.fullscreen-time-overlay.bg-3 .bottom-controls-group .set-timer-btn,
+.fullscreen-time-overlay.bg-4 .bottom-controls-group .set-timer-btn {
+    color: black;
+}
+
 /* Hover styles for light backgrounds */
 /* Hover effects removed for cancel and fullscreen buttons */
 
@@ -203,6 +228,14 @@ body.dark-mode .bottom-controls-group .vertical-divider {
     background-color: black;
 }
 
+.fullscreen-time-overlay.bg-1 .bottom-controls-group .set-timer-btn:hover,
+.fullscreen-time-overlay.bg-2 .bottom-controls-group .set-timer-btn:hover,
+.fullscreen-time-overlay.bg-3 .bottom-controls-group .set-timer-btn:hover,
+.fullscreen-time-overlay.bg-4 .bottom-controls-group .set-timer-btn:hover {
+    color: white;
+    background-color: black;
+}
+
 
 
 /* Dark background icon styles - remove invert filter for white icons on dark backgrounds */
@@ -210,6 +243,13 @@ body.dark-mode .bottom-controls-group .vertical-divider {
 .fullscreen-time-overlay.bg-6 .button-icon,
 .fullscreen-time-overlay.bg-7 .button-icon {
     filter: none; /* Keep original white color for dark backgrounds */
+}
+
+/* Text colors for dark backgrounds */
+.fullscreen-time-overlay.bg-5 .bottom-controls-group .set-timer-btn,
+.fullscreen-time-overlay.bg-6 .bottom-controls-group .set-timer-btn,
+.fullscreen-time-overlay.bg-7 .bottom-controls-group .set-timer-btn {
+    color: white;
 }
 
 /* Hover styles for dark backgrounds */
@@ -225,6 +265,13 @@ body.dark-mode .bottom-controls-group .vertical-divider {
 .fullscreen-time-overlay.bg-5 .bottom-controls-group .background-toggle-btn:hover,
 .fullscreen-time-overlay.bg-6 .bottom-controls-group .background-toggle-btn:hover,
 .fullscreen-time-overlay.bg-7 .bottom-controls-group .background-toggle-btn:hover {
+    color: black;
+    background-color: white;
+}
+
+.fullscreen-time-overlay.bg-5 .bottom-controls-group .set-timer-btn:hover,
+.fullscreen-time-overlay.bg-6 .bottom-controls-group .set-timer-btn:hover,
+.fullscreen-time-overlay.bg-7 .bottom-controls-group .set-timer-btn:hover {
     color: black;
     background-color: white;
 }

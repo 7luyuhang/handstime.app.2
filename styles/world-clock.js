@@ -3,24 +3,76 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Available cities data
     const allCities = [
+        // Oceania
         { timezone: 'Pacific/Auckland', name: 'Auckland' },
-        { timezone: 'Europe/Berlin', name: 'Berlin' },
-        { timezone: 'America/Chicago', name: 'Chicago' },
-        { timezone: 'Asia/Dubai', name: 'Dubai' },
-        { timezone: 'Asia/Hong_Kong', name: 'Hong Kong' },
-        { timezone: 'Europe/London', name: 'London' },
-        { timezone: 'Europe/Moscow', name: 'Moscow' },
-        { timezone: 'Asia/Kolkata', name: 'Mumbai' },
-        { timezone: 'America/New_York', name: 'New York' },
-        { timezone: 'Europe/Paris', name: 'Paris' },
-        { timezone: 'America/Los_Angeles', name: 'Los Angeles' },
-        { timezone: 'America/Sao_Paulo', name: 'São Paulo' },
-        { timezone: 'Asia/Seoul', name: 'Seoul' },
-        { timezone: 'Asia/Shanghai', name: 'Shanghai' },
-        { timezone: 'Asia/Singapore', name: 'Singapore' },
+        { timezone: 'Pacific/Fiji', name: 'Fiji' },
+        { timezone: 'Pacific/Guam', name: 'Guam' },
+        { timezone: 'Pacific/Honolulu', name: 'Honolulu' },
         { timezone: 'Australia/Sydney', name: 'Sydney' },
-        { timezone: 'Asia/Tokyo', name: 'Tokyo' }
-    ];
+        { timezone: 'Australia/Melbourne', name: 'Melbourne' },
+        { timezone: 'Australia/Perth', name: 'Perth' },
+      
+        // East Asia
+        { timezone: 'Asia/Shanghai', name: 'Shanghai' },
+        { timezone: 'Asia/Hong_Kong', name: 'Hong Kong' },
+        { timezone: 'Asia/Tokyo', name: 'Tokyo' },
+        { timezone: 'Asia/Seoul', name: 'Seoul' },
+        { timezone: 'Asia/Taipei', name: 'Taipei' },
+      
+        // Southeast Asia
+        { timezone: 'Asia/Singapore', name: 'Singapore' },
+        { timezone: 'Asia/Bangkok', name: 'Bangkok' },
+        { timezone: 'Asia/Kuala_Lumpur', name: 'Kuala Lumpur' },
+        { timezone: 'Asia/Jakarta', name: 'Jakarta' },
+        { timezone: 'Asia/Manila', name: 'Manila' },
+      
+        // South Asia
+        { timezone: 'Asia/Kolkata', name: 'Mumbai' },
+        { timezone: 'Asia/Kathmandu', name: 'Kathmandu' },
+        { timezone: 'Asia/Karachi', name: 'Karachi' },
+      
+        // Middle East
+        { timezone: 'Asia/Dubai', name: 'Dubai' },
+        { timezone: 'Asia/Riyadh', name: 'Riyadh' },
+        { timezone: 'Asia/Tehran', name: 'Tehran' },
+        { timezone: 'Asia/Jerusalem', name: 'Jerusalem' },
+        { timezone: 'Europe/Istanbul', name: 'Istanbul' },
+      
+        // Europe
+        { timezone: 'Europe/London', name: 'London' },
+        { timezone: 'Europe/Paris', name: 'Paris' },
+        { timezone: 'Europe/Berlin', name: 'Berlin' },
+        { timezone: 'Europe/Madrid', name: 'Madrid' },
+        { timezone: 'Europe/Rome', name: 'Rome' },
+        { timezone: 'Europe/Moscow', name: 'Moscow' },
+        { timezone: 'Europe/Zurich', name: 'Zurich' },
+        { timezone: 'Europe/Athens', name: 'Athens' },
+        { timezone: 'Europe/Warsaw', name: 'Warsaw' },
+        { timezone: 'Europe/Stockholm', name: 'Stockholm' },
+      
+        // Africa
+        { timezone: 'Africa/Cairo', name: 'Cairo' },
+        { timezone: 'Africa/Lagos', name: 'Lagos' },
+        { timezone: 'Africa/Nairobi', name: 'Nairobi' },
+        { timezone: 'Africa/Johannesburg', name: 'Johannesburg' },
+        { timezone: 'Africa/Casablanca', name: 'Casablanca' },
+      
+        // North America
+        { timezone: 'America/New_York', name: 'New York' },
+        { timezone: 'America/Toronto', name: 'Toronto' },
+        { timezone: 'America/Chicago', name: 'Chicago' },
+        { timezone: 'America/Denver', name: 'Denver' },
+        { timezone: 'America/Los_Angeles', name: 'Los Angeles' },
+        { timezone: 'America/Vancouver', name: 'Vancouver' },
+        { timezone: 'America/Mexico_City', name: 'Mexico City' },
+      
+        // South America
+        { timezone: 'America/Sao_Paulo', name: 'São Paulo' },
+        { timezone: 'America/Buenos_Aires', name: 'Buenos Aires' },
+        { timezone: 'America/Lima', name: 'Lima' },
+        { timezone: 'America/Bogota', name: 'Bogotá' },
+        { timezone: 'America/Santiago', name: 'Santiago' }
+      ];
     
     // Default selected cities
     const defaultCities = [

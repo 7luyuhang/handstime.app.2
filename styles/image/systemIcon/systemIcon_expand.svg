@@ -1,5 +1,5 @@
 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M32 18L32 8L22 8" stroke="white"/>
-<path d="M8 22L8 32H18" stroke="white"/>
-<path d="M32 8L8 32" stroke="white"/>
+<path d="M32 18L32 8L22 8" stroke="white" stroke-width="1.5"/>
+<path d="M8 22L8 32H18" stroke="white" stroke-width="1.5"/>
+<path d="M32 8L8 32" stroke="white" stroke-width="1.5"/>
 </svg>

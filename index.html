@@ -39,6 +39,7 @@
     <script defer src="styles/main.js"></script>
     <script defer src="styles/theme.js"></script>
     <script defer src="styles/video.js"></script>
+    <script defer src="styles/set-timer.js"></script>
     <script defer src="styles/fullscreen-time.js"></script>
     <script defer src="styles/background-selector.js"></script>
     <script defer src="styles/horizontal-swiper.js"></script>
@@ -203,10 +204,10 @@
         <!-- Footer -->
         <div class="container">
             <div class="vertical-line">
-                <p class="footer">Crafted with humility toward time.</p>
+                <p class="footer">Crafted with humility toward time, focus on present.</p>
 
                 <!-- Time -->
-                <p id="localTime" class="clickable-time tooltip-link" data-tooltip="Focus on present, 25 mins."></p>
+                <p id="localTime" class="clickable-time tooltip-link" data-tooltip="Focus on 25 mins."></p>
                 <script>
                     function updateLocalTime() {
                         const now = new Date();
@@ -299,6 +300,12 @@
             
             <!-- Background Toggle Button -->
             <button id="backgroundToggleBtn" class="background-toggle-btn">Background</button>
+            
+            <!-- Vertical Divider -->
+            <div class="vertical-divider"></div>
+            
+            <!-- Set Timer Button -->
+            <button id="setTimerBtn" class="set-timer-btn tooltip-link" data-tooltip="Hovering and swipe horizontally to adjust timer">Set Timer</button>
         </div>
         
         <!-- Full Screen Button -->

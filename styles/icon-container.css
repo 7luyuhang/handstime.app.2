@@ -55,7 +55,8 @@
     right: 0px;
     height: 32px;
     width: auto;
-    cursor: pointer;
+    pointer-events: none;
+    user-select: none;
 }
 
 /* Dark mode for icon container */

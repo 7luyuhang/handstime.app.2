@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fullscreenModeButton = document.getElementById('fullscreenModeBtn');
     const timeFormatButton = document.getElementById('timeFormatBtn');
     const backgroundToggleBtn = document.getElementById('backgroundToggleBtn');
+    const setTimerBtn = document.getElementById('setTimerBtn');
     const bottomControlsGroup = document.querySelector('.bottom-controls-group');
     
     // Countdown state management
@@ -20,9 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let timeFormatMode = 0;
     const timeFormatLabels = ['24H', '12H'];
     
+    // Timer adjustment will be handled by timerAdjustment module
+    
     // Constants
-    const COUNTDOWN_MINUTES = 25;
-    const COUNTDOWN_DURATION = COUNTDOWN_MINUTES * 60 * 1000; // 25 minutes in milliseconds
+    let COUNTDOWN_MINUTES = window.timerAdjustment ? window.timerAdjustment.adjustedTimerMinutes : 25;
+    let COUNTDOWN_DURATION = COUNTDOWN_MINUTES * 60 * 1000; // default in milliseconds
     
     // Format time for countdown display (MM:SS)
     function formatCountdownTime(milliseconds) {
@@ -51,9 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return timeString;
     }
     
+
+    
     // Update fullscreen time to match local time
     function updateFullscreenTime() {
-        if (!isCountdownActive) {
+        const isAdjusting = window.timerAdjustment && window.timerAdjustment.isAdjustingTimer;
+        if (!isCountdownActive && !isAdjusting) {
             // Generate fresh time to avoid conflicts
             const now = new Date();
             const currentTime = formatTimeDisplay(now);
@@ -65,6 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function startCountdown() {
         // Clear any existing countdown
         stopCountdown();
+        
+        // Get the latest timer value from the module if available
+        if (window.timerAdjustment) {
+            COUNTDOWN_MINUTES = window.timerAdjustment.adjustedTimerMinutes;
+            COUNTDOWN_DURATION = COUNTDOWN_MINUTES * 60 * 1000;
+        }
         
         // Set the end time
         countdownEndTime = Date.now() + COUNTDOWN_DURATION;
@@ -206,6 +218,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
     }
     
+    // Callback to update countdown duration from timer adjustment
+    function updateCountdownDuration(minutes) {
+        COUNTDOWN_MINUTES = minutes;
+        COUNTDOWN_DURATION = COUNTDOWN_MINUTES * 60 * 1000;
+    }
+    
     // Click on local time to enter fullscreen
     localTimeElement.addEventListener('click', function(e) {
         e.preventDefault();
@@ -216,6 +234,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Click on fullscreen clock to toggle countdown
     fullscreenClock.addEventListener('click', function(e) {
         e.stopPropagation(); // Prevent closing the fullscreen
+        
+        // Don't start countdown if we're adjusting timer
+        const isAdjusting = window.timerAdjustment && window.timerAdjustment.isAdjustingTimer;
+        if (isAdjusting) {
+            return;
+        }
         
         if (isCountdownActive) {
             // Stop countdown and return to current time
@@ -230,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateFullscreenTime();
             }, 125);
         } else {
-            // Start 25-minute countdown
+            // Start countdown with adjusted duration
             startCountdown();
         }
     });
@@ -268,9 +292,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Fullscreen state change listener (rotation removed)
+    // Update button icon based on fullscreen state
     document.addEventListener('fullscreenchange', function() {
-        // Button icon no longer rotates on state change
+        if (fullscreenModeButton) {
+            const buttonIcon = fullscreenModeButton.querySelector('.button-icon');
+            if (buttonIcon) {
+                if (document.fullscreenElement) {
+                    // In fullscreen - show collapse icon
+                    buttonIcon.src = 'styles/image/systemIcon/systemIcon_collapse.svg';
+                    buttonIcon.alt = 'Collapse';
+                } else {
+                    // Not in fullscreen - show expand icon
+                    buttonIcon.src = 'styles/image/systemIcon/systemIcon_expand.svg';
+                    buttonIcon.alt = 'Expand';
+                }
+            }
+        }
     });
     
     // Click Time Format button to cycle through formats
@@ -297,6 +334,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Initialize timer adjustment module
+    if (window.timerAdjustment) {
+        const elements = {
+            timeFormatButton,
+            backgroundToggleBtn,
+            setTimerBtn,
+            cancelButton,
+            fullscreenModeButton,
+            fullscreenClock
+        };
+        
+        const callbacks = {
+            stopCountdown: function() {
+                if (isCountdownActive || isCountdownComplete) {
+                    stopCountdown();
+                }
+            },
+            updateCountdownDuration,
+            updateFullscreenTime
+        };
+        
+        window.timerAdjustment.init(elements, callbacks);
+    }
+    
     // Load saved time format preference
     const savedFormat = localStorage.getItem('preferredTimeFormat');
     if (savedFormat !== null) {
@@ -318,7 +379,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update fullscreen time when in normal time mode
     setInterval(() => {
-        if (fullscreenOverlay.classList.contains('active') && !isCountdownActive && !isCountdownComplete) {
+        const isAdjusting = window.timerAdjustment && window.timerAdjustment.isAdjustingTimer;
+        if (fullscreenOverlay.classList.contains('active') && !isCountdownActive && !isCountdownComplete && !isAdjusting) {
             updateFullscreenTime();
         }
     }, 1000);

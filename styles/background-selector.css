@@ -104,18 +104,21 @@
 .fullscreen-time-overlay.bg-5 .fullscreen-cancel-btn,
 .fullscreen-time-overlay.bg-5 .bottom-controls-group .time-format-btn,
 .fullscreen-time-overlay.bg-5 .bottom-controls-group .background-toggle-btn,
+.fullscreen-time-overlay.bg-5 .bottom-controls-group .set-timer-btn,
 .fullscreen-time-overlay.bg-5 .fullscreen-mode-btn,
 .fullscreen-time-overlay.bg-6 .fullscreen-time-content,
 .fullscreen-time-overlay.bg-6 .fullscreen-clock,
 .fullscreen-time-overlay.bg-6 .fullscreen-cancel-btn,
 .fullscreen-time-overlay.bg-6 .bottom-controls-group .time-format-btn,
 .fullscreen-time-overlay.bg-6 .bottom-controls-group .background-toggle-btn,
+.fullscreen-time-overlay.bg-6 .bottom-controls-group .set-timer-btn,
 .fullscreen-time-overlay.bg-6 .fullscreen-mode-btn,
 .fullscreen-time-overlay.bg-7 .fullscreen-time-content,
 .fullscreen-time-overlay.bg-7 .fullscreen-clock,
 .fullscreen-time-overlay.bg-7 .fullscreen-cancel-btn,
 .fullscreen-time-overlay.bg-7 .bottom-controls-group .time-format-btn,
 .fullscreen-time-overlay.bg-7 .bottom-controls-group .background-toggle-btn,
+.fullscreen-time-overlay.bg-7 .bottom-controls-group .set-timer-btn,
 .fullscreen-time-overlay.bg-7 .fullscreen-mode-btn {
     color: white;
 }
