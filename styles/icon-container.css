@@ -1,0 +1,68 @@
+/* Icon Container Component Styles */
+
+.icon-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 24px;
+    position: relative;
+}
+
+.icon-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.container-icon {
+    height: 56px;
+    width: auto;
+    pointer-events: none;
+    user-select: none;
+}
+
+.icon-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 0.875em;
+    color: inherit;
+    text-transform: uppercase;
+}
+
+.icon-text p {
+    margin: 0;
+}
+
+.icon-text .main-text {
+    text-align: left;
+    color: #808080;
+}
+
+.icon-text .version-text {
+    text-align: right;
+    color: #808080;
+}
+
+/* App Store icon positioning */
+.appstore-icon {
+    position: absolute;
+    right: 0px;
+    height: 32px;
+    width: auto;
+    cursor: pointer;
+}
+
+/* Dark mode for icon container */
+body.dark-mode .container-icon {
+    filter: invert(1);
+}
+
+body.dark-mode .appstore-icon {
+    filter: invert(1);
+}

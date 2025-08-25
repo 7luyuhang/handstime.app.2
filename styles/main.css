@@ -88,43 +88,10 @@ body {
     gap: 0.25em;
 }
 
-/* Icon Container Styles */
-.icon-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 24px;
-    height: 100%;
-}
-
-.icon-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.container-icon {
-    height: 56px;
-    width: auto;
-}
-
-.icon-text {
-    text-align: left;
-    font-family: 'ABCDiatypeSemi-Mono', monospace;
-    font-size: 1em;
-    color: inherit;
-}
-
-.icon-text p {
-    margin: 0;
-}
-
-/* Dark mode for icon container */
-body.dark-mode .container-icon {
-    filter: invert(1);
+/* Auto-height container variant */
+.container-auto-height {
+    height: auto; /* Override the 360px fixed height */
+    min-height: 144px; /* Set a minimum height */
 }
 
 /*Layout*/

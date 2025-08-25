@@ -1,11 +1,16 @@
 /* Fullscreen Time */
 /* Created on 2025-08-06, by yuhang */
 
-
+/* Clickable Time */
 .clickable-time {
     cursor: pointer;
     text-decoration: underline;
     position: relative;
+}
+
+.clickable-time:hover {
+    color: white;
+    background-color: black;
 }
 
 /* Cancel Button */
@@ -16,17 +21,16 @@
     background: transparent;
     border: none;
     padding: 0;
-    font-family: 'ABCDiatypeSemi-Mono', monospace;
-    font-size: 1em;
     cursor: pointer;
-    color: black;
-    text-decoration: underline;
     z-index: 1001;
+    width: 40px;
+    height: 40px;
 }
 
-.fullscreen-cancel-btn:hover {
-    color: white;
-    background-color: black;
+.fullscreen-cancel-btn .button-icon {
+    width: 40px;
+    height: 40px;
+    filter: invert(1); /* Invert white SVG to black for default white background */
 }
 
 /* Bottom Controls Group */
@@ -81,30 +85,26 @@
 }
 
 /* Full Screen Button */
-.fullscreen-mode-btn { 
+.fullscreen-mode-btn {
     position: fixed;
     bottom: 2em;
     right: 2em;
     background: transparent;
     border: none;
-    font-family: 'ABCDiatypeSemi-Mono', monospace;
-    font-size: 1em;
     cursor: pointer;
-    color: black;
-    text-decoration: underline;
     z-index: 1001;
-    text-align: right;
+    width: 40px;
+    height: 40px;
 }
 
-.fullscreen-mode-btn:hover {
-    color: white;
-    background-color: black;
+.fullscreen-mode-btn .button-icon {
+    width: 40px;
+    height: 40px;
+    filter: invert(1); /* Invert white SVG to black for default white background */
 }
 
-.clickable-time:hover {
-    color: white;
-    background-color: black;
-}
+
+
 
 /* Dark mode hover effect for clickable-time */
 body.dark-mode .clickable-time:hover {
@@ -185,14 +185,7 @@ body.dark-mode .bottom-controls-group .vertical-divider {
 /* Text colors are handled by background-selector.css based on selected background */
 
 /* Hover styles for light backgrounds */
-/* When background is light (bg-1, bg-2, bg-3, bg-4), buttons need white text on black background */
-.fullscreen-time-overlay.bg-1 .fullscreen-cancel-btn:hover,
-.fullscreen-time-overlay.bg-2 .fullscreen-cancel-btn:hover,
-.fullscreen-time-overlay.bg-3 .fullscreen-cancel-btn:hover,
-.fullscreen-time-overlay.bg-4 .fullscreen-cancel-btn:hover {
-    color: white;
-    background-color: black;
-}
+/* Hover effects removed for cancel and fullscreen buttons */
 
 .fullscreen-time-overlay.bg-1 .bottom-controls-group .time-format-btn:hover,
 .fullscreen-time-overlay.bg-2 .bottom-controls-group .time-format-btn:hover,
@@ -210,22 +203,17 @@ body.dark-mode .bottom-controls-group .vertical-divider {
     background-color: black;
 }
 
-.fullscreen-time-overlay.bg-1 .fullscreen-mode-btn:hover,
-.fullscreen-time-overlay.bg-2 .fullscreen-mode-btn:hover,
-.fullscreen-time-overlay.bg-3 .fullscreen-mode-btn:hover,
-.fullscreen-time-overlay.bg-4 .fullscreen-mode-btn:hover {
-    color: white;
-    background-color: black;
+
+
+/* Dark background icon styles - remove invert filter for white icons on dark backgrounds */
+.fullscreen-time-overlay.bg-5 .button-icon,
+.fullscreen-time-overlay.bg-6 .button-icon,
+.fullscreen-time-overlay.bg-7 .button-icon {
+    filter: none; /* Keep original white color for dark backgrounds */
 }
 
 /* Hover styles for dark backgrounds */
-/* When background is dark (bg-5, bg-6, bg-7), buttons need inverted hover colors */
-.fullscreen-time-overlay.bg-5 .fullscreen-cancel-btn:hover,
-.fullscreen-time-overlay.bg-6 .fullscreen-cancel-btn:hover,
-.fullscreen-time-overlay.bg-7 .fullscreen-cancel-btn:hover {
-    color: black;
-    background-color: white;
-}
+/* Hover effects removed for cancel and fullscreen buttons */
 
 .fullscreen-time-overlay.bg-5 .bottom-controls-group .time-format-btn:hover,
 .fullscreen-time-overlay.bg-6 .bottom-controls-group .time-format-btn:hover,
@@ -241,12 +229,7 @@ body.dark-mode .bottom-controls-group .vertical-divider {
     background-color: white;
 }
 
-.fullscreen-time-overlay.bg-5 .fullscreen-mode-btn:hover,
-.fullscreen-time-overlay.bg-6 .fullscreen-mode-btn:hover,
-.fullscreen-time-overlay.bg-7 .fullscreen-mode-btn:hover {
-    color: black;
-    background-color: white;
-}
+
 
 .fullscreen-time-overlay.bg-5 .clickable-time:hover,
 .fullscreen-time-overlay.bg-6 .clickable-time:hover,
@@ -261,6 +244,8 @@ body.dark-mode .bottom-controls-group .vertical-divider {
 .fullscreen-time-overlay.bg-7 .fullscreen-clock:hover {
     outline: 1px solid white;
 }
+
+
 
 /* Countdown hint text */
 .countdown-hint {

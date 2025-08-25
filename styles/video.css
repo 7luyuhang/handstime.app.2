@@ -15,19 +15,19 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    transition: filter 0.3s ease;
+    transition: filter 0.25s cubic-bezier(0.5,0,0,1);
     -webkit-playsinline: true; /* iOS Safari specific */
     pointer-events: auto;
 }
 
 .container.video-container video:hover {
-    filter: brightness(1.5);
+    filter: brightness(2.0);
     cursor: crosshair; /* Show horizontal resize cursor to indicate scrubbing */
 }
 
 /* Scrubbing state indicators */
 .container.video-container video.scrubbing {
-    filter: brightness(1.5)
+    filter: brightness(2.0)
 }
 
 

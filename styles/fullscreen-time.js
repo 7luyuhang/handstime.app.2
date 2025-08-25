@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cancelButton = document.getElementById('fullscreenCancelBtn');
     const fullscreenModeButton = document.getElementById('fullscreenModeBtn');
     const timeFormatButton = document.getElementById('timeFormatBtn');
+    const backgroundToggleBtn = document.getElementById('backgroundToggleBtn');
     const bottomControlsGroup = document.querySelector('.bottom-controls-group');
     
     // Countdown state management
@@ -69,6 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownEndTime = Date.now() + COUNTDOWN_DURATION;
         isCountdownActive = true;
         isCountdownComplete = false;
+        
+        // Hide background selector during countdown
+        if (window.backgroundSelector && window.backgroundSelector.hideSelector) {
+            window.backgroundSelector.hideSelector();
+        }
+        
+        // Disable background toggle button during countdown
+        if (backgroundToggleBtn) {
+            backgroundToggleBtn.disabled = true;
+            backgroundToggleBtn.style.opacity = '0.3';
+        }
         
         // Hide bottom controls during countdown
         if (bottomControlsGroup) {
@@ -138,6 +150,12 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownEndTime = null;
         isCountdownActive = false;
         isCountdownComplete = false;
+        
+        // Re-enable background toggle button when countdown stops
+        if (backgroundToggleBtn) {
+            backgroundToggleBtn.disabled = false;
+            backgroundToggleBtn.style.opacity = '';
+        }
         
         // Show bottom controls when countdown stops
         if (bottomControlsGroup) {
@@ -250,15 +268,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Update button text based on fullscreen state
+    // Fullscreen state change listener (rotation removed)
     document.addEventListener('fullscreenchange', function() {
-        if (fullscreenModeButton) {
-            if (document.fullscreenElement) {
-                fullscreenModeButton.textContent = 'Collapse';
-            } else {
-                fullscreenModeButton.textContent = 'Expand';
-            }
-        }
+        // Button icon no longer rotates on state change
     });
     
     // Click Time Format button to cycle through formats

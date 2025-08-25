@@ -23,6 +23,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/circle.css">
+    <link rel="stylesheet" href="styles/icon-container.css">
     <link rel="stylesheet" href="styles/newsletter.css">
     <link rel="stylesheet" href="styles/tooltip.css">
     <link rel="stylesheet" href="styles/video.css">
@@ -183,15 +184,17 @@
         </div>
 
         <!-- Icon Container -->
-        <div class="container">
+        <div class="container container-auto-height">
             <div class="icon-container">
                 <div class="icon-row">
                     <img src="styles/image/time_icon.svg" alt="Time Icon" class="container-icon">
                     <img src="styles/image/zhi_icon.svg" alt="Zhi Icon" class="container-icon">
                 </div>
                 <div class="icon-text">
-                    <p>Time web system.</p>
+                    <p class="main-text">Time on web system</p>
+                    <p class="version-text">Version: 1.0</p>
                 </div>
+                <img src="styles/image/appstore_icon.svg" alt="App Store" class="appstore-icon">
             </div>
         </div>
 
@@ -282,7 +285,9 @@
     <!-- Fullscreen Time -->
     <div id="fullscreenTime" class="fullscreen-time-overlay">
         <!-- Cancel Button -->
-        <button id="fullscreenCancelBtn" class="fullscreen-cancel-btn">Cancel</button>
+        <button id="fullscreenCancelBtn" class="fullscreen-cancel-btn">
+            <img src="styles/image/systemIcon/systemIcon_close.svg" alt="Close" class="button-icon">
+        </button>
         
         <!-- Bottom Controls Group -->
         <div class="bottom-controls-group">
@@ -297,7 +302,9 @@
         </div>
         
         <!-- Full Screen Button -->
-        <button id="fullscreenModeBtn" class="fullscreen-mode-btn">Expand</button>
+        <button id="fullscreenModeBtn" class="fullscreen-mode-btn">
+            <img src="styles/image/systemIcon/systemIcon_expand.svg" alt="Expand" class="button-icon">
+        </button>
 
         <div class="fullscreen-time-content">
             <p id="fullscreenClock" class="fullscreen-clock"></p>
