@@ -87,8 +87,8 @@
             // Accumulate movement
             this.accumulatedMovement += movement;
             
-            // Map pixel movement to timer change (1 pixel = 1 second)
-            const deltaSeconds = Math.round(this.accumulatedMovement * 1);
+            // Map pixel movement to timer change (1 pixel = 0.5 second)
+            const deltaSeconds = Math.round(this.accumulatedMovement * 0.5);
             
             // Calculate new timer value in seconds
             let newTotalSeconds = Math.round(this.dragStartMinutes * 60) + deltaSeconds;

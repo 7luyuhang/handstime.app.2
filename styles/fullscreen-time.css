@@ -63,9 +63,10 @@
 
 /* Vertical Divider */
 .vertical-divider {
-    width: 1px;
-    height: 16px;
+    width: 2.5px;
+    height: 2.5px;
     background-color: black;
+    border-radius: 50%;
 }
 
 /* Background Toggle Button */
