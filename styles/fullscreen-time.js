@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Update button icon based on fullscreen state
+    // Update button icon and tooltip based on fullscreen state
     document.addEventListener('fullscreenchange', function() {
         if (fullscreenModeButton) {
             const buttonIcon = fullscreenModeButton.querySelector('.button-icon');
@@ -301,10 +301,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     // In fullscreen - show collapse icon
                     buttonIcon.src = 'styles/image/systemIcon/systemIcon_collapse.svg';
                     buttonIcon.alt = 'Collapse';
+                    fullscreenModeButton.title = 'Exit Fullscreen';
                 } else {
                     // Not in fullscreen - show expand icon
                     buttonIcon.src = 'styles/image/systemIcon/systemIcon_expand.svg';
                     buttonIcon.alt = 'Expand';
+                    fullscreenModeButton.title = 'Fullscreen';
                 }
             }
         }

@@ -87,8 +87,8 @@
             // Accumulate movement
             this.accumulatedMovement += movement;
             
-            // Map pixel movement to timer change (1 pixel = 0.5 second)
-            const deltaSeconds = Math.round(this.accumulatedMovement * 0.5);
+            // Map pixel movement to timer change (1 pixel = 1 second)
+            const deltaSeconds = Math.round(this.accumulatedMovement * 1);
             
             // Calculate new timer value in seconds
             let newTotalSeconds = Math.round(this.dragStartMinutes * 60) + deltaSeconds;
@@ -160,7 +160,12 @@
             
             // Update button text to show current timer value
             const totalSeconds = Math.round(this.adjustedTimerMinutes * 60);
-            elements.setTimerBtn.textContent = this.formatTimerDisplay(totalSeconds);
+            const btnText = elements.setTimerBtn.querySelector('.timer-btn-text');
+            if (btnText) {
+                btnText.textContent = this.formatTimerDisplay(totalSeconds);
+            } else {
+                elements.setTimerBtn.textContent = this.formatTimerDisplay(totalSeconds);
+            }
             
             // Remove visual feedback
             elements.fullscreenClock.classList.remove('countdown-active');
@@ -211,7 +216,12 @@
                 
                 // Initialize button text with current timer value
                 const totalSeconds = Math.round(self.adjustedTimerMinutes * 60);
-                elements.setTimerBtn.textContent = self.formatTimerDisplay(totalSeconds);
+                const btnText = elements.setTimerBtn.querySelector('.timer-btn-text');
+                if (btnText) {
+                    btnText.textContent = self.formatTimerDisplay(totalSeconds);
+                } else {
+                    elements.setTimerBtn.textContent = self.formatTimerDisplay(totalSeconds);
+                }
             }
             
             // Listen for pointer lock changes (with vendor prefixes)
