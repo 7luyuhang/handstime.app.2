@@ -1,0 +1,109 @@
+/* Timer Tooltip Styles */
+/* Special tooltip for timer adjustment button */
+
+/* Timer Tooltip Container */
+.timer-tooltip {
+    position: fixed;
+    left: 50%;
+    bottom: calc(3em); 
+    transform: translateX(-50%) scale(0.95);
+    width: 360px;
+    height: auto;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    filter: blur(5px);
+    transition: opacity 0.25s cubic-bezier(0.5, 0, 0, 1), 
+                visibility 0.25s cubic-bezier(0.5, 0, 0, 1),
+                filter 0.25s cubic-bezier(0.5, 0, 0, 1),
+                transform 0.25s cubic-bezier(0.5, 0, 0, 1);
+    z-index: 1002;
+}
+
+/* Show tooltip on hover */
+.set-timer-btn:hover .timer-tooltip {
+    opacity: 1;
+    visibility: visible;
+    filter: blur(0px);
+    transform: translateX(-50%) scale(1);
+}
+
+/* Timer Tooltip Left Section */
+.timer-tooltip-left {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.timer-tooltip-title {
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 0.875em;
+    color: black;
+    text-transform: uppercase;
+}
+
+/* Timer Tooltip Right Section */
+.timer-tooltip-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8px 16px 8px 16px;
+    gap: 8px;
+}
+
+.timer-tooltip-icon {
+    width: 40px;
+    height: auto;
+}
+
+.timer-tooltip-text {
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 0.875em;
+    color: black;
+    text-align: left;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+/* Dark background styles (bg-5, bg-6, bg-7) */
+.fullscreen-time-overlay.bg-5 .timer-tooltip,
+.fullscreen-time-overlay.bg-6 .timer-tooltip,
+.fullscreen-time-overlay.bg-7 .timer-tooltip {
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.fullscreen-time-overlay.bg-5 .timer-tooltip-left,
+.fullscreen-time-overlay.bg-6 .timer-tooltip-left,
+.fullscreen-time-overlay.bg-7 .timer-tooltip-left {
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.fullscreen-time-overlay.bg-5 .timer-tooltip-title,
+.fullscreen-time-overlay.bg-6 .timer-tooltip-title,
+.fullscreen-time-overlay.bg-7 .timer-tooltip-title,
+.fullscreen-time-overlay.bg-5 .timer-tooltip-text,
+.fullscreen-time-overlay.bg-6 .timer-tooltip-text,
+.fullscreen-time-overlay.bg-7 .timer-tooltip-text {
+    color: white;
+}
+
+.fullscreen-time-overlay.bg-5 .timer-tooltip-icon,
+.fullscreen-time-overlay.bg-6 .timer-tooltip-icon,
+.fullscreen-time-overlay.bg-7 .timer-tooltip-icon {
+    filter: invert(1);
+}
+
+/* Disable tooltip on mobile devices */
+@media (hover: none) and (pointer: coarse) {
+    .timer-tooltip {
+        display: none !important;
+    }
+}

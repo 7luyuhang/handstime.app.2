@@ -101,6 +101,14 @@
     background-color: black;
 }
 
+/* Timer button text span */
+.timer-btn-text {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    text-decoration: inherit;
+}
+
 /* Full Screen Button */
 .fullscreen-mode-btn {
     position: fixed;

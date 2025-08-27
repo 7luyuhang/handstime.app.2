@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="styles/icon-container.css">
     <link rel="stylesheet" href="styles/newsletter.css">
     <link rel="stylesheet" href="styles/tooltip.css">
+    <link rel="stylesheet" href="styles/timer-tooltip.css">
     <link rel="stylesheet" href="styles/video.css">
     <link rel="stylesheet" href="styles/qrcode.css">
     <link rel="stylesheet" href="styles/fullscreen-time.css">
@@ -286,7 +287,7 @@
     <!-- Fullscreen Time -->
     <div id="fullscreenTime" class="fullscreen-time-overlay">
         <!-- Cancel Button -->
-        <button id="fullscreenCancelBtn" class="fullscreen-cancel-btn">
+        <button id="fullscreenCancelBtn" class="fullscreen-cancel-btn" title="Cancel">
             <img src="styles/image/systemIcon/systemIcon_close.svg" alt="Close" class="button-icon">
         </button>
         
@@ -305,11 +306,22 @@
             <div class="vertical-divider"></div>
             
             <!-- Set Timer Button -->
-            <button id="setTimerBtn" class="set-timer-btn tooltip-link" data-tooltip="Click & swipe horizontally to adjust timer.">Set Timer</button>
+            <button id="setTimerBtn" class="set-timer-btn">
+                <span class="timer-btn-text">Set Timer</span>
+                <div class="timer-tooltip">
+                    <div class="timer-tooltip-left">
+                        <span class="timer-tooltip-title">Timer</span>
+                    </div>
+                    <div class="timer-tooltip-right">
+                        <img src="styles/image/cursorMoving_icon.svg" alt="Cursor Moving" class="timer-tooltip-icon">
+                        <span class="timer-tooltip-text">Press & move horizontally to adjust.</span>
+                    </div>
+                </div>
+            </button>
         </div>
         
         <!-- Full Screen Button -->
-        <button id="fullscreenModeBtn" class="fullscreen-mode-btn">
+        <button id="fullscreenModeBtn" class="fullscreen-mode-btn" title="Fullscreen">
             <img src="styles/image/systemIcon/systemIcon_expand.svg" alt="Expand" class="button-icon">
         </button>
 
