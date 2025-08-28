@@ -10,17 +10,38 @@
         dragStartX: 0,
         dragStartMinutes: 25,
         accumulatedMovement: 0,
+        hasStartedDragging: false,
+        
+        // Audio
+        clickAudio: null,
+        lastPlayedValue: null,
         
         // Constants
         MIN_TIMER_SECONDS: 5, // 00:05
         MAX_TIMER_MINUTES: 60, // 60:00
         TIMER_STEP_SECONDS: 5, // 5 second increments
+        SENSITIVITY_FACTOR: 2, // Pixels per second (10 pixels = 5 seconds change)
         
         // Format timer for display (MM:SS)
         formatTimerDisplay: function(totalSeconds) {
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
             return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        },
+        
+        // Play click sound when timer value changes
+        playClickSound: function(newTotalSeconds) {
+            // Only play sound if the value has changed and we're actually dragging
+            if (this.lastPlayedValue !== newTotalSeconds && this.clickAudio && this.hasStartedDragging) {
+                this.lastPlayedValue = newTotalSeconds;
+                
+                // Clone and play the audio to allow rapid playback
+                const audioClone = this.clickAudio.cloneNode();
+                audioClone.volume = 0.2; // Adjust volume if needed
+                audioClone.play().catch(e => {
+                    // Ignore errors if audio can't play
+                });
+            }
         },
         
         // Start timer adjustment
@@ -34,6 +55,8 @@
             this.dragStartX = e.clientX;
             this.dragStartMinutes = this.adjustedTimerMinutes;
             this.accumulatedMovement = 0; // Reset accumulated movement
+            this.lastPlayedValue = null; // Reset last played value for audio
+            this.hasStartedDragging = false; // Track if actual dragging has started
             
             // Hide all controls during adjustment
             if (elements.timeFormatButton) elements.timeFormatButton.style.display = 'none';
@@ -84,16 +107,22 @@
             // Use movementX for pointer lock movement
             const movement = e.movementX || e.mozMovementX || e.webkitMovementX || 0;
             
-            // Accumulate movement
+            // Mark as dragging when actual movement is detected
+            if (movement !== 0 && !this.hasStartedDragging) {
+                this.hasStartedDragging = true;
+            }
+            
+            // Accumulate movement with higher sensitivity
             this.accumulatedMovement += movement;
             
-            // Map pixel movement to timer change (1 pixel = 1 second)
-            const deltaSeconds = Math.round(this.accumulatedMovement * 1);
+            // Map pixel movement to timer change with improved sensitivity
+            // Now 1 second requires SENSITIVITY_FACTOR pixels (2 pixels per second)
+            const deltaSeconds = this.accumulatedMovement / this.SENSITIVITY_FACTOR;
             
-            // Calculate new timer value in seconds
+            // Calculate new timer value in seconds (don't round deltaSeconds for smoother control)
             let newTotalSeconds = Math.round(this.dragStartMinutes * 60) + deltaSeconds;
             
-            // Round to nearest 5-second increment
+            // Round to nearest TIMER_STEP_SECONDS increment for the final value
             newTotalSeconds = Math.round(newTotalSeconds / this.TIMER_STEP_SECONDS) * this.TIMER_STEP_SECONDS;
             
             // Clamp to min/max
@@ -101,6 +130,9 @@
             
             // Update the stored value
             this.adjustedTimerMinutes = newTotalSeconds / 60;
+            
+            // Play click sound when value changes
+            this.playClickSound(newTotalSeconds);
             
             // Update display
             elements.fullscreenClock.textContent = this.formatTimerDisplay(newTotalSeconds);
@@ -111,13 +143,19 @@
             if (!this.isAdjustingTimer) return;
             
             const deltaX = e.clientX - this.dragStartX;
-            // Map pixel movement to timer change (1 pixel = 1 second)
-            const deltaSeconds = Math.round(deltaX * 1);
             
-            // Calculate new timer value in seconds
+            // Mark as dragging when actual movement is detected (threshold to avoid micro-movements)
+            if (Math.abs(deltaX) > 2 && !this.hasStartedDragging) {
+                this.hasStartedDragging = true;
+            }
+            // Map pixel movement to timer change with improved sensitivity
+            // Now 1 second requires SENSITIVITY_FACTOR pixels (2 pixels per second)
+            const deltaSeconds = deltaX / this.SENSITIVITY_FACTOR;
+            
+            // Calculate new timer value in seconds (don't round deltaSeconds for smoother control)
             let newTotalSeconds = Math.round(this.dragStartMinutes * 60) + deltaSeconds;
             
-            // Round to nearest 5-second increment
+            // Round to nearest TIMER_STEP_SECONDS increment for the final value
             newTotalSeconds = Math.round(newTotalSeconds / this.TIMER_STEP_SECONDS) * this.TIMER_STEP_SECONDS;
             
             // Clamp to min/max
@@ -125,6 +163,9 @@
             
             // Update the stored value
             this.adjustedTimerMinutes = newTotalSeconds / 60;
+            
+            // Play click sound when value changes
+            this.playClickSound(newTotalSeconds);
             
             // Update display
             elements.fullscreenClock.textContent = this.formatTimerDisplay(newTotalSeconds);
@@ -135,6 +176,7 @@
             if (!this.isAdjustingTimer) return;
             
             this.isAdjustingTimer = false;
+            this.hasStartedDragging = false; // Reset dragging flag
             
             // Exit pointer lock (with vendor prefixes)
             const exitPointerLock = document.exitPointerLock || 
@@ -205,6 +247,10 @@
         // Initialize timer adjustment
         init: function(elements, callbacks) {
             const self = this;
+            
+            // Initialize audio
+            this.clickAudio = new Audio('styles/sound/key_press_click.mp3');
+            this.clickAudio.preload = 'auto';
             
             // Set up Set Timer button
             if (elements.setTimerBtn) {
