@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="styles/video.css">
     <link rel="stylesheet" href="styles/qrcode.css">
     <link rel="stylesheet" href="styles/fullscreen-time.css">
+    <link rel="stylesheet" href="styles/timer-history.css">
     <link rel="stylesheet" href="styles/background-selector.css">
     <link rel="stylesheet" href="styles/horizontal-container.css">
     <link rel="stylesheet" href="styles/two-hands.css">
@@ -41,6 +42,7 @@
     <script defer src="styles/theme.js"></script>
     <script defer src="styles/video.js"></script>
     <script defer src="styles/set-timer.js"></script>
+    <script defer src="styles/timer-history.js"></script>
     <script defer src="styles/fullscreen-time.js"></script>
     <script defer src="styles/background-selector.js"></script>
     <script defer src="styles/horizontal-swiper.js"></script>
@@ -324,6 +326,11 @@
         <button id="fullscreenModeBtn" class="fullscreen-mode-btn" title="Fullscreen">
             <img src="styles/image/systemIcon/systemIcon_expand.svg" alt="Expand" class="button-icon">
         </button>
+        
+        <!-- History Button -->
+        <button id="historyBtn" class="history-btn" title="History">
+            <img src="styles/image/systemIcon/systemIcon_more.svg" alt="History" class="button-icon">
+        </button>
 
         <div class="fullscreen-time-content">
             <p id="fullscreenClock" class="fullscreen-clock"></p>
@@ -341,6 +348,18 @@
             <div class="background-option bg-gradient-5" data-bg="bg-5"></div>
             <div class="background-option bg-gradient-6" data-bg="bg-6"></div>
             <div class="background-option bg-gradient-7" data-bg="bg-7"></div>
+        </div>
+    </div>
+    
+    <!-- History Overlay -->
+    <div id="historyOverlay" class="history-overlay"></div>
+    
+    <!-- History Sheet -->
+    <div id="historySheet" class="history-sheet">
+        <div class="history-sheet-content">
+            <div id="historyList" class="history-list">
+                <div class="history-list-empty">No timer history.</div>
+            </div>
         </div>
     </div>
 

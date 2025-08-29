@@ -128,9 +128,6 @@
     filter: invert(1); /* Invert white SVG to black for default white background */
 }
 
-
-
-
 /* Dark mode hover effect for clickable-time */
 body.dark-mode .clickable-time:hover {
     color: black;

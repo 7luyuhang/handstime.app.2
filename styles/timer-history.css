@@ -1,0 +1,220 @@
+/* Timer History Styles */
+/* Created on 2024-11-29 */
+
+/* History Overlay */
+.history-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s cubic-bezier(0.5, 0, 0, 1), visibility 0.25s cubic-bezier(0.5, 0, 0, 1);
+    z-index: 1002;
+}
+
+.history-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* History Button */
+.history-btn {
+    position: fixed;
+    top: 2em;
+    right: 2em;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s cubic-bezier(0.5, 0, 0, 1), visibility 0.25s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.fullscreen-time-overlay.active .history-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+.history-btn .button-icon {
+    width: 40px;
+    height: 40px;
+    filter: invert(1); /* Invert white SVG to black for default white background */
+}
+
+/* History Sheet */
+.history-sheet {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 360px;
+    height: 100vh;
+    background-color: white;
+    transform: translateX(100%);
+    transition: transform 0.25s cubic-bezier(0.5, 0, 0, 1);
+    z-index: 1003; /* Above overlay */
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+.history-sheet.active {
+    transform: translateX(0);
+}
+
+/* History Sheet Content */
+.history-sheet-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* History List */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100%;
+}
+
+.history-list-empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 0.875em;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    color: #808080;
+    text-transform: uppercase;
+}
+
+/* History Date Section */
+.history-date-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-date-header {
+    padding: 1em;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    color: #808080;
+    font-size: 0.875em;
+    text-transform: uppercase;
+}
+
+.history-date-section:first-child .history-date-header {
+    padding-top: 1.5em;
+}
+
+/* History List Item */
+.history-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+    position: relative;
+}
+
+/* Delete button */
+.history-item-delete {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translateY(-50%) scale(0.5);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    visibility: hidden;
+    filter: blur(5px);
+    transition: 
+        opacity 0.25s cubic-bezier(0.5, 0, 0, 1),
+        visibility 0.25s cubic-bezier(0.5, 0, 0, 1),
+        transform 0.25s cubic-bezier(0.5, 0, 0, 1),
+        filter 0.25s cubic-bezier(0.5, 0, 0, 1);
+    z-index: 1;
+}
+
+.history-list-item:hover .history-item-delete {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) scale(1);
+    filter: blur(0);
+}
+
+/* Add subtle hover effect on the button itself */
+.history-item-delete:hover {
+    transform: translateY(-50%) scale(1);
+}
+
+.history-item-delete img {
+    width: 20px;
+    height: 20px;
+    filter: invert(1); 
+}
+
+.history-date-section:last-child .history-list-item:last-child {
+    border-bottom: none;
+}
+
+.history-item-time {
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    color: #808080;
+}
+
+.history-item-duration {
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    color: black;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.history-list-item:hover .history-item-duration {
+    transform: translateX(-2em);
+}
+
+/* Dark background styles for history button */
+.fullscreen-time-overlay.bg-5 .history-btn .button-icon,
+.fullscreen-time-overlay.bg-6 .history-btn .button-icon,
+.fullscreen-time-overlay.bg-7 .history-btn .button-icon {
+    filter: none; /* Keep original white color for dark backgrounds */
+}
+
+/* Dark mode styles for history sheet */
+body.dark-mode .history-sheet {
+    background-color: black;
+    border-left: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+body.dark-mode .history-list-item {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+body.dark-mode .history-date-section:last-child .history-list-item:last-child {
+    border-bottom: none;
+}
+
+body.dark-mode .history-date-header {
+    color: #808080;
+}
+
+body.dark-mode .history-item-time {
+    color: #808080;
+}
+
+body.dark-mode .history-item-duration {
+    color: white;
+}
+
+body.dark-mode .history-item-delete img {
+    filter: none; /* Keep white icon for dark mode */
+}
