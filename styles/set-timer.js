@@ -37,7 +37,7 @@
                 
                 // Clone and play the audio to allow rapid playback
                 const audioClone = this.clickAudio.cloneNode();
-                audioClone.volume = 0.2; // Adjust volume if needed
+                audioClone.volume = 0.3; // Adjust volume if needed
                 audioClone.play().catch(e => {
                     // Ignore errors if audio can't play
                 });

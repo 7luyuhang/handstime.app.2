@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Countdown state management
     let countdownInterval = null;
     let countdownEndTime = null;
+    let countdownStartTime = null; // Track when countdown started
     let isCountdownActive = false;
     let isCountdownComplete = false;
     
@@ -78,7 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
             COUNTDOWN_DURATION = COUNTDOWN_MINUTES * 60 * 1000;
         }
         
-        // Set the end time
+        // Set the start and end time
+        countdownStartTime = Date.now();
         countdownEndTime = Date.now() + COUNTDOWN_DURATION;
         isCountdownActive = true;
         isCountdownComplete = false;
@@ -105,10 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             // Add visual feedback
             fullscreenClock.classList.add('countdown-active');
-            
-            // Show countdown hint
-            countdownHint.classList.add('active');
-            
             
             // Update immediately
             updateCountdown();
@@ -139,6 +137,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 countdownInterval = null;
             }
             
+            // Record the actual timer usage (full duration was used)
+            if (window.timerHistory && countdownStartTime) {
+                const actualDurationMs = Date.now() - countdownStartTime;
+                const actualDurationMinutes = actualDurationMs / (60 * 1000);
+                window.timerHistory.addTimerRecord(actualDurationMinutes);
+            }
+            
             // Mark as complete but don't reset other states
             isCountdownActive = false;
             isCountdownComplete = true;
@@ -155,11 +160,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Stop countdown
     function stopCountdown() {
+        // Record actual timer usage if countdown was active (user stopped early)
+        if (isCountdownActive && countdownStartTime && window.timerHistory) {
+            const actualDurationMs = Date.now() - countdownStartTime;
+            const actualDurationMinutes = actualDurationMs / (60 * 1000);
+            window.timerHistory.addTimerRecord(actualDurationMinutes);
+        }
+        
         if (countdownInterval) {
             clearInterval(countdownInterval);
             countdownInterval = null;
         }
         countdownEndTime = null;
+        countdownStartTime = null;
         isCountdownActive = false;
         isCountdownComplete = false;
         
@@ -180,10 +193,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             fullscreenClock.classList.remove('countdown-active');
             fullscreenClock.classList.remove('countdown-complete');
-            
-            // Hide countdown hint
-            countdownHint.classList.remove('active');
-            
             
             // Remove scale after transition
             fullscreenClock.style.transform = '';
