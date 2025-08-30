@@ -62,13 +62,14 @@
         },
         
         // Add a timer record to history
-        addTimerRecord: function(duration) {
+        addTimerRecord: function(duration, isCompleted = false) {
             const now = new Date();
             const dateTime = this.formatDateTime(now);
             const record = {
                 id: Date.now(),
                 startTime: now.toISOString(),
                 duration: duration, // Duration in minutes
+                isCompleted: isCompleted, // Track if timer was completed or stopped early
                 formattedDate: dateTime.date,
                 formattedTime: dateTime.time,
                 formattedDuration: this.formatDuration(duration)
@@ -245,9 +246,20 @@
                         timeSpan.className = 'history-item-time';
                         timeSpan.textContent = timeText || '';
                         
+                        // Add completion indicator if timer was completed
+                        const durationContainer = document.createElement('div');
+                        durationContainer.className = 'history-item-duration-container';
+                        
+                        if (record.isCompleted) {
+                            const completionIndicator = document.createElement('span');
+                            completionIndicator.className = 'history-completion-indicator';
+                            durationContainer.appendChild(completionIndicator);
+                        }
+                        
                         const durationSpan = document.createElement('span');
                         durationSpan.className = 'history-item-duration';
                         durationSpan.textContent = record.formattedDuration;
+                        durationContainer.appendChild(durationSpan);
                         
                         // Add delete button
                         const deleteBtn = document.createElement('button');
@@ -260,7 +272,7 @@
                         });
                         
                         item.appendChild(timeSpan);
-                        item.appendChild(durationSpan);
+                        item.appendChild(durationContainer);
                         item.appendChild(deleteBtn);
                         dateSection.appendChild(item);
                     });
