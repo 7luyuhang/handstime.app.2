@@ -73,6 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear any existing countdown
         stopCountdown();
         
+        // Play warsaw.mp3 sound when timer starts
+        const audio = new Audio('styles/sound/warsaw.mp3');
+        audio.play().catch(err => {
+            console.log('Error playing sound:', err);
+        });
+        
         // Get the latest timer value from the module if available
         if (window.timerAdjustment) {
             COUNTDOWN_MINUTES = window.timerAdjustment.adjustedTimerMinutes;
@@ -141,7 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (window.timerHistory && countdownStartTime) {
                 const actualDurationMs = Date.now() - countdownStartTime;
                 const actualDurationMinutes = actualDurationMs / (60 * 1000);
-                window.timerHistory.addTimerRecord(actualDurationMinutes);
+                // Pass true to indicate timer was completed
+                window.timerHistory.addTimerRecord(actualDurationMinutes, true);
             }
             
             // Mark as complete but don't reset other states
@@ -164,7 +171,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isCountdownActive && countdownStartTime && window.timerHistory) {
             const actualDurationMs = Date.now() - countdownStartTime;
             const actualDurationMinutes = actualDurationMs / (60 * 1000);
-            window.timerHistory.addTimerRecord(actualDurationMinutes);
+            // Pass false to indicate timer was stopped early
+            window.timerHistory.addTimerRecord(actualDurationMinutes, false);
         }
         
         if (countdownInterval) {

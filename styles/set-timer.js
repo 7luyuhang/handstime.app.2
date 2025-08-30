@@ -6,7 +6,7 @@
     window.timerAdjustment = {
         // State
         isAdjustingTimer: false,
-        adjustedTimerMinutes: 25,
+        adjustedTimerMinutes: 25, // Default value, will be overridden by localStorage
         dragStartX: 0,
         dragStartMinutes: 25,
         accumulatedMovement: 0,
@@ -29,6 +29,23 @@
             return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         },
         
+        // Save timer setting to localStorage
+        saveTimerSetting: function() {
+            localStorage.setItem('customTimerMinutes', this.adjustedTimerMinutes);
+        },
+        
+        // Load timer setting from localStorage
+        loadTimerSetting: function() {
+            const saved = localStorage.getItem('customTimerMinutes');
+            if (saved !== null) {
+                const minutes = parseFloat(saved);
+                // Validate the loaded value
+                if (!isNaN(minutes) && minutes >= this.MIN_TIMER_SECONDS / 60 && minutes <= this.MAX_TIMER_MINUTES) {
+                    this.adjustedTimerMinutes = minutes;
+                }
+            }
+        },
+        
         // Play click sound when timer value changes
         playClickSound: function(newTotalSeconds) {
             // Only play sound if the value has changed and we're actually dragging
@@ -37,7 +54,7 @@
                 
                 // Clone and play the audio to allow rapid playback
                 const audioClone = this.clickAudio.cloneNode();
-                audioClone.volume = 0.3; // Adjust volume if needed
+                audioClone.volume = 1.0; // Adjust volume if needed
                 audioClone.play().catch(e => {
                     // Ignore errors if audio can't play
                 });
@@ -187,6 +204,9 @@
                 exitPointerLock.call(document);
             }
             
+            // Save the timer setting to localStorage
+            this.saveTimerSetting();
+            
             // Update the countdown duration via callback
             if (callbacks.updateCountdownDuration) {
                 callbacks.updateCountdownDuration(this.adjustedTimerMinutes);
@@ -248,6 +268,9 @@
         init: function(elements, callbacks) {
             const self = this;
             
+            // Load saved timer setting from localStorage
+            this.loadTimerSetting();
+            
             // Initialize audio
             this.clickAudio = new Audio('styles/sound/key_press_click.mp3');
             this.clickAudio.preload = 'auto';
@@ -260,7 +283,7 @@
                     self.startTimerAdjustment(e, elements, callbacks);
                 });
                 
-                // Initialize button text with current timer value
+                // Initialize button text with saved timer value
                 const totalSeconds = Math.round(self.adjustedTimerMinutes * 60);
                 const btnText = elements.setTimerBtn.querySelector('.timer-btn-text');
                 if (btnText) {
