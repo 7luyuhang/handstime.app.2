@@ -203,6 +203,12 @@ body.dark-mode .bottom-controls-group .vertical-divider {
     color: black;
 }
 
+/* Hide history button when countdown is active */
+.fullscreen-time-overlay:has(.countdown-active) .history-btn,
+.fullscreen-time-overlay:has(.countdown-complete) .history-btn {
+    display: none;
+}
+
 
 /* Fullscreen time has its own color rules independent of site theme */
 /* Text colors are handled by background-selector.css based on selected background */

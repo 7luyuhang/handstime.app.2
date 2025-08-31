@@ -326,12 +326,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     // In fullscreen - show collapse icon
                     buttonIcon.src = 'assets/image/systemIcon/systemIcon_collapse.svg';
                     buttonIcon.alt = 'Collapse';
-                    fullscreenModeButton.title = 'Exit Fullscreen';
+                    fullscreenModeButton.title = 'Exit Full Screen';
                 } else {
                     // Not in fullscreen - show expand icon
                     buttonIcon.src = 'assets/image/systemIcon/systemIcon_expand.svg';
                     buttonIcon.alt = 'Expand';
-                    fullscreenModeButton.title = 'Fullscreen';
+                    fullscreenModeButton.title = 'Full Screen';
                 }
             }
         }
