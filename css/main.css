@@ -33,7 +33,7 @@ html::-webkit-scrollbar {
 /*Font*/
 @font-face {
     font-family: 'ABCDiatypeSemi-Mono';
-    src: url(font/ABCDiatypeSemi-Mono-Regular.otf);
+    src: url(../assets/font/ABCDiatypeSemi-Mono-Regular.otf);
 }
 
 a {

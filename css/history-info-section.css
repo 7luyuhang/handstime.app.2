@@ -1,0 +1,73 @@
+/* History Info Section Styles */
+/* Created on 2024-12-05 */
+/* This file contains styles for the timer history info section */
+
+/* Info Section Container */
+.history-info-section {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+    padding: 1em;
+    z-index: 1004;
+}
+
+/* Info Header */
+.history-info-header {
+    margin-bottom: 0.5em;
+}
+
+.history-info-icon { /* Info icon */
+    width: auto;
+    height: 28px;
+    opacity: 0.5;
+}
+
+/* Info Content */
+.history-info-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+}
+
+.history-info-item + .history-info-item {
+    margin-top: 0.25em;
+}
+
+.history-info-label {
+    color: #808080;
+    font-size: 0.875em;
+    text-transform: uppercase;
+}
+
+.history-info-value {
+    color: black;
+    font-size: 0.875em;
+    text-transform: uppercase;
+}
+
+/* Dark Mode Styles */
+body.dark-mode .history-info-section {
+    background-color: black;
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+body.dark-mode .history-info-icon {
+    filter: invert(1); /* Invert black icon to white in dark mode */
+}
+
+body.dark-mode .history-info-label {
+    color: #808080;
+}
+
+body.dark-mode .history-info-value {
+    color: white;
+}

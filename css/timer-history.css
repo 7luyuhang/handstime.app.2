@@ -8,7 +8,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.5); /* White overlay for light mode */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.25s cubic-bezier(0.5, 0, 0, 1), visibility 0.25s cubic-bezier(0.5, 0, 0, 1);
@@ -73,6 +73,7 @@
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
+    padding-bottom: 160px; /* Space for info section with two items */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -117,7 +118,7 @@
     position: sticky;
     top: 0;
     background-color: white;
-    z-index: 1;
+    z-index: 10;
 }
 
 .history-date-section:first-child .history-date-header {
@@ -192,8 +193,8 @@
 }
 
 .history-completion-indicator { /* Circle indicator for completed timer */
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     margin-bottom: 0.1em;
     background-color: black;
     border-radius: 50%;
@@ -215,6 +216,11 @@
 .fullscreen-time-overlay.bg-6 .history-btn .button-icon,
 .fullscreen-time-overlay.bg-7 .history-btn .button-icon {
     filter: none; /* Keep original white color for dark backgrounds */
+}
+
+/* Dark mode styles for history overlay */
+body.dark-mode .history-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Black overlay for dark mode */
 }
 
 /* Dark mode styles for history sheet */

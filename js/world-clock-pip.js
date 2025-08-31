@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
             style.textContent = `
                 @font-face {
                     font-family: 'ABCDiatypeSemi-Mono';
-                    src: url('${window.location.origin}/styles/font/ABCDiatypeSemi-Mono-Regular.otf') format('opentype');
+                    src: url('${window.location.origin}/assets/font/ABCDiatypeSemi-Mono-Regular.otf') format('opentype');
                     font-weight: normal;
                     font-style: normal;
                     font-display: swap;
