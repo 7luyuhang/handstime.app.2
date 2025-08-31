@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const localTimeElement = document.getElementById('localTime');
     const fullscreenOverlay = document.getElementById('fullscreenTime');
     const fullscreenClock = document.getElementById('fullscreenClock');
-    const countdownHint = document.getElementById('countdownHint');
     const cancelButton = document.getElementById('fullscreenCancelBtn');
     const fullscreenModeButton = document.getElementById('fullscreenModeBtn');
     const timeFormatButton = document.getElementById('timeFormatBtn');
@@ -90,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownEndTime = Date.now() + COUNTDOWN_DURATION;
         isCountdownActive = true;
         isCountdownComplete = false;
+        lastDisplayedSeconds = -1; // Reset tracker for new countdown
         
         // Hide background selector during countdown
         if (window.backgroundSelector && window.backgroundSelector.hideSelector) {
@@ -122,10 +122,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 125); // Half of the transition duration
         
         // Update every second
-        countdownInterval = setInterval(updateCountdown, 1000); // Update every second
+        countdownInterval = setInterval(updateCountdown, 100); // Update every 100ms for smooth display
     }
     
     // Update countdown display
+    let lastDisplayedSeconds = -1; // Track last displayed second to avoid unnecessary DOM updates
+    
     function updateCountdown() {
         if (!isCountdownActive || !countdownEndTime) {
             return;
@@ -136,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (remainingTime <= 0) {
             // Countdown finished
             fullscreenClock.textContent = '00:00';
+            lastDisplayedSeconds = 0;
             
             // Clear the interval but keep the state
             if (countdownInterval) {
@@ -160,8 +163,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Keep hint visible to guide user
             // Keep showing 00:00 until user clicks to reset
         } else {
-            // Update display with remaining time
-            fullscreenClock.textContent = formatCountdownTime(remainingTime);
+            // Update display only if the second has changed
+            const currentSeconds = Math.ceil(remainingTime / 1000);
+            if (currentSeconds !== lastDisplayedSeconds) {
+                fullscreenClock.textContent = formatCountdownTime(remainingTime);
+                lastDisplayedSeconds = currentSeconds;
+            }
         }
     }
     
@@ -183,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownStartTime = null;
         isCountdownActive = false;
         isCountdownComplete = false;
+        lastDisplayedSeconds = -1; // Reset the last displayed seconds tracker
         
         // Re-enable background toggle button when countdown stops
         if (backgroundToggleBtn) {

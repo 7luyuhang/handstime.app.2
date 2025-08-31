@@ -15,6 +15,9 @@
             // Load history from localStorage
             this.loadHistory();
             
+            // Update info stats to set initial visibility
+            this.updateInfoStats();
+            
             // Get elements
             const historyBtn = document.getElementById('historyBtn');
             const historySheet = document.getElementById('historySheet');
@@ -42,6 +45,14 @@
                     self.closeHistorySheet();
                 }
             });
+            
+            // Set up reset button
+            const resetBtn = document.getElementById('resetHistoryBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    self.handleReset();
+                });
+            }
         },
         
         // Load history from localStorage
@@ -145,7 +156,7 @@
                 // Then show sheet
                 historySheet.classList.add('active');
                 this.isSheetOpen = true;
-                this.renderHistory();
+                this.renderHistory(); // This calls updateInfoStats internally
                 
                 // Prevent body scroll when sheet is open
                 document.body.style.overflow = 'hidden';
@@ -279,6 +290,10 @@
                         
                         const durationSpan = document.createElement('span');
                         durationSpan.className = 'history-item-duration';
+                        // Apply special styling for 00:00 duration
+                        if (record.formattedDuration === '00:00') {
+                            durationSpan.classList.add('zero-duration');
+                        }
                         durationSpan.textContent = record.formattedDuration;
                         durationContainer.appendChild(durationSpan);
                         
@@ -325,7 +340,32 @@
             // Also clear the stored initial date
             localStorage.removeItem('timerInitialStartDate');
             if (this.isSheetOpen) {
-                this.renderHistory();
+                this.renderHistory(); // This will also update info stats and hide reset button
+            }
+        },
+        
+        // Handle reset button click
+        handleReset: function() {
+            if (this.historyData.length === 0) {
+                // No history to clear
+                return;
+            }
+            
+            // Show confirmation dialog
+            const confirmMessage = 'Are you sure you want to reset the timer history?';
+            if (confirm(confirmMessage)) {
+                this.clearHistory();
+                // Show feedback that history was cleared
+                const resetBtn = document.getElementById('resetHistoryBtn');
+                if (resetBtn) {
+                    const originalText = resetBtn.querySelector('.history-reset-text').textContent;
+                    resetBtn.querySelector('.history-reset-text').textContent = 'Cleared';
+                    
+                    // Restore button text after a delay
+                    setTimeout(() => {
+                        resetBtn.querySelector('.history-reset-text').textContent = originalText;
+                    }, 2000);
+                }
             }
         },
         
@@ -352,8 +392,22 @@
                     
                     timerStartedDate.textContent = `${month} ${day}, ${year}`;
                 } else {
-                    timerStartedDate.textContent = '—';
+                    timerStartedDate.textContent = 'None';
                 }
+            }
+            
+            // Show/hide reset button and divider based on history data
+            const resetContainer = document.querySelector('.history-reset-container');
+            const divider = document.querySelector('.history-info-divider');
+            
+            if (this.historyData.length > 0) {
+                // Show reset button and divider when there's data
+                if (resetContainer) resetContainer.style.display = 'block';
+                if (divider) divider.style.display = 'block';
+            } else {
+                // Hide reset button and divider when there's no data
+                if (resetContainer) resetContainer.style.display = 'none';
+                if (divider) divider.style.display = 'none';
             }
         }
     };

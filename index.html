@@ -336,9 +336,7 @@
         <div class="fullscreen-time-content">
             <p id="fullscreenClock" class="fullscreen-clock"></p>
         </div>
-        <div id="countdownHint" class="countdown-hint">
-            Focus on present. Click circle to cancel.
-        </div>
+
         
         <!-- Background Selector -->
         <div class="background-selector" id="backgroundSelector">
@@ -359,7 +357,7 @@
     <div id="historySheet" class="history-sheet">
         <div class="history-sheet-content">
             <div id="historyList" class="history-list">
-                <div class="history-list-empty">No timer history.</div>
+                <div class="history-list-empty">No timer history</div>
             </div>
         </div>
         <!-- Info Section -->
@@ -375,6 +373,12 @@
                 <div class="history-info-item">
                     <span class="history-info-label">Started</span>
                     <span id="timerStartedDate" class="history-info-value">—</span>
+                </div>
+                <div class="history-info-divider"></div>
+                <div class="history-reset-container">
+                    <button id="resetHistoryBtn" class="history-reset-btn">
+                        <span class="history-reset-text">Reset</span>
+                    </button>
                 </div>
             </div>
         </div>

@@ -69,41 +69,27 @@
     color: black;
     text-align: left;
     width: 100%;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
-/* Dark background styles (bg-5, bg-6, bg-7) */
-.fullscreen-time-overlay.bg-5 .timer-tooltip,
-.fullscreen-time-overlay.bg-6 .timer-tooltip,
-.fullscreen-time-overlay.bg-7 .timer-tooltip {
+/* Dark mode styles */
+body.dark-mode .timer-tooltip {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.fullscreen-time-overlay.bg-5 .timer-tooltip-left,
-.fullscreen-time-overlay.bg-6 .timer-tooltip-left,
-.fullscreen-time-overlay.bg-7 .timer-tooltip-left {
+body.dark-mode .timer-tooltip-left {
     border-right: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.fullscreen-time-overlay.bg-5 .timer-tooltip-title,
-.fullscreen-time-overlay.bg-6 .timer-tooltip-title,
-.fullscreen-time-overlay.bg-7 .timer-tooltip-title,
-.fullscreen-time-overlay.bg-5 .timer-tooltip-text,
-.fullscreen-time-overlay.bg-6 .timer-tooltip-text,
-.fullscreen-time-overlay.bg-7 .timer-tooltip-text {
+body.dark-mode .timer-tooltip-title {
     color: white;
 }
 
-.fullscreen-time-overlay.bg-5 .timer-tooltip-icon,
-.fullscreen-time-overlay.bg-6 .timer-tooltip-icon,
-.fullscreen-time-overlay.bg-7 .timer-tooltip-icon {
-    filter: invert(1);
+body.dark-mode .timer-tooltip-text {
+    color: white;
 }
 
-/* Disable tooltip on mobile devices */
-@media (hover: none) and (pointer: coarse) {
-    .timer-tooltip {
-        display: none !important;
-    }
+body.dark-mode .timer-tooltip-icon {
+    filter: invert(1);
 }
