@@ -48,7 +48,7 @@
 }
 
 /* History Sheet */
-.history-sheet {
+.history-sheet { /* Overall history sheet */
     position: fixed;
     top: 0;
     right: 0;
@@ -73,7 +73,7 @@
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
-    padding-bottom: 160px; /* Space for info section with two items */
+    padding-bottom: 120px; /* Space for info section (adjusts automatically) */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -86,26 +86,28 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    min-height: 100%;
+    min-height: calc(100vh - 120px); /* Full viewport height minus info section */
 }
 
+/* History List Empty State*/
 .history-list-empty {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 0.875em;
     transform: translate(-50%, -50%);
-    width: 100%;
+    font-size: 0.875em;
     text-align: center;
     font-family: 'ABCDiatypeSemi-Mono', monospace;
     color: #808080;
     text-transform: uppercase;
+    width: 100%;
 }
 
 /* History Date Section */
 .history-date-section {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .history-date-header {
@@ -207,16 +209,15 @@
     color: black;
 }
 
+/* Color for 00:00 duration */
+.history-item-duration.zero-duration {
+    color: #808080;
+}
+
 .history-list-item:hover .history-item-duration-container {
     transform: translateX(-1.75em); /* close button to right padding */
 }
 
-/* Dark background styles for history button */
-.fullscreen-time-overlay.bg-5 .history-btn .button-icon,
-.fullscreen-time-overlay.bg-6 .history-btn .button-icon,
-.fullscreen-time-overlay.bg-7 .history-btn .button-icon {
-    filter: none; /* Keep original white color for dark backgrounds */
-}
 
 /* Dark mode styles for history overlay */
 body.dark-mode .history-overlay {
@@ -249,6 +250,11 @@ body.dark-mode .history-item-time {
 
 body.dark-mode .history-item-duration {
     color: white;
+}
+
+/* Gray color for 00:00 duration in dark mode */
+body.dark-mode .history-item-duration.zero-duration {
+    color: #808080;
 }
 
 body.dark-mode .history-completion-indicator {

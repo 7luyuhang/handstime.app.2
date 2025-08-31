@@ -2,6 +2,8 @@
 /* Created on 2024-12-05 */
 /* This file contains styles for the timer history info section */
 
+/* Bottom Info Section */
+
 /* Info Section Container */
 .history-info-section {
     position: absolute;
@@ -54,6 +56,49 @@
     text-transform: uppercase;
 }
 
+/* Timer reset */
+/* Divider */
+.history-info-divider {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.25);
+    margin: 1em 0em 1em 0em;
+    display: none; /* Hidden by default, shown when there's history data */
+}
+
+/* Reset Button Container */
+.history-reset-container {
+    text-align: left;
+    display: none; /* Hidden by default, shown via JS when there's history data */
+}
+
+/* Reset Button */
+.history-reset-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-block;
+    width: auto;
+    /* Independent font settings */
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+
+}
+
+.history-reset-text {
+    /* Inherit from button, not from info-section */
+    font-family: inherit;
+    font-size: inherit;
+    color: black;
+    text-decoration: underline;
+}
+
+.history-reset-btn:hover .history-reset-text {
+    color: white;
+    background-color: black;
+}
+
+
 /* Dark Mode Styles */
 body.dark-mode .history-info-section {
     background-color: black;
@@ -70,4 +115,13 @@ body.dark-mode .history-info-label {
 
 body.dark-mode .history-info-value {
     color: white;
+}
+
+body.dark-mode .history-reset-text {
+    color: white;
+}
+
+body.dark-mode .history-reset-btn:hover .history-reset-text {
+    color: black;
+    background-color: white;
 }
