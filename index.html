@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="styles/qrcode.css">
     <link rel="stylesheet" href="styles/fullscreen-time.css">
     <link rel="stylesheet" href="styles/timer-history.css">
+    <link rel="stylesheet" href="styles/history-info-section.css">
     <link rel="stylesheet" href="styles/background-selector.css">
     <link rel="stylesheet" href="styles/horizontal-container.css">
     <link rel="stylesheet" href="styles/two-hands.css">
@@ -359,6 +360,22 @@
         <div class="history-sheet-content">
             <div id="historyList" class="history-list">
                 <div class="history-list-empty">No timer history.</div>
+            </div>
+        </div>
+        <!-- Info Section -->
+        <div class="history-info-section">
+            <div class="history-info-header">
+                <img src="styles/image/info_icon.svg" alt="Info" class="history-info-icon">
+            </div>
+            <div class="history-info-content">
+                <div class="history-info-item">
+                    <span class="history-info-label">Timer Done</span>
+                    <span id="timerDoneCount" class="history-info-value">0</span>
+                </div>
+                <div class="history-info-item">
+                    <span class="history-info-label">Started</span>
+                    <span id="timerStartedDate" class="history-info-value">—</span>
+                </div>
             </div>
         </div>
     </div>

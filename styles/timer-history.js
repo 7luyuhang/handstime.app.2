@@ -161,6 +161,9 @@
             // Clear current content
             historyList.innerHTML = '';
             
+            // Update info section stats
+            this.updateInfoStats();
+            
             if (this.historyData.length === 0) {
                 // Show empty state
                 const emptyDiv = document.createElement('div');
@@ -302,6 +305,36 @@
             this.saveHistory();
             if (this.isSheetOpen) {
                 this.renderHistory();
+            }
+        },
+        
+        // Calculate and update info section statistics
+        updateInfoStats: function() {
+            // Update timer done count
+            const timerDoneCount = document.getElementById('timerDoneCount');
+            if (timerDoneCount) {
+                const completedCount = this.historyData.filter(record => record.isCompleted).length;
+                timerDoneCount.textContent = completedCount;
+            }
+            
+            // Update started date (earliest timer)
+            const timerStartedDate = document.getElementById('timerStartedDate');
+            if (timerStartedDate) {
+                if (this.historyData.length > 0) {
+                    // Get the oldest timer (last in array since we add new ones to beginning)
+                    const oldestTimer = this.historyData[this.historyData.length - 1];
+                    const startDate = new Date(oldestTimer.startTime);
+                    
+                    // Format date as "Aug 25, 2025"
+                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    const month = months[startDate.getMonth()];
+                    const day = startDate.getDate();
+                    const year = startDate.getFullYear();
+                    
+                    timerStartedDate.textContent = `${month} ${day}, ${year}`;
+                } else {
+                    timerStartedDate.textContent = '—';
+                }
             }
         }
     };
