@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         stopCountdown();
         
         // Play warsaw.mp3 sound when timer starts
-        const audio = new Audio('styles/sound/warsaw.mp3');
+        const audio = new Audio('assets/sound/warsaw.mp3');
         audio.play().catch(err => {
             console.log('Error playing sound:', err);
         });
@@ -316,12 +316,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (buttonIcon) {
                 if (document.fullscreenElement) {
                     // In fullscreen - show collapse icon
-                    buttonIcon.src = 'styles/image/systemIcon/systemIcon_collapse.svg';
+                    buttonIcon.src = 'assets/image/systemIcon/systemIcon_collapse.svg';
                     buttonIcon.alt = 'Collapse';
                     fullscreenModeButton.title = 'Exit Fullscreen';
                 } else {
                     // Not in fullscreen - show expand icon
-                    buttonIcon.src = 'styles/image/systemIcon/systemIcon_expand.svg';
+                    buttonIcon.src = 'assets/image/systemIcon/systemIcon_expand.svg';
                     buttonIcon.alt = 'Expand';
                     fullscreenModeButton.title = 'Fullscreen';
                 }

@@ -272,7 +272,7 @@
             this.loadTimerSetting();
             
             // Initialize audio
-            this.clickAudio = new Audio('styles/sound/key_press_click.mp3');
+            this.clickAudio = new Audio('assets/sound/key_press_click.mp3');
             this.clickAudio.preload = 'auto';
             
             // Set up Set Timer button

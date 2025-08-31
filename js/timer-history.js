@@ -6,6 +6,7 @@
         historyData: [],
         maxHistoryItems: 50,
         isSheetOpen: false,
+        initialStartDate: null, // Store the very first timer date
         
         // Initialize
         init: function() {
@@ -54,6 +55,17 @@
                     this.historyData = [];
                 }
             }
+            
+            // Load initial start date
+            const savedStartDate = localStorage.getItem('timerInitialStartDate');
+            if (savedStartDate) {
+                this.initialStartDate = savedStartDate;
+            } else if (this.historyData.length > 0) {
+                // If no saved start date but we have history, use the oldest timer
+                const oldestTimer = this.historyData[this.historyData.length - 1];
+                this.initialStartDate = oldestTimer.startTime;
+                localStorage.setItem('timerInitialStartDate', this.initialStartDate);
+            }
         },
         
         // Save history to localStorage
@@ -74,6 +86,12 @@
                 formattedTime: dateTime.time,
                 formattedDuration: this.formatDuration(duration)
             };
+            
+            // Set initial start date if this is the first timer ever
+            if (!this.initialStartDate) {
+                this.initialStartDate = record.startTime;
+                localStorage.setItem('timerInitialStartDate', this.initialStartDate);
+            }
             
             // Add to beginning of array
             this.historyData.unshift(record);
@@ -168,7 +186,7 @@
                 // Show empty state
                 const emptyDiv = document.createElement('div');
                 emptyDiv.className = 'history-list-empty';
-                emptyDiv.textContent = 'No timer history yet';
+                emptyDiv.textContent = 'No timer history';
                 historyList.appendChild(emptyDiv);
             } else {
                 // Group history items by date
@@ -268,7 +286,7 @@
                         const deleteBtn = document.createElement('button');
                         deleteBtn.className = 'history-item-delete';
                         deleteBtn.setAttribute('data-record-id', record.id);
-                        deleteBtn.innerHTML = '<img src="styles/image/systemIcon/systemIcon_close.svg" alt="Delete">';
+                        deleteBtn.innerHTML = '<img src="assets/image/systemIcon/systemIcon_close.svg" alt="Delete">';
                         deleteBtn.addEventListener('click', (e) => {
                             e.stopPropagation();
                             this.deleteRecord(record.id);
@@ -302,7 +320,10 @@
         // Clear all history
         clearHistory: function() {
             this.historyData = [];
+            this.initialStartDate = null;
             this.saveHistory();
+            // Also clear the stored initial date
+            localStorage.removeItem('timerInitialStartDate');
             if (this.isSheetOpen) {
                 this.renderHistory();
             }
@@ -317,13 +338,11 @@
                 timerDoneCount.textContent = completedCount;
             }
             
-            // Update started date (earliest timer)
+            // Update started date (use preserved initial date)
             const timerStartedDate = document.getElementById('timerStartedDate');
             if (timerStartedDate) {
-                if (this.historyData.length > 0) {
-                    // Get the oldest timer (last in array since we add new ones to beginning)
-                    const oldestTimer = this.historyData[this.historyData.length - 1];
-                    const startDate = new Date(oldestTimer.startTime);
+                if (this.initialStartDate) {
+                    const startDate = new Date(this.initialStartDate);
                     
                     // Format date as "Aug 25, 2025"
                     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
