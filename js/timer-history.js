@@ -18,6 +18,12 @@
             // Update info stats to set initial visibility
             this.updateInfoStats();
             
+            // Adjust padding for info section
+            this.adjustInfoSectionPadding();
+            
+            // Set up ResizeObserver for info section
+            this.setupInfoSectionObserver();
+            
             // Get elements
             const historyBtn = document.getElementById('historyBtn');
             const historySheet = document.getElementById('historySheet');
@@ -157,6 +163,11 @@
                 historySheet.classList.add('active');
                 this.isSheetOpen = true;
                 this.renderHistory(); // This calls updateInfoStats internally
+                
+                // Adjust padding for info section
+                setTimeout(() => {
+                    this.adjustInfoSectionPadding();
+                }, 10);
                 
                 // Prevent body scroll when sheet is open
                 document.body.style.overflow = 'hidden';
@@ -408,6 +419,40 @@
                 // Hide reset button and divider when there's no data
                 if (resetContainer) resetContainer.style.display = 'none';
                 if (divider) divider.style.display = 'none';
+            }
+            
+            // Adjust padding after potentially changing visibility of elements
+            this.adjustInfoSectionPadding();
+        },
+        
+        // Adjust padding bottom to match info section height
+        adjustInfoSectionPadding: function() {
+            const historySheetContent = document.querySelector('.history-sheet-content');
+            const historyInfoSection = document.querySelector('.history-info-section');
+            const historyList = document.querySelector('.history-list');
+            
+            if (historySheetContent && historyInfoSection && historyList) {
+                // Get the actual height of the info section
+                const infoSectionHeight = historyInfoSection.offsetHeight;
+                
+                // Set padding-bottom on sheet content to match
+                historySheetContent.style.paddingBottom = infoSectionHeight + 'px';
+                
+                // Also adjust the min-height of the list
+                historyList.style.minHeight = `calc(100vh - ${infoSectionHeight}px)`;
+            }
+        },
+        
+        // Set up ResizeObserver to watch info section size changes
+        setupInfoSectionObserver: function() {
+            const historyInfoSection = document.querySelector('.history-info-section');
+            
+            if (historyInfoSection && window.ResizeObserver) {
+                const resizeObserver = new ResizeObserver(() => {
+                    this.adjustInfoSectionPadding();
+                });
+                
+                resizeObserver.observe(historyInfoSection);
             }
         }
     };

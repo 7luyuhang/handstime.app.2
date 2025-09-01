@@ -101,6 +101,44 @@
     background-color: black;
 }
 
+/* Timer Controls Group */
+.timer-controls-group {
+    position: fixed;
+    bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none; /* Hidden by default */
+    align-items: center;
+    gap: 1em;
+    z-index: 1001;
+}
+
+/* Show timer controls during countdown (but not when complete or adjusting) */
+.fullscreen-time-overlay:has(.countdown-active) .timer-controls-group {
+    display: flex;
+}
+
+/* Hide bottom controls during timer adjustment */
+.fullscreen-time-overlay:has(.adjusting-timer) .bottom-controls-group {
+    display: none !important;
+}
+
+/* Pause/Resume Button */
+.pause-resume-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
+.pause-resume-btn .button-icon {
+    width: 40px;
+    height: 40px;
+    filter: invert(1); /* Invert white SVG to black for default white background */
+}
+
 /* Timer button text span */
 .timer-btn-text {
     font-family: inherit;
@@ -201,11 +239,20 @@ body.dark-mode .bottom-controls-group .vertical-divider {
 
 .fullscreen-clock.countdown-complete {
     color: black;
+    outline: 1px solid black;
 }
 
-/* Hide history button when countdown is active */
+/* Timer adjustment state */
+.fullscreen-clock.adjusting-timer {
+    color: black;
+    font-size: 2rem; /* font size */
+    outline: 1px solid black;
+}
+
+/* Hide history button when countdown is active, complete, or adjusting */
 .fullscreen-time-overlay:has(.countdown-active) .history-btn,
-.fullscreen-time-overlay:has(.countdown-complete) .history-btn {
+.fullscreen-time-overlay:has(.countdown-complete) .history-btn,
+.fullscreen-time-overlay:has(.adjusting-timer) .history-btn {
     display: none;
 }
 
@@ -257,6 +304,13 @@ body.dark-mode .bottom-controls-group .vertical-divider {
     filter: none; /* Keep original white color for dark backgrounds */
 }
 
+/* Dark background styles for pause/resume button */
+.fullscreen-time-overlay.bg-5 .pause-resume-btn .button-icon,
+.fullscreen-time-overlay.bg-6 .pause-resume-btn .button-icon,
+.fullscreen-time-overlay.bg-7 .pause-resume-btn .button-icon {
+    filter: none; /* Keep original white color for dark backgrounds */
+}
+
 /* Text colors for dark backgrounds */
 .fullscreen-time-overlay.bg-5 .bottom-controls-group .set-timer-btn,
 .fullscreen-time-overlay.bg-6 .bottom-controls-group .set-timer-btn,
@@ -301,6 +355,27 @@ body.dark-mode .bottom-controls-group .vertical-divider {
 .fullscreen-time-overlay.bg-5 .fullscreen-clock:hover,
 .fullscreen-time-overlay.bg-6 .fullscreen-clock:hover,
 .fullscreen-time-overlay.bg-7 .fullscreen-clock:hover {
+    outline: 1px solid white;
+}
+
+/* Countdown active state for dark backgrounds */
+.fullscreen-time-overlay.bg-5 .fullscreen-clock.countdown-active,
+.fullscreen-time-overlay.bg-6 .fullscreen-clock.countdown-active,
+.fullscreen-time-overlay.bg-7 .fullscreen-clock.countdown-active {
+    outline: 1px solid white;
+}
+
+/* Countdown complete state for dark backgrounds */
+.fullscreen-time-overlay.bg-5 .fullscreen-clock.countdown-complete,
+.fullscreen-time-overlay.bg-6 .fullscreen-clock.countdown-complete,
+.fullscreen-time-overlay.bg-7 .fullscreen-clock.countdown-complete {
+    outline: 1px solid white;
+}
+
+/* Timer adjustment state for dark backgrounds */
+.fullscreen-time-overlay.bg-5 .fullscreen-clock.adjusting-timer,
+.fullscreen-time-overlay.bg-6 .fullscreen-clock.adjusting-timer,
+.fullscreen-time-overlay.bg-7 .fullscreen-clock.adjusting-timer {
     outline: 1px solid white;
 }
 
