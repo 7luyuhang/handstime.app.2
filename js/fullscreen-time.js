@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const backgroundToggleBtn = document.getElementById('backgroundToggleBtn');
     const setTimerBtn = document.getElementById('setTimerBtn');
     const bottomControlsGroup = document.querySelector('.bottom-controls-group');
+    const pauseResumeBtn = document.getElementById('pauseResumeBtn');
+    const timerControlsGroup = document.querySelector('.timer-controls-group');
     
     // Countdown state management
     let countdownInterval = null;
@@ -16,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let countdownStartTime = null; // Track when countdown started
     let isCountdownActive = false;
     let isCountdownComplete = false;
+    let isCountdownPaused = false;
+    let pausedRemainingTime = null; // Store remaining time when paused
     
     // Time format state: 0 = 24H, 1 = 12H
     let timeFormatMode = 0;
@@ -29,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Format time for countdown display (MM:SS)
     function formatCountdownTime(milliseconds) {
-        const totalSeconds = Math.floor(milliseconds / 1000);
+        const totalSeconds = Math.ceil(milliseconds / 1000);
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
         return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
@@ -89,6 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownEndTime = Date.now() + COUNTDOWN_DURATION;
         isCountdownActive = true;
         isCountdownComplete = false;
+        isCountdownPaused = false;
+        pausedRemainingTime = null;
         lastDisplayedSeconds = -1; // Reset tracker for new countdown
         
         // Hide background selector during countdown
@@ -125,11 +131,60 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownInterval = setInterval(updateCountdown, 100); // Update every 100ms for smooth display
     }
     
+    // Pause countdown
+    function pauseCountdown() {
+        if (isCountdownActive && !isCountdownPaused) {
+            isCountdownPaused = true;
+            pausedRemainingTime = countdownEndTime - Date.now();
+            
+            // Clear the interval
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+            
+            // Update button icon to continue
+            if (pauseResumeBtn) {
+                const buttonIcon = pauseResumeBtn.querySelector('.button-icon');
+                if (buttonIcon) {
+                    buttonIcon.src = 'assets/image/systemIcon/systemIcon_continue.svg';
+                    buttonIcon.alt = 'Continue';
+                    pauseResumeBtn.title = 'Resume';
+                }
+            }
+        }
+    }
+    
+    // Resume countdown
+    function resumeCountdown() {
+        if (isCountdownActive && isCountdownPaused && pausedRemainingTime !== null) {
+            isCountdownPaused = false;
+            
+            // Reset the end time based on paused remaining time
+            countdownEndTime = Date.now() + pausedRemainingTime;
+            pausedRemainingTime = null;
+            
+            // Update button icon back to pause
+            if (pauseResumeBtn) {
+                const buttonIcon = pauseResumeBtn.querySelector('.button-icon');
+                if (buttonIcon) {
+                    buttonIcon.src = 'assets/image/systemIcon/systemIcon_pasue.svg';
+                    buttonIcon.alt = 'Pause';
+                    pauseResumeBtn.title = 'Pause';
+                }
+            }
+            
+            // Update immediately and restart interval
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 100);
+        }
+    }
+    
     // Update countdown display
     let lastDisplayedSeconds = -1; // Track last displayed second to avoid unnecessary DOM updates
     
     function updateCountdown() {
-        if (!isCountdownActive || !countdownEndTime) {
+        if (!isCountdownActive || !countdownEndTime || isCountdownPaused) {
             return;
         }
         
@@ -159,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
             isCountdownComplete = true;
             
             // Add visual feedback for completion
+            fullscreenClock.classList.remove('countdown-active'); // Remove active class
             fullscreenClock.classList.add('countdown-complete');
             // Keep hint visible to guide user
             // Keep showing 00:00 until user clicks to reset
@@ -176,7 +232,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function stopCountdown() {
         // Record actual timer usage if countdown was active (user stopped early)
         if (isCountdownActive && countdownStartTime && window.timerHistory) {
-            const actualDurationMs = Date.now() - countdownStartTime;
+            // Calculate actual duration considering pauses
+            let actualDurationMs;
+            if (isCountdownPaused && pausedRemainingTime !== null) {
+                // If paused, calculate based on what was already used
+                const originalDuration = COUNTDOWN_DURATION;
+                actualDurationMs = originalDuration - pausedRemainingTime;
+            } else {
+                actualDurationMs = Date.now() - countdownStartTime;
+            }
             const actualDurationMinutes = actualDurationMs / (60 * 1000);
             // Pass false to indicate timer was stopped early
             window.timerHistory.addTimerRecord(actualDurationMinutes, false);
@@ -190,7 +254,19 @@ document.addEventListener('DOMContentLoaded', function() {
         countdownStartTime = null;
         isCountdownActive = false;
         isCountdownComplete = false;
+        isCountdownPaused = false;
+        pausedRemainingTime = null;
         lastDisplayedSeconds = -1; // Reset the last displayed seconds tracker
+        
+        // Reset button icon to pause (for next countdown)
+        if (pauseResumeBtn) {
+            const buttonIcon = pauseResumeBtn.querySelector('.button-icon');
+            if (buttonIcon) {
+                buttonIcon.src = 'assets/image/systemIcon/systemIcon_pasue.svg';
+                buttonIcon.alt = 'Pause';
+                pauseResumeBtn.title = 'Pause';
+            }
+        }
         
         // Re-enable background toggle button when countdown stops
         if (backgroundToggleBtn) {
@@ -298,6 +374,21 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation(); // Prevent event bubbling
         exitFullscreenTime();
     });
+    
+    // Click pause/resume button
+    if (pauseResumeBtn) {
+        pauseResumeBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent event bubbling
+            
+            if (isCountdownActive && !isCountdownComplete) {
+                if (isCountdownPaused) {
+                    resumeCountdown();
+                } else {
+                    pauseCountdown();
+                }
+            }
+        });
+    }
     
     // Click Full Screen button to enter browser fullscreen mode
     fullscreenModeButton.addEventListener('click', function(e) {

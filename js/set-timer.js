@@ -92,8 +92,8 @@
             const totalSeconds = Math.round(this.adjustedTimerMinutes * 60);
             elements.fullscreenClock.textContent = this.formatTimerDisplay(totalSeconds);
             
-            // Add visual feedback
-            elements.fullscreenClock.classList.add('countdown-active');
+            // Add visual feedback - use a different class for timer adjustment
+            elements.fullscreenClock.classList.add('adjusting-timer');
             
             // Request pointer lock for infinite scrolling (with vendor prefixes)
             const requestPointerLock = document.body.requestPointerLock || 
@@ -230,7 +230,7 @@
             }
             
             // Remove visual feedback
-            elements.fullscreenClock.classList.remove('countdown-active');
+            elements.fullscreenClock.classList.remove('adjusting-timer');
             
             // Remove event listeners
             document.removeEventListener('mousemove', this.handleTimerDragWithPointerLock.bind(this, elements));
