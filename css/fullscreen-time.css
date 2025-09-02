@@ -107,15 +107,18 @@
     bottom: 2em;
     left: 50%;
     transform: translateX(-50%);
-    display: none; /* Hidden by default */
+    display: flex; /* Always flex, controlled by visibility and opacity */
     align-items: center;
     gap: 1em;
     z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Show timer controls during countdown (but not when complete or adjusting) */
 .fullscreen-time-overlay:has(.countdown-active) .timer-controls-group {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Hide bottom controls during timer adjustment */

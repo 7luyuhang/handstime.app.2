@@ -203,10 +203,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Record the actual timer usage (full duration was used)
             if (window.timerHistory && countdownStartTime) {
-                const actualDurationMs = Date.now() - countdownStartTime;
-                const actualDurationMinutes = actualDurationMs / (60 * 1000);
+                // For completed timers, use the set duration, not actual elapsed time
+                // This prevents showing 16 seconds when user set 15 seconds
+                const setDurationMinutes = COUNTDOWN_MINUTES;
                 // Pass true to indicate timer was completed
-                window.timerHistory.addTimerRecord(actualDurationMinutes, true);
+                window.timerHistory.addTimerRecord(setDurationMinutes, true);
             }
             
             // Mark as complete but don't reset other states
@@ -274,7 +275,11 @@ document.addEventListener('DOMContentLoaded', function() {
             backgroundToggleBtn.style.opacity = '';
         }
         
-        // Show bottom controls when countdown stops
+        // Immediately remove countdown classes to hide timer controls
+        fullscreenClock.classList.remove('countdown-active');
+        fullscreenClock.classList.remove('countdown-complete');
+        
+        // Show bottom controls after timer controls are hidden
         if (bottomControlsGroup) {
             bottomControlsGroup.style.display = '';
         }
@@ -283,9 +288,6 @@ document.addEventListener('DOMContentLoaded', function() {
         fullscreenClock.style.transform = 'scale(0.95)';
         
         setTimeout(() => {
-            fullscreenClock.classList.remove('countdown-active');
-            fullscreenClock.classList.remove('countdown-complete');
-            
             // Remove scale after transition
             fullscreenClock.style.transform = '';
         }, 125); // Half of the transition duration
@@ -485,9 +487,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Press Escape key to exit fullscreen
+    // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) {
+        // Only handle keyboard shortcuts when fullscreen is active
+        if (!fullscreenOverlay.classList.contains('active')) {
+            return;
+        }
+        
+        // Escape key to exit fullscreen
+        if (e.key === 'Escape') {
             exitFullscreenTime();
         }
     });

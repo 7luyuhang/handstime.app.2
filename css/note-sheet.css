@@ -1,0 +1,140 @@
+/* Note Sheet Styles */
+/* For adding notes to timer history items */
+
+/* Note Overlay */
+.note-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.5); /* White overlay for light mode */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s cubic-bezier(0.5, 0, 0, 1), visibility 0.25s cubic-bezier(0.5, 0, 0, 1);
+    z-index: 1003; /* Above history overlay, below note sheet */
+}
+
+.note-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Note Sheet */
+.note-sheet {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 360px;
+    height: 100vh;
+    background-color: white;
+    transform: translateX(100%);
+    transition: transform 0.25s cubic-bezier(0.5, 0, 0, 1);
+    z-index: 1004; /* Above history sheet */
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+.note-sheet.active {
+    transform: translateX(0);
+}
+
+/* Note Sheet Header */
+.note-sheet-header {
+    padding: 1em;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.note-timer-info {
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 0.875em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#noteTimerTime {
+    color: #808080;
+}
+
+#noteTimerDuration {
+    color: #000000;
+}
+
+/* Note Sheet Content */
+.note-sheet-content {
+    flex: 1;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-textarea {
+    width: 100%;
+    flex: 1;
+    padding: 1em;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 1em;
+    color: #000000;
+    background-color: transparent;
+    border: none;
+    resize: none;
+    outline: none;
+    overflow-y: auto;
+}
+
+.note-textarea::placeholder {
+    color: #808080;
+}
+
+/* Note Character Count */
+.note-char-count {
+    text-align: right;
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 0.875em;
+    color: #808080;
+    padding: 0.5em 1em;
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+/* Dark mode styles */
+body.dark-mode .note-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Black overlay for dark mode */
+}
+
+body.dark-mode .note-sheet {
+    background-color: black;
+    border-left: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+body.dark-mode .note-sheet-header {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+body.dark-mode #noteTimerTime {
+    color: #808080;
+}
+
+body.dark-mode #noteTimerDuration {
+    color: #FFFFFF;
+}
+
+body.dark-mode .note-textarea {
+    color: #FFFFFF;
+    background-color: transparent;
+}
+
+body.dark-mode .note-textarea::placeholder {
+    color: #808080;
+}
+
+body.dark-mode .note-char-count {
+    color: #808080;
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+}

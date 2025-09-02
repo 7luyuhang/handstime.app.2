@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="css/qrcode.css">
     <link rel="stylesheet" href="css/fullscreen-time.css">
     <link rel="stylesheet" href="css/timer-history.css">
+    <link rel="stylesheet" href="css/note-sheet.css">
     <link rel="stylesheet" href="css/history-info-section.css">
     <link rel="stylesheet" href="css/background-selector.css">
     <link rel="stylesheet" href="css/horizontal-container.css">
@@ -38,7 +39,6 @@
     <link rel="stylesheet" href="css/world-clock.css">
 
     <!-- JS -->
-
     <script defer src="js/smooth-drag.js"></script>
     <script defer src="js/main.js"></script>
     <script defer src="js/theme.js"></script>
@@ -389,6 +389,25 @@
                         <span class="history-reset-text">Reset</span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Note Overlay -->
+    <div id="noteOverlay" class="note-overlay"></div>
+    
+    <!-- Note Sheet -->
+    <div id="noteSheet" class="note-sheet">
+        <div class="note-sheet-header">
+            <div class="note-timer-info">
+                <span id="noteTimerTime" class="note-timer-time"></span>
+                <span id="noteTimerDuration" class="note-timer-duration"></span>
+            </div>
+        </div>
+        <div class="note-sheet-content">
+            <textarea id="noteTextarea" class="note-textarea" placeholder="Write something..." maxlength="500"></textarea>
+            <div class="note-char-count">
+                <span id="noteCharCount">0</span>/500
             </div>
         </div>
     </div>
