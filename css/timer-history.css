@@ -113,7 +113,7 @@
 .history-date-header {
     padding: 1em;
     font-family: 'ABCDiatypeSemi-Mono', monospace;
-    color: #808080;
+    color: #000000;
     font-size: 0.875em;
     text-transform: uppercase;
     border-bottom: 1px solid rgba(128, 128, 128, 0.25);
@@ -194,6 +194,7 @@
     transition: transform 0.25s cubic-bezier(0.5, 0, 0, 1);
 }
 
+
 .history-completion-indicator { /* Circle indicator for completed timer */
     width: 8px;
     height: 8px;
@@ -239,7 +240,7 @@ body.dark-mode .history-date-section:last-child .history-list-item:last-child {
 }
 
 body.dark-mode .history-date-header {
-    color: #808080;
+    color: #FFFFFF;
     background-color: black;
     border-bottom: 1px solid rgba(128, 128, 128, 0.25);
 }
