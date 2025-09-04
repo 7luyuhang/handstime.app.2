@@ -398,16 +398,19 @@
     
     <!-- Note Sheet -->
     <div id="noteSheet" class="note-sheet">
-        <div class="note-sheet-header">
+        <div class="note-sheet-content">
+            <textarea id="noteTextarea" class="note-textarea" placeholder="Write something..." maxlength="500"></textarea>
+        </div>
+        <div class="note-sheet-footer">
+            <div class="note-char-count">
+                <span id="noteCharCount">0</span>/500
+            </div>
             <div class="note-timer-info">
                 <span id="noteTimerTime" class="note-timer-time"></span>
                 <span id="noteTimerDuration" class="note-timer-duration"></span>
             </div>
-        </div>
-        <div class="note-sheet-content">
-            <textarea id="noteTextarea" class="note-textarea" placeholder="Write something..." maxlength="500"></textarea>
-            <div class="note-char-count">
-                <span id="noteCharCount">0</span>/500
+            <div id="noteCompletionStatus" class="note-completion-status" style="display: none;">
+                Timer done
             </div>
         </div>
     </div>
