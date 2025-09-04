@@ -72,6 +72,8 @@
             }
 
             // Listen for ESC key to close sheet
+            // DISABLED: ESC key functionality has been disabled
+            /*
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
                     // Check if note sheet is open
@@ -91,6 +93,7 @@
                     }
                 }
             });
+            */
 
             // Set up reset button
             const resetBtn = document.getElementById('resetHistoryBtn');
@@ -152,6 +155,14 @@
                     record.id = newId;
                     needsSave = true;
                 }
+                
+                // Add originalDuration if missing (for backward compatibility)
+                if (!record.originalDuration) {
+                    record.originalDuration = record.duration;
+                    record.formattedOriginalDuration = record.formattedDuration;
+                    needsSave = true;
+                }
+                
                 seenIds.add(record.id);
                 return record;
             });
@@ -182,7 +193,7 @@
         },
 
         // Add a timer record to history
-        addTimerRecord: function (duration, isCompleted = false) {
+        addTimerRecord: function (duration, isCompleted = false, originalDuration = null) {
             const now = new Date();
             const dateTime = this.formatDateTime(now);
             // Generate unique ID with timestamp and random component to prevent duplicates
@@ -190,11 +201,13 @@
             const record = {
                 id: uniqueId,
                 startTime: now.toISOString(),
-                duration: duration, // Duration in minutes
+                duration: duration, // Actual duration in minutes
+                originalDuration: originalDuration || duration, // Original set duration
                 isCompleted: isCompleted, // Track if timer was completed or stopped early
                 formattedDate: dateTime.date,
                 formattedTime: dateTime.time,
-                formattedDuration: this.formatDuration(duration)
+                formattedDuration: this.formatDuration(duration),
+                formattedOriginalDuration: originalDuration ? this.formatDuration(originalDuration) : null
             };
 
             // Set initial start date if this is the first timer ever
@@ -367,6 +380,11 @@
                     groupedByDate[date].forEach(record => {
                         const item = document.createElement('div');
                         item.className = 'history-list-item';
+                        
+                        // Add class if this item has a note
+                        if (this.notesData[record.id]) {
+                            item.classList.add('has-note');
+                        }
 
                         // Get time text
                         let timeText = record.formattedTime;
@@ -564,6 +582,7 @@
             const noteCharCount = document.getElementById('noteCharCount');
             const noteTimerTime = document.getElementById('noteTimerTime');
             const noteTimerDuration = document.getElementById('noteTimerDuration');
+            const noteCompletionStatus = document.getElementById('noteCompletionStatus');
             const noteDoneBtn = document.getElementById('noteDoneBtn');
             const historyOverlay = document.getElementById('historyOverlay');
             const historySheet = document.getElementById('historySheet');
@@ -573,7 +592,23 @@
 
             // Set timer info
             noteTimerTime.textContent = record.formattedTime;
-            noteTimerDuration.textContent = record.formattedDuration;
+            
+            // Show actual duration and original duration if different
+            if (!record.isCompleted && record.formattedOriginalDuration && 
+                record.formattedDuration !== record.formattedOriginalDuration) {
+                noteTimerDuration.textContent = record.formattedDuration + ' · set as ' + record.formattedOriginalDuration;
+            } else {
+                noteTimerDuration.textContent = record.formattedDuration;
+            }
+
+            // Show completion status if timer was completed
+            if (noteCompletionStatus) {
+                if (record.isCompleted) {
+                    noteCompletionStatus.style.display = 'block';
+                } else {
+                    noteCompletionStatus.style.display = 'none';
+                }
+            }
 
             // Load existing note if any
             const existingNote = this.notesData[record.id] || '';
@@ -613,9 +648,13 @@
             const noteTextareaNew = document.getElementById('noteTextarea');
             noteTextareaNew.value = existingNote;
             
-            // Focus textarea after animation
+            // Focus textarea after animation and position cursor at the end
             setTimeout(() => {
                 noteTextareaNew.focus();
+                // Position cursor at the end of existing text
+                if (existingNote) {
+                    noteTextareaNew.setSelectionRange(noteTextareaNew.value.length, noteTextareaNew.value.length);
+                }
             }, 250);
 
             // Auto-save and character count update

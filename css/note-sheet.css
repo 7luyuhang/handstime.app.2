@@ -11,7 +11,6 @@
     background-color: rgba(255, 255, 255, 0.5); /* White overlay for light mode */
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.25s cubic-bezier(0.5, 0, 0, 1), visibility 0.25s cubic-bezier(0.5, 0, 0, 1);
     z-index: 1003; /* Above history overlay, below note sheet */
 }
 
@@ -40,13 +39,13 @@
     transform: translateX(0);
 }
 
-/* Note Sheet Header */
-.note-sheet-header {
-    padding: 1em;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+/* Note Sheet Footer */
+.note-sheet-footer {
+    padding: 0;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+    flex-shrink: 0;
 }
 
 .note-timer-info {
@@ -56,6 +55,11 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 1em;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+    flex-wrap: wrap;
+    gap: 0.5em;
+    text-transform: uppercase;
 }
 
 #noteTimerTime {
@@ -63,7 +67,31 @@
 }
 
 #noteTimerDuration {
-    color: #000000;
+    color: #808080;
+}
+
+/* Timer Completion Status */
+.note-completion-status {
+    font-family: 'ABCDiatypeSemi-Mono', monospace;
+    font-size: 0.875em;
+    color: #808080;
+    padding: 1em;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.note-completion-status::after { /* Circle indicator for completed timer */
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #808080;
+    border-radius: 50%;
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-bottom: 0.1em;
 }
 
 /* Note Sheet Content */
@@ -100,7 +128,7 @@
     font-size: 0.875em;
     color: #808080;
     padding: 0.5em 1em;
-    border-top: 1px solid rgba(128, 128, 128, 0.25);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
 }
 
 /* Dark mode styles */
@@ -113,7 +141,11 @@ body.dark-mode .note-sheet {
     border-left: 1px solid rgba(128, 128, 128, 0.25);
 }
 
-body.dark-mode .note-sheet-header {
+body.dark-mode .note-sheet-footer {
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+body.dark-mode .note-timer-info {
     border-bottom: 1px solid rgba(128, 128, 128, 0.25);
 }
 
@@ -122,7 +154,15 @@ body.dark-mode #noteTimerTime {
 }
 
 body.dark-mode #noteTimerDuration {
-    color: #FFFFFF;
+    color: #808080;
+}
+
+body.dark-mode .note-completion-status {
+    color: #808080;
+}
+
+body.dark-mode .note-completion-status::after {
+    background-color: #808080;
 }
 
 body.dark-mode .note-textarea {
@@ -136,5 +176,5 @@ body.dark-mode .note-textarea::placeholder {
 
 body.dark-mode .note-char-count {
     color: #808080;
-    border-top: 1px solid rgba(128, 128, 128, 0.25);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
 }

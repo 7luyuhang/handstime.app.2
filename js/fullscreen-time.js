@@ -206,8 +206,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // For completed timers, use the set duration, not actual elapsed time
                 // This prevents showing 16 seconds when user set 15 seconds
                 const setDurationMinutes = COUNTDOWN_MINUTES;
-                // Pass true to indicate timer was completed
-                window.timerHistory.addTimerRecord(setDurationMinutes, true);
+                // Pass true to indicate timer was completed, original duration is same as actual
+                window.timerHistory.addTimerRecord(setDurationMinutes, true, setDurationMinutes);
             }
             
             // Mark as complete but don't reset other states
@@ -243,8 +243,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 actualDurationMs = Date.now() - countdownStartTime;
             }
             const actualDurationMinutes = actualDurationMs / (60 * 1000);
-            // Pass false to indicate timer was stopped early
-            window.timerHistory.addTimerRecord(actualDurationMinutes, false);
+            const originalDurationMinutes = COUNTDOWN_MINUTES;
+            // Pass false to indicate timer was stopped early, include original duration
+            window.timerHistory.addTimerRecord(actualDurationMinutes, false, originalDurationMinutes);
         }
         
         if (countdownInterval) {
@@ -495,9 +496,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Escape key to exit fullscreen
+        // DISABLED: ESC key functionality has been disabled
+        /*
         if (e.key === 'Escape') {
             exitFullscreenTime();
         }
+        */
     });
     
     // Prevent clicks inside the content from closing the fullscreen
