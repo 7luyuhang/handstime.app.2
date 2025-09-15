@@ -140,3 +140,61 @@ body.dark-mode .icon svg path {
     fill: #ffffff;
 }
 
+/* Hide features on mobile */
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    /* Hide Icon Container section (with time icon, zhi icon, Desktop Time System text) on mobile */
+    .icon-container {
+        display: none !important;
+    }
+    
+    /* Also hide the parent container of icon-container to remove the space */
+    .container.container-auto-height {
+        display: none !important;
+    }
+    
+    /* Hide World Clock section on mobile */
+    .world-clock-container {
+        display: none !important;
+    }
+    
+    /* Hide World Clock Edit Button and all controls on mobile */
+    .world-clock-controls,
+    .world-clock-edit-btn,
+    .world-clock-reset-btn {
+        display: none !important;
+    }
+    
+    /* Disable clickable time on mobile - just show time without interaction */
+    .clickable-time,
+    #localTime.clickable-time,
+    .clickable-time.tooltip-link,
+    #localTime.clickable-time.tooltip-link {
+        cursor: default !important;
+        text-decoration: none !important;
+        pointer-events: none !important;
+    }
+    
+    /* Remove hover effects on mobile */
+    .clickable-time:hover {
+        color: inherit !important;
+        background-color: transparent !important;
+    }
+    
+    /* Remove hover effects in dark mode on mobile */
+    body.dark-mode .clickable-time:hover {
+        color: inherit !important;
+        background-color: transparent !important;
+    }
+    
+    /* Hide tooltip on mobile since timer is disabled */
+    .tooltip-link::after {
+        display: none !important;
+    }
+    
+    /* Hide two-hands image on mobile since there's no hover interaction */
+    .two-hands-image {
+        display: none !important;
+    }
+}
+
